@@ -1,0 +1,4 @@
+mstar_mutual_parse_packet
+mstar_get_touch_packet_addr
+mstar_iic_read_data
+mstar_init_chip

@@ -1,0 +1,25 @@
+ 0 id=41 axi_sel                p0=clk26m         mux=0x40 set=0x44 clr=0x48 upd=0xffffffff shift=0 width=2 gate=-1 updsh=255 np=4
+ 1 id=44 mm_sel                 p0=clk26m         mux=0x40 set=0x44 clr=0x48 upd=0x4 shift=24 width=3 gate=31 updsh=3 np=8
+ 2 id=45 mfg_sel                p0=clk26m         mux=0x50 set=0x54 clr=0x58 upd=0x4 shift=24 width=2 gate=31 updsh=7 np=4
+ 3 id=46 camtg_sel              p0=clk26m         mux=0x60 set=0x64 clr=0x68 upd=0x4 shift=0 width=3 gate=7 updsh=8 np=7
+ 4 id=47 uart_sel               p0=clk26m         mux=0x60 set=0x64 clr=0x68 upd=0x4 shift=8 width=1 gate=15 updsh=9 np=2
+ 5 id=48 spi_sel                p0=clk26m         mux=0x60 set=0x64 clr=0x68 upd=0x4 shift=16 width=2 gate=23 updsh=10 np=4
+ 6 id=49 msdc5hclk              p0=clk26m         mux=0x70 set=0x74 clr=0x78 upd=0x4 shift=8 width=2 gate=15 updsh=12 np=3
+ 7 id=50 msdc50_0_sel           p0=clk26m         mux=0x70 set=0x74 clr=0x78 upd=0x4 shift=16 width=3 gate=23 updsh=13 np=8
+ 8 id=51 msdc30_1_sel           p0=clk26m         mux=0x70 set=0x74 clr=0x78 upd=0x4 shift=24 width=3 gate=31 updsh=14 np=8
+ 9 id=52 audio_sel              p0=clk26m         mux=0x80 set=0x84 clr=0x88 upd=0x4 shift=16 width=2 gate=23 updsh=17 np=4
+10 id=53 aud_intbus_sel         p0=clk26m         mux=0x80 set=0x84 clr=0x88 upd=0x4 shift=24 width=2 gate=31 updsh=18 np=3
+11 id=54 dbi0_sel               p0=clk26m         mux=0xa0 set=0xa4 clr=0xa8 upd=0x4 shift=0 width=3 gate=7 updsh=23 np=5
+12 id=55 scam_sel               p0=clk26m         mux=0xa0 set=0xa4 clr=0xa8 upd=0x4 shift=8 width=2 gate=15 updsh=24 np=3
+13 id=56 aud_1_sel              p0=clk26m         mux=0xa0 set=0xa4 clr=0xa8 upd=0x4 shift=16 width=1 gate=23 updsh=25 np=2
+14 id=57 disp_pwm_sel           p0=clk26m         mux=0xb0 set=0xb4 clr=0xb8 upd=0x4 shift=0 width=2 gate=7 updsh=27 np=4
+15 id=58 nfi2x_sel              p0=clk26m         mux=0xb0 set=0xb4 clr=0xb8 upd=0x4 shift=8 width=3 gate=15 updsh=28 np=8
+16 id=59 nfiecc_sel             p0=clk26m         mux=0xb0 set=0xb4 clr=0xb8 upd=0x4 shift=16 width=3 gate=23 updsh=29 np=8
+17 id=60 usb_top_sel            p0=clk26m         mux=0xb0 set=0xb4 clr=0xb8 upd=0x4 shift=24 width=1 gate=31 updsh=30 np=2
+18 id=61 spm_sel                p0=clk26m         mux=0xc0 set=0xc4 clr=0xc8 upd=0x4 shift=0 width=1 gate=7 updsh=31 np=2
+19 id=62 i2c_sel                p0=clk26m         mux=0xc0 set=0xc4 clr=0xc8 upd=0x8 shift=16 width=2 gate=-1 updsh=1 np=3
+20 id=63 senif_sel              p0=clk26m         mux=0xd0 set=0xd4 clr=0xd8 upd=0x8 shift=8 width=2 gate=15 updsh=3 np=3
+21 id=64 dxcc_sel               p0=clk26m         mux=0xd0 set=0xd4 clr=0xd8 upd=0x8 shift=16 width=2 gate=23 updsh=4 np=4
+22 id=65 camtg2_sel             p0=clk26m         mux=0xd0 set=0xd4 clr=0xd8 upd=0x8 shift=24 width=3 gate=31 updsh=9 np=7
+23 id=66 aud_engen1_sel         p0=clk26m         mux=0xe0 set=0xe4 clr=0xe8 upd=0x8 shift=0 width=2 gate=7 updsh=5 np=4
+

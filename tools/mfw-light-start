@@ -1,0 +1,23 @@
+#!/bin/sh
+# Explicit opt-in, no autostart. Only tested on MICROFW v62/#48.
+set -eu
+export PATH=/usr/sbin:/usr/bin:/sbin:/bin
+case "$(uname -v)" in '#48 '*) ;; *) echo 'Expected v62/#48 modules' >&2;exit 1;; esac
+modprobe industrialio
+if [ ! -d /sys/module/mfw_i2c1_probe ]; then
+ modprobe mfw_i2c1_probe enable=1 als_control=1
+fi
+[ "$(cat /sys/module/mfw_i2c1_probe/parameters/als_control)" = Y ]
+modprobe mfw_ltr_c2_iio
+if [ ! -d /sys/bus/i2c/devices/1-0053 ]; then
+ printf 'mfw_ltr_c2 0x53\n' > /sys/bus/i2c/devices/i2c-1/new_device
+fi
+for path in /sys/bus/iio/devices/iio:device*; do
+ if [ "$(cat "$path/name" 2>/dev/null)" = mfw-stock-c2-light ]; then
+  echo "Light raw channel: $path/in_illuminance_raw"
+  echo 'Raw units only; exact part and lux calibration unconfirmed. No proximity/IR enabled.'
+  exit 0
+ fi
+done
+echo 'No confirmed MICROFW stock-c2 light IIO device' >&2
+exit 1

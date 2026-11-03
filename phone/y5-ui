@@ -1,0 +1,47 @@
+#!/bin/sh
+# y5-ui mt|legacy  - restartuje TYLKO kompozytor (labwc) i aplikacje UI. Xvfb i gpupresent zostaja nietkniete.
+#   mt     = prawdziwy multitouch: labwc z backendem x11 (obraz jak dotad) + libinput (dotyk z y5-touch-b)
+#   legacy = stary tryb: labwc x11 + fbbridge (XTest, jeden punkt)
+# Tryb mt ustawia automatyczne wycofanie do legacy po REVERT_AFTER s, jesli nie powstanie /tmp/y5-ui-confirmed.
+MODE=${1:-mt}
+export HOME=/root XDG_RUNTIME_DIR=/run/user/0 XDG_SESSION_TYPE=wayland
+mkdir -p /root/.config/labwc-mt && : > /root/.config/labwc-mt/autostart   # bez autostartu: aplikacje startuje ten skrypt
+
+for a in homebar control_center wifi_settings status_bar app_switcher lock_screen; do pkill -f /root/$a.py; done
+pkill waybar; pkill wvkbd-mobintl; pkill swaybg; pkill firefox-esr; pkill -f fbbridge.py
+pkill -x labwc; sleep 1
+
+if [ "$MODE" = mt ]; then
+  ok=0; for d in /sys/class/input/event*; do [ "$(cat $d/device/name 2>/dev/null)" = "y5-touch-b" ] && ok=1; done
+  if [ $ok = 0 ]; then python3 /usr/local/bin/y5-touchb.py > /tmp/touchb.log 2>&1 & sleep 2; fi
+  sh /usr/local/bin/y5-udev-prep.sh
+  pkill seatd; sleep 0.5; rm -f /run/seatd.sock
+  (SEATD_VTBOUND=0 setsid seatd -g root > /tmp/seatd.log 2>&1 < /dev/null &)
+  for i in 1 2 3 4 5; do [ -S /run/seatd.sock ] && break; sleep 1; done
+  export WLR_BACKENDS=x11,libinput LIBSEAT_BACKEND=seatd
+  rm -f /tmp/y5-ui-confirmed
+  (setsid sh -c "sleep ${REVERT_AFTER:-240}; [ -e /tmp/y5-ui-confirmed ] || /usr/local/bin/y5-ui legacy" < /dev/null > /tmp/y5ui-watchdog.log 2>&1 &)
+else
+  export WLR_BACKENDS=x11
+  GPUPRESENT=1 python3 /usr/local/bin/fbbridge.py > /tmp/fbbridge.log 2>&1 &
+fi
+
+export DISPLAY=:0 WLR_RENDERER=pixman WLR_NO_HARDWARE_CURSORS=1
+export MOZ_ENABLE_WAYLAND=1 MOZ_WEBRENDER=0 MOZ_ACCELERATED=0 LIBGL_ALWAYS_SOFTWARE=1
+labwc -C /root/.config/labwc-mt > /tmp/labwc.log 2>&1 &
+
+# okno X kompozytora na caly ekran (wlroots-x11 tworzy 1024x768)
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  sleep 1
+  W=$(xdotool search --onlyvisible --name "" 2>/dev/null | tail -n 1)
+  G=$(xdotool getwindowgeometry $W 2>/dev/null | grep Geometry)
+  case "$G" in *1024x768*) xdotool windowsize $W 736 1440; xdotool windowmove $W 0 0; break;; esac
+done
+
+swaybg -i /root/wallpaper.jpg -m fill > /tmp/swaybg.log 2>&1 &
+wvkbd-mobintl -L 360 --hidden > /tmp/wvkbd.log 2>&1 &
+sleep 1
+python3 /root/status_bar.py > /tmp/status_bar.log 2>&1 &
+python3 /root/homebar.py > /tmp/homebar.log 2>&1 &
+python3 /root/control_center.py > /tmp/cc.log 2>&1 &
+echo "y5-ui $MODE started"

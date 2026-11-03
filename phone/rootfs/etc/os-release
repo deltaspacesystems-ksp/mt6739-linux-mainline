@@ -1,0 +1,5 @@
+NAME="microfw"
+PRETTY_NAME="microfw (Alpine userland, Linux 7.3)"
+ID=microfw
+ID_LIKE=alpine
+HOME_URL="https://github.com/deltaspacesystems-ksp/y5linux"

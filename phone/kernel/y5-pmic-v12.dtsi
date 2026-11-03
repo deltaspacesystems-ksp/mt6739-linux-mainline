@@ -1,0 +1,12 @@
+/* Append after the proven out/v11.dts; compile the combined DTS to v12.dtb. */
+/ {
+	pwrap@1000d000 {
+		compatible = "microfw,dura-l21-pmic-monitor";
+		reg = <0 0x1000d000 0 0x1000>, <0 0x10010000 0 0x20>;
+		reg-names = "pwrap", "keypad";
+		status = "okay";
+	};
+	kp@10010000 {
+		status = "disabled";
+	};
+};

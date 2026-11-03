@@ -1,0 +1,25 @@
+{
+  "status": "Restricted software-budget compiler experiment PASS offline; not physical profile",
+  "source": "Pinned Mesa2736dd1220d58192f5591ca6f9fcc5e60ee368ad pco_ra.c; reproducibly transformed by archived script, production library unchanged",
+  "restriction": "Normal compute WG1x1x1,no barriers,no shareds; fixed software RA budget8, no rogue_get_temps or rogue_max_wg_temps feature query in this standalone override",
+  "guards": [
+    "Post-lowering NIR whitelist from previous probe",
+    "RA rejects noncompute/nonWG1/barriers/shareds",
+    "Final RA asserts no spills and temps<=8"
+  ],
+  "profile_input": "Probe depth0 leaves unified_store_depth/usc_slots unknown; no synthetic capacity inserted",
+  "result": {
+    "bytes": 128,
+    "temps": 4,
+    "vtxins": 1,
+    "shareds": 0,
+    "sha256": "3c15b86129d126c263fbd831312216f468ba4897068c95d7b8ea23fdeddba646"
+  },
+  "comparison": "Unlike synthetic64/4 output5temps, restricted8 allocation uses4temps and different register assignment/hash; not byte-identical. Both128B.",
+  "limits": [
+    "Software budget8 is an explicit compiler constraint, NOT measured unified depth or slot count",
+    "Actual ISA/errata, permitted target allocation and GPU execution remain unvalidated",
+    "No modified compiler installed on phone; no binary uploaded"
+  ],
+  "next": "Validate exact opcode/allocation and submission contract for controlled test; preserve unknown full profile."
+}

@@ -1,0 +1,19 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -4,6 +4,7 @@
+  * This does NOT provide a complete winsys or a complete GPU device profile.
+  */
+ #ifdef PVR_MFW_DDK19
++#include <unistd.h>
+ static enum pvr_srv_error mfw19_error(uint32_t error)
+ {
+  /*0/25 confirmed with the generated1.9 enum; other codes remain opaque. */
+@@ -154,7 +155,7 @@
+   struct {uint64_t pmr;uint32_t error;} PACKED old_out={.error=UINT32_MAX};
+   uint32_t flags;
+   _Static_assert(sizeof(old_in)==52&&sizeof(old_out)==12,"1.9 PMR allocation ABI");
+-  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||in->pid||in->pdump_flags||
++  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||(in->pid&&in->pid!=(uint32_t)getpid())||in->pdump_flags||
+      in->log2_page_size!=12||!in->size||(in->size&4095)||in->block_size!=in->size||
+      in->phy_blocks!=1||in->virt_blocks!=1||!in->mapping_table||
+      !in->annotation||!in->annotation_size||in->annotation_size>128||

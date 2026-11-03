@@ -1,0 +1,17 @@
+// Stock GPU reg/IRQ provenance: phone/hardware/gpu-stock-evidence.json
+
+/ {
+ mfw-gpu-id-probe@10006000 { status = "disabled"; };
+ gpu@13000000 {
+  compatible = "microfw,mt6739-rogue-ddk19";
+  reg = <0 0x13000000 0 0x80000>, <0 0x10006000 0 0x1000>,
+        <0 0x10001000 0 0x1000>, <0 0x1020e000 0 0x1000>;
+  reg-names = "gpu", "spm", "infra-ao", "infra";
+  interrupt-parent = <1>;
+  interrupts = <0 226 8>;
+  interrupt-names = "RGX";
+  clocks = <160>;
+  vcore-supply = <159>;
+  microfw,pmic-provider = <161>;
+ };
+};

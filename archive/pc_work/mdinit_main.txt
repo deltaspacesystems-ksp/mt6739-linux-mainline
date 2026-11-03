@@ -1,0 +1,121 @@
+INFO  Using log config file: jar:file:/D:/y5_linux_work/ghidra/ghidra_12.1.4_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1352 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (3220 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    D:\y5_linux_work\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessAnalyzer)  
+INFO  Opening project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessProject)  
+INFO  REPORT: Processing project file: /ccci_mdinit_bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompFuncByName.java 'main'  (HeadlessAnalyzer)  
+INFO  SCRIPT: D:\y5_linux_work\ghidra_scripts\DecompFuncByName.java (HeadlessAnalyzer)  
+INFO  DecompFuncByName.java> ===main_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined4 main(int param_1,int param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  char *pcVar3;
+  undefined4 *puVar4;
+  
+  *(undefined4 *)(DAT_000112b0 + 0x111c6) = 0;
+  if (param_1 < 2) {
+    ccci_log_print(0,0,DAT_00011370 + 0x111d2);
+    return 0;
+  }
+  pcVar3 = *(char **)(param_2 + 4);
+  iVar1 = strcmp(pcVar3,"0");
+  if (iVar1 == 0) {
+    uVar2 = 1;
+  }
+  else {
+    iVar1 = strcmp(pcVar3,"1");
+    if (iVar1 == 0) {
+      uVar2 = 2;
+    }
+    else {
+      iVar1 = strcmp(pcVar3,"2");
+      if (iVar1 != 0) {
+        ccci_log_print(0,0,"invalid md_id(%s), exit",pcVar3);
+        return 0;
+      }
+      uVar2 = 3;
+    }
+  }
+  puVar4 = (undefined4 *)(DAT_000112d8 + 0x11216);
+  *puVar4 = uVar2;
+  uVar2 = __open_2("/proc/bootprof",2);
+  *(undefined4 *)(DAT_000112ec + 0x11222) = uVar2;
+  update_inf_to_bootprof("md_init srv start");
+  depends_so_prepare();
+  iVar1 = check_lk_load_md_status(*puVar4);
+  if (iVar1 < 0) {
+    pcVar3 = "detect lk info fail, exit";
+    puVar4 = (undefined4 *)(DAT_00011350 + 0x11270);
+  }
+  else {
+    iVar1 = kernel_setting_prepare();
+    uVar2 = *(undefined4 *)(DAT_00011304 + 0x11246);
+    if (iVar1 < 0) {
+      pcVar3 = "get kernel setting fail, exit";
+      goto LAB_0001127c;
+    }
+    iVar1 = is_current_md_en(uVar2);
+    if (iVar1 != 0) {
+      iVar1 = get_ccci_drv_ver();
+      if (iVar1 == 2) {
+        main_v2(*(undefined4 *)(DAT_0001130c + 0x11262),0);
+      }
+      else {
+        main_v1(*(undefined4 *)(DAT_00011308 + 0x1128e),iVar1 == 1);
+      }
+      depends_so_free();
+      if (*(int *)(DAT_00011310 + 0x112a4) < 0) {
+        return 0;
+      }
+      close(*(int *)(DAT_00011310 + 0x112a4));
+      return 0;
+    }
+    pcVar3 = "md not enabled, exit";
+    puVar4 = (undefined4 *)(DAT_00011314 + 0x1127c);
+  }
+  uVar2 = *puVar4;
+LAB_0001127c:
+  ccci_log_print(0,uVar2,pcVar3);
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===main_END=== (GhidraScript)  
+INFO  REPORT: Save succeeded for processed file: /ccci_mdinit_bin (HeadlessAnalyzer)  

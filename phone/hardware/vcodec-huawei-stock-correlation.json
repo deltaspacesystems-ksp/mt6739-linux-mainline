@@ -1,0 +1,43 @@
+{
+  "status": "actual Huawei stock kernel static evidence; no hardware activation",
+  "symbols": [
+    {
+      "type": "W",
+      "name": "scp_dump_pc"
+    },
+    {
+      "type": "W",
+      "name": "scp_dump_lr"
+    }
+  ],
+  "negative_evidence_limit": "No matching VPU codec symbols found in this symbol list does not prove absent silicon or external firmware protocol. scpsys names refer to power controller, not proof of codec coprocessor.",
+  "actual_stock_decomp": {
+    "dec_isr": "0xffffff80084b9bf4: MISC+a4 donebit16, OR11/write + DSB, AND~10/write + DSB, then event signal; matches public reference protocol",
+    "vdec_power_on": "0xffffff80084b6758: smi_bus_enable(1), prepare/enable first clock, then second; error logs and continues",
+    "vdec_power_off": "0xffffff80084b6834: disable/unprepare second then first, smi_bus_disable(1), under counter/mutex",
+    "limits": "Clock global names need probe assignment correlation; no standalone VPU transport calls observed in these3 functions, not proof for whole system",
+    "private_output": "D:/y5_linux_work/out/k44_codec_native.c"
+  },
+  "decision": "Current evidence favours investigating native register-controlled decoder path; do not assume mainline VPU backend can be bound without firmware ABI evidence.",
+  "clock_probe_correlation": {
+    "probe": "vcodec_probe0xffffff80084b6088",
+    "method": "Static decompile assignments plus bounded ASCII read of actual stock kernel string addresses",
+    "globals": {
+      "0xffffff80095d9040": "MT_CG_VDEC",
+      "0xffffff80095d9048": "MT_CG_VENC",
+      "0xffffff80095d9050": "MT_SCP_SYS_VDE",
+      "0xffffff80095d9058": "MT_SCP_SYS_VEN"
+    },
+    "confirmed_decoder_order": [
+      "smi_bus_enable(1)",
+      "MT_SCP_SYS_VDE prepare/enable",
+      "MT_CG_VDEC prepare/enable"
+    ],
+    "confirmed_off_order": [
+      "MT_CG_VDEC disable/unprepare",
+      "MT_SCP_SYS_VDE disable/unprepare",
+      "smi_bus_disable(1)"
+    ],
+    "limits": "Actual stock Linux clock consumer names established; does not identify verified Linux7.3 provider IDs, power register transitions, SMI configuration or safe live enable sequence"
+  }
+}

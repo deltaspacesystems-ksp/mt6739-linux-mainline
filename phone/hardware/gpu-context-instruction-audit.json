@@ -1,0 +1,433 @@
+{
+  "status": "static source index; absence does not establish workaround unnecessary",
+  "references": {
+    "60084": {
+      "legacy": [
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.33.21.11.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.49.21.16.h",
+          "line": 62,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.44.22.25.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.28.22.23.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.40.54.30.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.46.54.330.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.48.54.30.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.30.54.25.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.26.54.24.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.67.54.30.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.50.22.29.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_60084"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3992,
+          "text": "case FIX_HW_BRN_60084_BIT_MASK: ui32ErnBrnId = 60084; break;"
+        }
+      ],
+      "mesa": []
+    },
+    "61450": {
+      "legacy": [
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.33.21.11.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.49.21.16.h",
+          "line": 63,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.44.22.25.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.28.22.23.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.40.54.30.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.46.54.330.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.48.54.30.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.30.54.25.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.26.54.24.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.50.22.29.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_61450"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3994,
+          "text": "case FIX_HW_BRN_61450_BIT_MASK: ui32ErnBrnId = 61450; break;"
+        }
+      ],
+      "mesa": []
+    },
+    "63027": {
+      "legacy": [
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.60.22.29.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.33.21.11.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.49.21.16.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.69.22.25.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.44.22.25.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.59.54.30.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.28.22.23.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.40.54.30.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.46.54.330.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.62.21.16.h",
+          "line": 62,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.48.54.30.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.68.54.30.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.63.54.330.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.58.22.25.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.30.54.25.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.26.54.24.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.67.54.30.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.50.22.29.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.70.208.316.h",
+          "line": 62,
+          "text": "#define FIX_HW_BRN_63027"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3996,
+          "text": "case FIX_HW_BRN_63027_BIT_MASK: ui32ErnBrnId = 63027; break;"
+        }
+      ],
+      "mesa": [
+        {
+          "path": "vulkan/winsys/pvrsrvkm/fw-api/pvr_rogue_fwif.h",
+          "line": 186,
+          "text": "/* Only used when BRN 44455 or BRN 63027 present. */"
+        },
+        {
+          "path": "vulkan/winsys/pvrsrvkm/fw-api/pvr_rogue_fwif.h",
+          "line": 220,
+          "text": "/* Only used when BRN 44455 or BRN 63027 present. */"
+        }
+      ]
+    },
+    "65273": {
+      "legacy": [
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_12.4.1.48.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.60.22.29.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.33.21.11.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.49.21.16.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.69.22.25.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.44.22.25.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.59.54.30.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.28.22.23.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_12.5.1.20.h",
+          "line": 64,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.40.54.30.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.46.54.330.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.62.21.16.h",
+          "line": 63,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.48.54.30.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.68.54.30.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.63.54.330.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.58.22.25.h",
+          "line": 65,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.30.54.25.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.26.54.24.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.67.54.30.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.50.22.29.h",
+          "line": 67,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.70.208.316.h",
+          "line": 63,
+          "text": "#define FIX_HW_BRN_65273"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3670,
+          "text": "INIT_HEAP_NAME(RGX_GENERAL_HEAP_IDENT, GENERAL_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3687,
+          "text": "INIT_HEAP_NAME(RGX_GENERAL_NON4K_HEAP_IDENT, GENERAL_NON4K_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3688,
+          "text": "INIT_HEAP_NAME(RGX_VISTEST_HEAP_IDENT, VISTEST_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3691,
+          "text": "INIT_HEAP(MMU_INIA_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3692,
+          "text": "INIT_HEAP(MMU_INIB_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3702,
+          "text": "INIT_HEAP_NAME(RGX_PDSCODEDATA_HEAP_IDENT, PDSCODEDATA_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3703,
+          "text": "INIT_HEAP_NAME(RGX_USCCODE_HEAP_IDENT, USCCODE_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3718,
+          "text": "INIT_HEAP_NAME(RGX_TQ3DPARAMETERS_HEAP_IDENT, TQ3DPARAMETERS_BRN_65273);"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxinit.c",
+          "line": 3998,
+          "text": "case FIX_HW_BRN_65273_BIT_MASK: ui32ErnBrnId = 65273; break;"
+        }
+      ],
+      "mesa": []
+    },
+    "63553": {
+      "legacy": [
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.49.21.16.h",
+          "line": 66,
+          "text": "#define FIX_HW_BRN_63553"
+        },
+        {
+          "path": "hwdefs/km/cores/rgxcore_km_22.40.54.30.h",
+          "line": 68,
+          "text": "#define FIX_HW_BRN_63553"
+        },
+        {
+          "path": "services/server/devices/rgx/rgxstartstop.c",
+          "line": 297,
+          "text": "#if defined(FIX_HW_BRN_63553)"
+        }
+      ],
+      "mesa": []
+    }
+  },
+  "context_instructions": {
+    "dma_ld_shregs_pco": "INDEX register MOV + indexed SHARED destination LD_REGBL, DRC0",
+    "dma_st_shregs_pco": "INDEX register MOV + indexed SHARED source ST32_REGBL, DRC0, idf from intrinsic flags",
+    "load_shared_reg_alloc_size_pco": "MOV special register SH_ALLOC_SIZE",
+    "source": "pco/pco_trans_nir.c"
+  },
+  "contract": {
+    "reserved_bytes": 48,
+    "pointer_inputs": "size-address64 then store-address64 through vtxin intrinsics",
+    "allocation_size_unit": "16 dwords in common.cl",
+    "warning": "Instruction mapping and source presence do not prove ISA/workaround compatibility for22.49.21.16"
+  }
+}

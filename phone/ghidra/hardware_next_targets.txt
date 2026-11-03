@@ -1,0 +1,14 @@
+mtk_pinctrl_get_gpio_value
+mtk_gpio_get_direction
+mtk_gpio_get_out.isra.12
+mtk_gpio_get_in.isra.13
+mtk_pinctrl_get_gpio_mode_for_eint
+mtk_pinctrl_probe
+mtk_pctrl_init
+mt_i2c_probe
+mt_i2c_clock_enable
+mt_i2c_set_speed
+mt_get_cust_led_list
+mt65xx_leds_probe
+mt65xx_led_set_cust
+mt_backlight_set_pwm

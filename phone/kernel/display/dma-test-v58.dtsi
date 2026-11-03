@@ -1,0 +1,7 @@
+// Include after v57 observer opt-in. Keeps inherited sysirq/SPI202/LEVEL_LOW.
+// No address write or DMA allocation until explicit sysfs flip_test="run".
+&{/disp_rdma0@1400b000} {
+ reg = <0 0x1400b000 0 0x1000>, <0 0x1400a000 0 0x1000>,
+       <0 0x14003000 0 0x1000>, <0 0x14012000 0 0x1000>;
+ microfw,scanout-dma-test;
+};

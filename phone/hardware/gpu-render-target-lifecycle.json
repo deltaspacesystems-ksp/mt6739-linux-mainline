@@ -1,0 +1,15 @@
+{
+  "status": "LIVE RenderTarget CREATE/DESTROY PASS",
+  "abi": "Bridge130 CREATE2 input8/output16, DESTROY3 input8/output4",
+  "backing": "Owned mapped zeroed4K General page; lifecycle only, not validated VHeap sizing for rendering",
+  "cleanup": "Target, local/global freelists, render context, 12 PMRs; RC0",
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 1,
+    "HWR_increment": 0,
+    "CRR": 0,
+    "GPU": "idle0%"
+  },
+  "limits": "No TA/3D command submitted. No rendered triangle. HWRT creation and actual render backing sizing remain next."
+}

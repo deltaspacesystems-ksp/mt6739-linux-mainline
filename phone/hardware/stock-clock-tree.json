@@ -1,0 +1,1256 @@
+{
+  "source_sha256": "e4b90ff2a56daaecddc4ab7c00f7aa38a5704779ae8c123aca1d0d922e660b5d",
+  "evidence": "Stock kernel descriptors, not live PLL measurements. Offsets verified in k44_clock_tree.c; other fields are raw.",
+  "plls": [
+    {
+      "id": 1,
+      "name": "mainpll",
+      "descriptor_va": "0xffffff8008c59088",
+      "reg_offset": "0x220",
+      "pwr_offset": "0x22c",
+      "pd_offset": "0x224",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x224",
+      "raw_words": [
+        "0x1",
+        "0x0",
+        "0x8e05710",
+        "0xffffff80",
+        "0x220",
+        "0x22c",
+        "0x80000111",
+        "0x224",
+        "0x0",
+        "0x18",
+        "0x1",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x4",
+        "0x7",
+        "0x15",
+        "0x224",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "mfgpll",
+      "descriptor_va": "0xffffff8008c590f8",
+      "reg_offset": "0x240",
+      "pwr_offset": "0x24c",
+      "pd_offset": "0x244",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x244",
+      "raw_words": [
+        "0x2",
+        "0x0",
+        "0x8f0810a",
+        "0xffffff80",
+        "0x240",
+        "0x24c",
+        "0x40000111",
+        "0x244",
+        "0x0",
+        "0x18",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x4",
+        "0x7",
+        "0x15",
+        "0x244",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "mmpll",
+      "descriptor_va": "0xffffff8008c59168",
+      "reg_offset": "0x270",
+      "pwr_offset": "0x27c",
+      "pd_offset": "0x274",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x274",
+      "raw_words": [
+        "0x3",
+        "0x0",
+        "0x8f08111",
+        "0xffffff80",
+        "0x270",
+        "0x27c",
+        "0x40000111",
+        "0x274",
+        "0x0",
+        "0x18",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x4",
+        "0x7",
+        "0x15",
+        "0x274",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "univpll",
+      "descriptor_va": "0xffffff8008c591d8",
+      "reg_offset": "0x230",
+      "pwr_offset": "0x23c",
+      "pd_offset": "0x234",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x234",
+      "raw_words": [
+        "0x4",
+        "0x0",
+        "0x8f08117",
+        "0xffffff80",
+        "0x230",
+        "0x23c",
+        "0xf0000111",
+        "0x234",
+        "0x0",
+        "0x18",
+        "0x1",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x4",
+        "0x7",
+        "0x15",
+        "0x234",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "msdcpll",
+      "descriptor_va": "0xffffff8008c59248",
+      "reg_offset": "0x250",
+      "pwr_offset": "0x25c",
+      "pd_offset": "0x254",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x254",
+      "raw_words": [
+        "0x5",
+        "0x0",
+        "0x8f0811f",
+        "0xffffff80",
+        "0x250",
+        "0x25c",
+        "0x40000111",
+        "0x254",
+        "0x0",
+        "0x18",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x4",
+        "0x7",
+        "0x15",
+        "0x254",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "apll1",
+      "descriptor_va": "0xffffff8008c592b8",
+      "reg_offset": "0x2a0",
+      "pwr_offset": "0x2b0",
+      "pd_offset": "0x2a0",
+      "tuner_offset": "0x0",
+      "pcw_offset": "0x2a4",
+      "raw_words": [
+        "0x6",
+        "0x0",
+        "0x8f21c19",
+        "0xffffff80",
+        "0x2a0",
+        "0x2b0",
+        "0x40000111",
+        "0x2a0",
+        "0x0",
+        "0x1",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1000000",
+        "0x0",
+        "0xb2d05e00",
+        "0x0",
+        "0x3b9aca00",
+        "0x0",
+        "0x0",
+        "0x8",
+        "0x20",
+        "0x2a4",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    }
+  ],
+  "fixed_clock": {
+    "id": 0,
+    "name": "f_f26m_ck",
+    "rate": 26000000,
+    "parent": "clk26m"
+  },
+  "factors": [
+    {
+      "id": 0,
+      "name": "syspll_ck",
+      "parent": "mainpll",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "syspll_d2",
+      "parent": "syspll_ck",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "syspll1_d2",
+      "parent": "syspll_d2",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "syspll1_d4",
+      "parent": "syspll_d2",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "syspll1_d8",
+      "parent": "syspll_d2",
+      "mult": 1,
+      "div": 8,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "syspll1_d16",
+      "parent": "syspll_d2",
+      "mult": 1,
+      "div": 16,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "syspll_d3",
+      "parent": "mainpll",
+      "mult": 1,
+      "div": 3,
+      "pdn_raw_words": [
+        "0x1e",
+        "0x220"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "syspll2_d2",
+      "parent": "syspll_d3",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "syspll2_d4",
+      "parent": "syspll_d3",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "syspll_d5",
+      "parent": "mainpll",
+      "mult": 1,
+      "div": 5,
+      "pdn_raw_words": [
+        "0x1d",
+        "0x220"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "syspll3_d2",
+      "parent": "syspll_d5",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "syspll3_d4",
+      "parent": "syspll_d5",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "syspll_d7",
+      "parent": "mainpll",
+      "mult": 1,
+      "div": 7,
+      "pdn_raw_words": [
+        "0x1c",
+        "0x220"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "syspll4_d2",
+      "parent": "syspll_d7",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "syspll4_d4",
+      "parent": "syspll_d7",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "univpll_ck",
+      "parent": "univpll",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "univpll_d26",
+      "parent": "univpll_ck",
+      "mult": 1,
+      "div": 26,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "univpll_48m_d2",
+      "parent": "univpll_d26",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "univpll_48m_d4",
+      "parent": "univpll_d26",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "univpll_48m_d8",
+      "parent": "univpll_d26",
+      "mult": 1,
+      "div": 8,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "univpll_d2",
+      "parent": "univpll",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "univpll1_d2",
+      "parent": "univpll_d2",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "univpll1_d4",
+      "parent": "univpll_d2",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "univpll_d3",
+      "parent": "univpll",
+      "mult": 1,
+      "div": 3,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "univpll2_d2",
+      "parent": "univpll_d3",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 25,
+      "name": "univpll2_d4",
+      "parent": "univpll_d3",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 26,
+      "name": "univpll2_d8",
+      "parent": "univpll_d3",
+      "mult": 1,
+      "div": 8,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 27,
+      "name": "univpll2_d32",
+      "parent": "univpll_d3",
+      "mult": 1,
+      "div": 32,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 28,
+      "name": "univpll_d5",
+      "parent": "univpll",
+      "mult": 1,
+      "div": 5,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 29,
+      "name": "univpll3_d2",
+      "parent": "univpll_d5",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 30,
+      "name": "univpll3_d4",
+      "parent": "univpll_d5",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 31,
+      "name": "univpll3_d8",
+      "parent": "univpll_d5",
+      "mult": 1,
+      "div": 8,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 32,
+      "name": "mmpll_ck",
+      "parent": "mfgpll",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 33,
+      "name": "vencpll_ck",
+      "parent": "mmpll",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 34,
+      "name": "msdcpll_ck",
+      "parent": "msdcpll",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 35,
+      "name": "msdcpll_d2",
+      "parent": "msdcpll",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 36,
+      "name": "apll1_ck",
+      "parent": "apll1",
+      "mult": 1,
+      "div": 1,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 37,
+      "name": "apll1_d2",
+      "parent": "apll1",
+      "mult": 1,
+      "div": 2,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 38,
+      "name": "apll1_d4",
+      "parent": "apll1",
+      "mult": 1,
+      "div": 4,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "id": 39,
+      "name": "apll1_d8",
+      "parent": "apll1",
+      "mult": 1,
+      "div": 8,
+      "pdn_raw_words": [
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    }
+  ],
+  "muxes": [
+    {
+      "id": 41,
+      "name": "axi_sel",
+      "parents": [
+        "clk26m",
+        "syspll_d7",
+        "syspll1_d4",
+        "syspll3_d2"
+      ],
+      "register_words_raw": [
+        "0x40",
+        "0x44",
+        "0x48",
+        "0xffffffff"
+      ],
+      "field_bytes_raw": [
+        0,
+        2,
+        255,
+        255
+      ]
+    },
+    {
+      "id": 44,
+      "name": "mm_sel",
+      "parents": [
+        "clk26m",
+        "vencpll_ck",
+        "syspll1_d2",
+        "syspll_d5",
+        "syspll1_d4",
+        "univpll_d5",
+        "syspll2_d2",
+        "univpll2_d2"
+      ],
+      "register_words_raw": [
+        "0x40",
+        "0x44",
+        "0x48",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        24,
+        3,
+        31,
+        3
+      ]
+    },
+    {
+      "id": 45,
+      "name": "mfg_sel",
+      "parents": [
+        "clk26m",
+        "mmpll_ck",
+        "syspll_d3",
+        "syspll_d5"
+      ],
+      "register_words_raw": [
+        "0x50",
+        "0x54",
+        "0x58",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        24,
+        2,
+        31,
+        7
+      ]
+    },
+    {
+      "id": 46,
+      "name": "camtg_sel",
+      "parents": [
+        "clk26m",
+        "univpll_48m_d2",
+        "univpll2_d8",
+        "univpll_d26",
+        "univpll2_d32",
+        "univpll_48m_d4",
+        "univpll_48m_d8"
+      ],
+      "register_words_raw": [
+        "0x60",
+        "0x64",
+        "0x68",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        0,
+        3,
+        7,
+        8
+      ]
+    },
+    {
+      "id": 47,
+      "name": "uart_sel",
+      "parents": [
+        "clk26m",
+        "univpll2_d8"
+      ],
+      "register_words_raw": [
+        "0x60",
+        "0x64",
+        "0x68",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        8,
+        1,
+        15,
+        9
+      ]
+    },
+    {
+      "id": 48,
+      "name": "spi_sel",
+      "parents": [
+        "clk26m",
+        "syspll3_d2",
+        "syspll4_d2",
+        "syspll2_d4"
+      ],
+      "register_words_raw": [
+        "0x60",
+        "0x64",
+        "0x68",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        16,
+        2,
+        23,
+        10
+      ]
+    },
+    {
+      "id": 49,
+      "name": "msdc5hclk",
+      "parents": [
+        "clk26m",
+        "syspll1_d2",
+        "syspll2_d2"
+      ],
+      "register_words_raw": [
+        "0x70",
+        "0x74",
+        "0x78",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        8,
+        2,
+        15,
+        12
+      ]
+    },
+    {
+      "id": 50,
+      "name": "msdc50_0_sel",
+      "parents": [
+        "clk26m",
+        "msdcpll_ck",
+        "syspll2_d2",
+        "syspll4_d2",
+        "univpll1_d2",
+        "syspll1_d2",
+        "univpll_d5",
+        "univpll1_d4"
+      ],
+      "register_words_raw": [
+        "0x70",
+        "0x74",
+        "0x78",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        16,
+        3,
+        23,
+        13
+      ]
+    },
+    {
+      "id": 51,
+      "name": "msdc30_1_sel",
+      "parents": [
+        "clk26m",
+        "msdcpll_d2",
+        "univpll2_d2",
+        "syspll2_d2",
+        "syspll1_d4",
+        "univpll1_d4",
+        "univpll_d26",
+        "syspll2_d4"
+      ],
+      "register_words_raw": [
+        "0x70",
+        "0x74",
+        "0x78",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        24,
+        3,
+        31,
+        14
+      ]
+    },
+    {
+      "id": 52,
+      "name": "audio_sel",
+      "parents": [
+        "clk26m",
+        "syspll3_d4",
+        "syspll4_d4",
+        "syspll1_d16"
+      ],
+      "register_words_raw": [
+        "0x80",
+        "0x84",
+        "0x88",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        16,
+        2,
+        23,
+        17
+      ]
+    },
+    {
+      "id": 53,
+      "name": "aud_intbus_sel",
+      "parents": [
+        "clk26m",
+        "syspll1_d4",
+        "syspll4_d2"
+      ],
+      "register_words_raw": [
+        "0x80",
+        "0x84",
+        "0x88",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        24,
+        2,
+        31,
+        18
+      ]
+    },
+    {
+      "id": 54,
+      "name": "dbi0_sel",
+      "parents": [
+        "clk26m",
+        "univpll3_d2",
+        "univpll2_d4",
+        "syspll4_d2",
+        "univpll2_d8"
+      ],
+      "register_words_raw": [
+        "0xa0",
+        "0xa4",
+        "0xa8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        0,
+        3,
+        7,
+        23
+      ]
+    },
+    {
+      "id": 55,
+      "name": "scam_sel",
+      "parents": [
+        "clk26m",
+        "syspll3_d2",
+        "univpll2_d4"
+      ],
+      "register_words_raw": [
+        "0xa0",
+        "0xa4",
+        "0xa8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        8,
+        2,
+        15,
+        24
+      ]
+    },
+    {
+      "id": 56,
+      "name": "aud_1_sel",
+      "parents": [
+        "clk26m",
+        "apll1_ck"
+      ],
+      "register_words_raw": [
+        "0xa0",
+        "0xa4",
+        "0xa8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        16,
+        1,
+        23,
+        25
+      ]
+    },
+    {
+      "id": 57,
+      "name": "disp_pwm_sel",
+      "parents": [
+        "clk26m",
+        "univpll2_d4",
+        "univpll2_d8",
+        "univpll3_d8"
+      ],
+      "register_words_raw": [
+        "0xb0",
+        "0xb4",
+        "0xb8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        0,
+        2,
+        7,
+        27
+      ]
+    },
+    {
+      "id": 58,
+      "name": "nfi2x_sel",
+      "parents": [
+        "clk26m",
+        "syspll2_d2",
+        "syspll_d7",
+        "syspll_d3",
+        "syspll2_d4",
+        "msdcpll_d2",
+        "univpll1_d2",
+        "univpll_d5"
+      ],
+      "register_words_raw": [
+        "0xb0",
+        "0xb4",
+        "0xb8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        8,
+        3,
+        15,
+        28
+      ]
+    },
+    {
+      "id": 59,
+      "name": "nfiecc_sel",
+      "parents": [
+        "clk26m",
+        "syspll4_d2",
+        "univpll2_d4",
+        "syspll_d7",
+        "univpll1_d2",
+        "syspll1_d2",
+        "univpll2_d2",
+        "syspll_d5"
+      ],
+      "register_words_raw": [
+        "0xb0",
+        "0xb4",
+        "0xb8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        16,
+        3,
+        23,
+        29
+      ]
+    },
+    {
+      "id": 60,
+      "name": "usb_top_sel",
+      "parents": [
+        "clk26m",
+        "univpll3_d4"
+      ],
+      "register_words_raw": [
+        "0xb0",
+        "0xb4",
+        "0xb8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        24,
+        1,
+        31,
+        30
+      ]
+    },
+    {
+      "id": 61,
+      "name": "spm_sel",
+      "parents": [
+        "clk26m",
+        "syspll1_d8"
+      ],
+      "register_words_raw": [
+        "0xc0",
+        "0xc4",
+        "0xc8",
+        "0x4"
+      ],
+      "field_bytes_raw": [
+        0,
+        1,
+        7,
+        31
+      ]
+    },
+    {
+      "id": 62,
+      "name": "i2c_sel",
+      "parents": [
+        "clk26m",
+        "univpll_d26",
+        "univpll3_d4"
+      ],
+      "register_words_raw": [
+        "0xc0",
+        "0xc4",
+        "0xc8",
+        "0x8"
+      ],
+      "field_bytes_raw": [
+        16,
+        2,
+        255,
+        1
+      ]
+    },
+    {
+      "id": 63,
+      "name": "senif_sel",
+      "parents": [
+        "clk26m",
+        "univpll1_d4",
+        "univpll2_d2"
+      ],
+      "register_words_raw": [
+        "0xd0",
+        "0xd4",
+        "0xd8",
+        "0x8"
+      ],
+      "field_bytes_raw": [
+        8,
+        2,
+        15,
+        3
+      ]
+    },
+    {
+      "id": 64,
+      "name": "dxcc_sel",
+      "parents": [
+        "clk26m",
+        "syspll1_d2",
+        "syspll1_d4",
+        "syspll1_d8"
+      ],
+      "register_words_raw": [
+        "0xd0",
+        "0xd4",
+        "0xd8",
+        "0x8"
+      ],
+      "field_bytes_raw": [
+        16,
+        2,
+        23,
+        4
+      ]
+    },
+    {
+      "id": 65,
+      "name": "camtg2_sel",
+      "parents": [
+        "clk26m",
+        "univpll_48m_d2",
+        "univpll2_d8",
+        "univpll_d26",
+        "univpll2_d32",
+        "univpll_48m_d4",
+        "univpll_48m_d8"
+      ],
+      "register_words_raw": [
+        "0xd0",
+        "0xd4",
+        "0xd8",
+        "0x8"
+      ],
+      "field_bytes_raw": [
+        24,
+        3,
+        31,
+        9
+      ]
+    },
+    {
+      "id": 66,
+      "name": "aud_engen1_sel",
+      "parents": [
+        "clk26m",
+        "apll1_d2",
+        "apll1_d4",
+        "apll1_d8"
+      ],
+      "register_words_raw": [
+        "0xe0",
+        "0xe4",
+        "0xe8",
+        "0x8"
+      ],
+      "field_bytes_raw": [
+        0,
+        2,
+        7,
+        5
+      ]
+    }
+  ],
+  "btif_clock_names": [
+    "btifc",
+    "apdmac"
+  ],
+  "top": {
+    "provider_slots": 67,
+    "fixed_count": 1,
+    "factor_pdn_count": 40,
+    "mux_count": 24,
+    "fixed_va": "0xffffff800901bf08",
+    "factor_pdn_va": "0xffffff800901bf28",
+    "mux_va": "0xffffff800901c568"
+  },
+  "infra": {
+    "provider_slots": 80,
+    "gate_count": 79,
+    "gates_va": "0xffffff800901c9e8"
+  }
+}

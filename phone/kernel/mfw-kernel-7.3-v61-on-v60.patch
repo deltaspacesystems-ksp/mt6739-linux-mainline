@@ -1,0 +1,10 @@
+--- a/drivers/gpu/drm/mfw-rogue-ddk19/kernel/drivers/staging/imgtec/pvr_drm.c
++++ b/drivers/gpu/drm/mfw-rogue-ddk19/kernel/drivers/staging/imgtec/pvr_drm.c
+@@ -231,6 +231,7 @@
+ #endif /* defined(CONFIG_COMPAT) */
+ 
+ static const struct file_operations pvr_drm_fops = {
++	.fop_flags              = FOP_UNSIGNED_OFFSET,
+ 	.owner			= THIS_MODULE,
+ 	.open			= drm_open,
+ 	.release		= drm_release,

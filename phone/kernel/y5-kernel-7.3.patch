@@ -1,0 +1,396 @@
+--- a/init/main.c
++++ b/init/main.c
+@@ -18,7 +18,87 @@
+ #include <linux/module.h>
+ #include <linux/proc_fs.h>
+ #include <linux/binfmts.h>
++#include <linux/delay.h>
+ #include <linux/kernel.h>
++#include <linux/y5cp.h>
++void __iomem *y5_wdt_base;
++
++static int __init y5_clk_hack(void)
++{
++	/* ungate zegarow USB: infracfg infra_icusb (CLR 0x84 bit 8), topckgen usb_top_sel (CLR 0xb8 bit 31 + UPD 0x4 bit 30) */
++	void __iomem *infra = ioremap(0x10001000, 0x1000);
++	void __iomem *top = ioremap(0x10000000, 0x1000);
++	if (infra) { writel(BIT(8), infra + 0x84); iounmap(infra); }
++	if (top) { writel(BIT(31), top + 0xb8); writel(BIT(30), top + 0x4); iounmap(top); }
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 2);
++	{
++		/* sekwencja usb_phy_recover() z 4.4 (PHY @0x11cc0000), przed sondowaniem musb */
++		void __iomem *p = ioremap(0x11cc0000, 0x1000);
++		u32 v, f, c, r1;
++		int to = 100000;
++
++		if (p) {
++#define Y5RM(o, andm, orm) writel((readl(p + (o)) & (andm)) | (orm), p + (o))
++			udelay(50);
++			Y5RM(0x81c, 0xffffefff, 0);
++			Y5RM(0x868, 0xfbffffff, 0);
++			Y5RM(0x86c, 0xfffeffff, 0);
++			Y5RM(0x820, 0xfffffdff, 0);
++			Y5RM(0x820, 0xfffffeff, 0);
++			Y5RM(0x868, 0xfffbffff, 0);
++			Y5RM(0x868, 0xffffff3f, 0);
++			Y5RM(0x868, 0xffffffcf, 0);
++			Y5RM(0x868, 0xfffffffb, 0);
++			Y5RM(0x868, 0xffffc3ff, 0);
++			Y5RM(0x868, 0xff45ffff, 0);
++			Y5RM(0x818, 0xff7fffff, 0);
++			mdelay(5);
++			Y5RM(0x814, 0xffffffff, 0x8000);
++			udelay(1);
++			Y5RM(0xf10, 0xffffffff, 0x100);
++			Y5RM(0xf00, 0xffffffff, 0x400);
++			Y5RM(0xf00, 0xffffffff, 0x1000000);
++			while ((readl(p + 0xf10) & 0xff) != 1 && --to)
++				udelay(1);
++			f = readl(p + 0xf0c);
++			c = f ? 0x150000 / f : 0;
++			v = (c / 1000) & 0xff;
++			r1 = (v + 1) & 0xff;
++			if (c - v * 1000 < 500)
++				r1 = v;
++			Y5RM(0xf00, 0xfeffffff, 0);
++			Y5RM(0xf10, 0xfffffeff, 0);
++			Y5RM(0x814, 0xffff8fff, 0);
++			Y5RM(0x814, 0xffffffff, (r1 & 7) << 12);
++			Y5RM(0x814, 0xffff7fff, 0);
++			Y5RM(0x818, 0xffffffff, 0xf0);
++			Y5RM(0x818, 0x3fffffff, 0);
++			Y5RM(0x818, 0xffffffff, 0xc0000000);
++			udelay(5);
++			iounmap(p);
++		}
++	}
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 3);
++	{
++		void __iomem *m = ioremap(0x11200000, 0x1000);
++
++		if (m) {
++			(void)readb(m + 0x0);
++			if (y5_wdt_base)
++				y5_cp_regs(y5_wdt_base, 5);
++			writew(0x0, m + 0x82);
++			if (y5_wdt_base)
++				y5_cp_regs(y5_wdt_base, 7);
++			iounmap(m);
++		}
++	}
++	return 0;
++}
++early_initcall(y5_clk_hack);
++
++
+ #include <linux/syscalls.h>
+ #include <linux/stackprotector.h>
+ #include <linux/string.h>
+@@ -1047,6 +1127,8 @@
+ 	sort_main_extable();
+ 	trap_init();
+ 	mm_core_init();
++	y5_cp(22);
++	y5_wdt_base = ioremap(0x10007000, 0x100);
+ 	maple_tree_init();
+ 	poking_init();
+ 	ftrace_init();
+@@ -1092,6 +1174,7 @@
+ 	/* init some links before init_ISA_irqs() */
+ 	early_irq_init();
+ 	init_IRQ();
++	y5_cp(24);
+ 	tick_init();
+ 	rcu_init_nohz();
+ 	timers_init();
+@@ -1101,6 +1184,7 @@
+ 	vdso_setup_data_pages();
+ 	timekeeping_init();
+ 	time_init();
++	y5_cp(26);
+ 
+ 	/* This must be after timekeeping is initialized */
+ 	random_init();
+@@ -1556,6 +1640,7 @@
+ 	int ret;
+ 
+ 	init_userspace_fs();
++	y5_cp(28);
+ 
+ 	/*
+ 	 * Wait until kthreadd is all set-up.
+@@ -1563,6 +1648,7 @@
+ 	wait_for_completion(&kthreadd_done);
+ 
+ 	kernel_init_freeable();
++	y5_cp(1);
+ 	/* need to finish all async __init code before freeing the memory */
+ 	async_synchronize_full();
+ 
+--- a/drivers/usb/musb/mediatek.c
++++ b/drivers/usb/musb/mediatek.c
+@@ -8,6 +8,9 @@
+  */
+ 
+ #include <linux/clk.h>
++#include <linux/y5cp.h>
++extern void __iomem *y5_wdt_base;
++#define Y5A(t) do { if (y5_wdt_base) y5_cp_regs(y5_wdt_base, (t)); } while (0)
+ #include <linux/dma-mapping.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -258,6 +261,7 @@
+ 	struct mtk_glue *glue = dev_get_drvdata(dev->parent);
+ 	int ret;
+ 
++	Y5A(9);
+ 	glue->musb = musb;
+ 	musb->phy = glue->phy;
+ 	musb->xceiv = glue->xceiv;
+@@ -268,6 +272,7 @@
+ 	musb_writew(musb->mregs, MUSB_TXTOGEN, MTK_TOGGLE_EN);
+ 	musb_writew(musb->mregs, MUSB_RXTOGEN, MTK_TOGGLE_EN);
+ 
++	Y5A(11);
+ 	if (musb->port_mode == MUSB_OTG) {
+ 		ret = mtk_otg_switch_init(glue);
+ 		if (ret)
+@@ -278,9 +283,11 @@
+ 	if (ret)
+ 		goto err_phy_init;
+ 
++	Y5A(13);
+ 	ret = phy_power_on(glue->phy);
+ 	if (ret)
+ 		goto err_phy_power_on;
++	Y5A(15);
+ 
+ 	phy_set_mode(glue->phy, glue->phy_mode);
+ 
+@@ -290,6 +297,7 @@
+ #endif
+ 	musb_writel(musb->mregs, USB_L1INTM, TX_INT_STATUS | RX_INT_STATUS |
+ 		    USBCOM_INT_STATUS | DMA_INT_STATUS);
++	Y5A(17);
+ 	return 0;
+ 
+ err_phy_power_on:
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -18,6 +18,7 @@
+ 
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
++#include <linux/y5cp.h>
+ #include <linux/delay.h>
+ #include <linux/dma-map-ops.h>
+ #include <linux/init.h>
+@@ -649,6 +650,25 @@
+ 	return ret;
+ }
+ 
++
++extern void __iomem *y5_wdt_base;
++static void y5_probe_cp(struct device *dev, int after)
++{
++	const char *n = dev_name(dev);
++	u32 t = 0;
++
++	if (!y5_wdt_base || !n)
++		return;
++	if (!strncmp(n, "11cc0000", 8))
++		t = after ? 6 : 4;
++	else if (!strncmp(n, "11200000", 8))
++		t = after ? 10 : 8;
++	else if (!strncmp(n, "11230000", 8))
++		t = after ? 14 : 12;
++	if (t)
++		y5_cp_regs(y5_wdt_base, t);
++}
++
+ static int really_probe(struct device *dev, const struct device_driver *drv)
+ {
+ 	bool test_remove = IS_ENABLED(CONFIG_DEBUG_TEST_DRIVER_REMOVE) &&
+@@ -703,7 +723,9 @@
+ 			goto probe_failed;
+ 	}
+ 
++	y5_probe_cp(dev, 0);
+ 	ret = call_driver_probe(dev, drv);
++	y5_probe_cp(dev, 1);
+ 	if (ret) {
+ 		/*
+ 		 * If fw_devlink_best_effort is active (denoted by -EAGAIN), the
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -12,6 +12,7 @@
+ #include <linux/debug_locks.h>
+ #include <linux/sched/debug.h>
+ #include <linux/interrupt.h>
++#include <linux/y5cp.h>
+ #include <linux/kgdb.h>
+ #include <linux/kmsg_dump.h>
+ #include <linux/kallsyms.h>
+@@ -574,8 +575,11 @@
+  *
+  * Display a message, then perform cleanups. This function never returns.
+  */
++extern void __iomem *y5_wdt_base;
+ void vpanic(const char *fmt, va_list args)
+ {
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 3);
+ 	static char buf[PANIC_MSG_BUFSZ];
+ 	long i, i_next = 0, len;
+ 	int state = 0;
+--- a/arch/arm64/kernel/pi/map_range.c
++++ b/arch/arm64/kernel/pi/map_range.c
+@@ -88,12 +88,15 @@
+ 	}
+ }
+ 
++#define Y5W(sec) do { volatile u32 *w = (volatile u32 *)0x10007000UL; u32 m = w[0]; w[1] = ((sec) << 11) | 8; w[2] = 0x1971; w[0] = 0x22000000 | (m & 0xff) | 1; } while (0)
++
+ asmlinkage phys_addr_t __init create_init_idmap(pgd_t *pg_dir, ptval_t clrmask)
+ {
+ 	phys_addr_t ptep = (phys_addr_t)pg_dir + PAGE_SIZE; /* MMU is off */
+ 	pgprot_t text_prot = PAGE_KERNEL_ROX;
+ 	pgprot_t data_prot = PAGE_KERNEL;
+ 
++	Y5W(8);
+ 	pgprot_val(text_prot) &= ~clrmask;
+ 	pgprot_val(data_prot) &= ~clrmask;
+ 
+@@ -101,9 +104,11 @@
+ 	map_range(&ptep, (u64)_stext, (u64)__initdata_begin,
+ 		  (phys_addr_t)_stext, text_prot, IDMAP_ROOT_LEVEL,
+ 		  (pte_t *)pg_dir, false, 0);
++	Y5W(10);
+ 	map_range(&ptep, (u64)__initdata_begin, (u64)_end,
+ 		  (phys_addr_t)__initdata_begin, data_prot, IDMAP_ROOT_LEVEL,
+ 		  (pte_t *)pg_dir, false, 0);
++	Y5W(12);
+ 
+ 	return ptep;
+ }
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -82,9 +82,49 @@
+ 	 *  x20        primary_entry() .. __primary_switch()    CPU boot mode
+ 	 *  x21        primary_entry() .. start_kernel()        FDT pointer passed at boot in x0
+ 	 */
++.macro	y5cp, sec
++	mov	x9, #0x7000
++	movk	x9, #0x1000, lsl #16
++	ldr	w12, [x9]
++	mov	w10, #((\sec << 11) & 0xffff)
++	movk	w10, #((\sec << 11) >> 16), lsl #16
++	orr	w10, w10, #8
++	str	w10, [x9, #4]
++	mov	w10, #0x1971
++	str	w10, [x9, #8]
++	and	w12, w12, #0xff
++	orr	w12, w12, #1
++	movz	w10, #0x2200, lsl #16
++	orr	w12, w12, w10
++	str	w12, [x9]
++.endm
+ SYM_CODE_START(primary_entry)
++	/* Y5-DEBUG: wylacz watchdog TOPRGU (0x10007000) i zamaluj framebuffer LK (0x771e0000) na biało.
++	 * Dowod wejscia w kernel; telefon nie resetuje sie przy awarii. Uzywa tylko x9-x11 (x0 = DTB). */
++	mov	x9, #0x7000
++	movk	x9, #0x1000, lsl #16
++	ldr	w12, [x9]
++	mov	w10, #0x1000
++	orr	w10, w10, #8
++	str	w10, [x9, #4]
++	mov	w10, #0x1971
++	str	w10, [x9, #8]
++	and	w12, w12, #0xff
++	orr	w12, w12, #1
++	movz	w10, #0x2200, lsl #16
++	orr	w12, w12, w10
++	str	w12, [x9]
++	movz	x9, #0x771e, lsl #16
++	mov	x10, #0x1600
++	movk	x10, #0x8, lsl #16
++	mov	x11, #-1
++9:	str	x11, [x9], #8
++	subs	x10, x10, #1
++	b.ne	9b
+ 	bl	record_mmu_state
++	y5cp	4
+ 	bl	preserve_boot_args
++	y5cp	6
+ 
+ 	adrp	x1, early_init_stack
+ 	mov	sp, x1
+@@ -92,6 +132,7 @@
+ 	adrp	x0, __pi_init_idmap_pg_dir
+ 	mov	x1, xzr
+ 	bl	__pi_create_init_idmap
++	y5cp	14
+ 
+ 	/*
+ 	 * If the page tables have been populated with non-cacheable
+@@ -119,6 +160,7 @@
+ 1:	mov	x0, x19
+ 	bl	init_kernel_el			// w0=cpu_boot_mode
+ 	mov	x20, x0
++	y5cp	16
+ 
+ 	/*
+ 	 * The following calls CPU setup code, see arch/arm64/mm/proc.S for
+@@ -127,6 +169,7 @@
+ 	 * the TCR will have been set.
+ 	 */
+ 	bl	__cpu_setup			// initialise processor
++	y5cp	18
+ 	b	__primary_switch
+ SYM_CODE_END(primary_entry)
+ 
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -28,6 +28,7 @@
+ #include <linux/memblock.h>
+ #include <linux/of_fdt.h>
+ #include <linux/efi.h>
++#include <linux/y5cp.h>
+ #include <linux/psci.h>
+ #include <linux/sched/task.h>
+ #include <linux/scs.h>
+@@ -288,6 +289,7 @@
+ 
+ 	early_fixmap_init();
+ 	early_ioremap_init();
++	{ void __iomem *y5b = early_ioremap(0x10007000, 0x100); y5_cp_regs(y5b, 20); early_iounmap(y5b, 0x100); }
+ 
+ 	setup_machine_fdt(__fdt_pointer);
+ 
+--- /dev/null
++++ b/include/linux/y5cp.h
+@@ -0,0 +1,22 @@
++#ifndef _LINUX_Y5CP_H
++#define _LINUX_Y5CP_H
++/* Y5 debug: punkt kontrolny = re-arm watchdog TOPRGU na `sec` sekund (restart po tym czasie, jesli kernel dalej nie dojdzie). */
++#include <linux/io.h>
++static inline void y5_cp_regs(void __iomem *b, u32 sec)
++{
++	u32 m = readl(b);
++	writel((sec << 11) | 0x8, b + 4);
++	writel(0x1971, b + 8);
++	writel(0x22000000 | (m & 0xff) | 1, b);
++}
++static inline void y5_cp(u32 sec)
++{
++	void __iomem *b = ioremap(0x10007000, 0x100);
++	if (b) { y5_cp_regs(b, sec); iounmap(b); }
++}
++static inline void y5_cp_off(void)
++{
++	void __iomem *b = ioremap(0x10007000, 0x100);
++	if (b) { writel(0x22000000, b); iounmap(b); }
++}
++#endif

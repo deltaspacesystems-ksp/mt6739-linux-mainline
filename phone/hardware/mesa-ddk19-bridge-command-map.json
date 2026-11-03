@@ -1,0 +1,349 @@
+{
+  "mesa_commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "ddk_commit": "096323c2d5db8a05e84df31608fc0c9d22e47b31",
+  "scope": "static IDs only; check CONNECT capability masks for runtime availability; every wire structure requires independent adaptation",
+  "commands": [
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SRVCORE",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_SRVCORE",
+      "ddk_19_id": 1,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SRVCORE_CONNECT",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_SRVCORE_CONNECT",
+      "ddk_19_id": 0,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SRVCORE_DISCONNECT",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_SRVCORE_DISCONNECT",
+      "ddk_19_id": 1,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SRVCORE_GETMULTICOREINFO",
+      "mesa_id": 12,
+      "ddk_19_name": "PVRSRV_BRIDGE_SRVCORE_GETMULTICOREINFO",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SYNC",
+      "mesa_id": 2,
+      "ddk_19_name": "PVRSRV_BRIDGE_SYNC",
+      "ddk_19_id": 2,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SYNC_ALLOCSYNCPRIMITIVEBLOCK",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_SYNC_ALLOCSYNCPRIMITIVEBLOCK",
+      "ddk_19_id": 0,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SYNC_FREESYNCPRIMITIVEBLOCK",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_SYNC_FREESYNCPRIMITIVEBLOCK",
+      "ddk_19_id": 1,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_SYNC_SYNCPRIMSET",
+      "mesa_id": 2,
+      "ddk_19_name": "PVRSRV_BRIDGE_SYNC_SYNCPRIMSET",
+      "ddk_19_id": 2,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM",
+      "mesa_id": 6,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM",
+      "ddk_19_id": 6,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_PMRUNREFUNLOCKPMR",
+      "mesa_id": 8,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_PMRUNREFUNLOCKPMR",
+      "ddk_19_id": 8,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_PHYSMEMNEWRAMBACKEDLOCKEDPMR",
+      "mesa_id": 10,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_PHYSMEMNEWRAMBACKEDLOCKEDPMR",
+      "ddk_19_id": 10,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTCTXCREATE",
+      "mesa_id": 15,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTCTXCREATE",
+      "ddk_19_id": 15,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTCTXDESTROY",
+      "mesa_id": 16,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTCTXDESTROY",
+      "ddk_19_id": 16,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTHEAPCREATE",
+      "mesa_id": 17,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTHEAPCREATE",
+      "ddk_19_id": 17,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTHEAPDESTROY",
+      "mesa_id": 18,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTHEAPDESTROY",
+      "ddk_19_id": 18,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTMAPPMR",
+      "mesa_id": 19,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTMAPPMR",
+      "ddk_19_id": 19,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTUNMAPPMR",
+      "mesa_id": 20,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTUNMAPPMR",
+      "ddk_19_id": 20,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTRESERVERANGE",
+      "mesa_id": 21,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTRESERVERANGE",
+      "ddk_19_id": 21,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTUNRESERVERANGE",
+      "mesa_id": 22,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTUNRESERVERANGE",
+      "ddk_19_id": 22,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTMAPPAGES",
+      "mesa_id": 24,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTMAPPAGES",
+      "ddk_19_id": 24,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_DEVMEMINTUNMAPPAGES",
+      "mesa_id": 25,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_DEVMEMINTUNMAPPAGES",
+      "ddk_19_id": 25,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_HEAPCFGHEAPCOUNT",
+      "mesa_id": 30,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_HEAPCFGHEAPCOUNT",
+      "ddk_19_id": 28,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_MM_HEAPCFGHEAPDETAILS",
+      "mesa_id": 32,
+      "ddk_19_name": "PVRSRV_BRIDGE_MM_HEAPCFGHEAPDETAILS",
+      "ddk_19_id": 30,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_DMABUF",
+      "mesa_id": 11,
+      "ddk_19_name": "PVRSRV_BRIDGE_DMABUF",
+      "ddk_19_id": 11,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_DMABUF_PHYSMEMIMPORTDMABUF",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_DMABUF_PHYSMEMIMPORTDMABUF",
+      "ddk_19_id": 0,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_DMABUF_PHYSMEMEXPORTDMABUF",
+      "mesa_id": 2,
+      "ddk_19_name": "PVRSRV_BRIDGE_DMABUF_PHYSMEMEXPORTDMABUF",
+      "ddk_19_id": 1,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTQ",
+      "mesa_id": 128,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTQ",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTQ_RGXCREATETRANSFERCONTEXT",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTQ_RGXCREATETRANSFERCONTEXT",
+      "ddk_19_id": 0,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTQ_RGXDESTROYTRANSFERCONTEXT",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTQ_RGXDESTROYTRANSFERCONTEXT",
+      "ddk_19_id": 1,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTQ_RGXSUBMITTRANSFER2",
+      "mesa_id": 3,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTQ_RGXSUBMITTRANSFER2",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXCMP",
+      "mesa_id": 129,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXCMP",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXCMP_RGXCREATECOMPUTECONTEXT",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXCMP_RGXCREATECOMPUTECONTEXT",
+      "ddk_19_id": 0,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXCMP_RGXDESTROYCOMPUTECONTEXT",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXCMP_RGXDESTROYCOMPUTECONTEXT",
+      "ddk_19_id": 1,
+      "numeric_id_same": true,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXCMP_RGXKICKCDM2",
+      "mesa_id": 5,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXCMP_RGXKICKCDM2",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D",
+      "mesa_id": 130,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXCREATEHWRTDATASET",
+      "mesa_id": 0,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXCREATEHWRTDATASET",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXDESTROYHWRTDATASET",
+      "mesa_id": 1,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXDESTROYHWRTDATASET",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXCREATEFREELIST",
+      "mesa_id": 6,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXCREATEFREELIST",
+      "ddk_19_id": 8,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXDESTROYFREELIST",
+      "mesa_id": 7,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXDESTROYFREELIST",
+      "ddk_19_id": 9,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXCREATERENDERCONTEXT",
+      "mesa_id": 8,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXCREATERENDERCONTEXT",
+      "ddk_19_id": 12,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXDESTROYRENDERCONTEXT",
+      "mesa_id": 9,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXDESTROYRENDERCONTEXT",
+      "ddk_19_id": 13,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    },
+    {
+      "mesa_117": "PVR_SRV_BRIDGE_RGXTA3D_RGXKICKTA3D2",
+      "mesa_id": 12,
+      "ddk_19_name": "PVRSRV_BRIDGE_RGXTA3D_RGXKICKTA3D2",
+      "ddk_19_id": null,
+      "numeric_id_same": false,
+      "abi_reuse_allowed": false
+    }
+  ],
+  "additional_protocol_differences": [
+    "DDK1.9 initializes firmware on render OPEN; do not send Mesa1.17 DRM INIT ioctl",
+    "CONNECT1.9 returns capability/bridge masks, not BVNC",
+    "Native sync timeline control is on separate pvr_sync misc device in1.9",
+    "Heap details1.9 lack the1.17 reserved carveout-size field"
+  ]
+}

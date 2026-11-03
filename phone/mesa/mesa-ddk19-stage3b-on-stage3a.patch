@@ -1,0 +1,79 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -8,6 +8,20 @@
+ {
+  /*0/25 confirmed with the generated1.9 enum; other codes remain opaque. */
+  return error==0?PVR_SRV_OK:error==25?PVR_SRV_ERROR_RETRY:PVR_SRV_ERROR_BRIDGE_CALL_FAILED;
++}
++/* Conservative subset: ordinary non-sparse 4K buffers. Never truncate flags. */
++static bool mfw19_memory_flags(uint64_t flags, bool mapping, uint32_t *old)
++{
++ uint64_t mask=mapping?UINT64_C(0x70f):UINT64_C(0x80007fff);
++ /* bit15/sparse/SVM/device/heap hints and other unverified modes rejected. */
++ if(flags&~mask)return false;
++ unsigned gpu=(flags>>8)&7,cpu=(flags>>11)&7;
++ if(gpu!=1&&gpu!=3)return false;
++ if(!mapping&&cpu!=0&&cpu!=3)return false;
++ *old=(uint32_t)(flags & (mapping?0xf:UINT64_C(0x800040ff)));
++ if(gpu==3)*old|=3u<<8; /* modern uncached1 -> old uncached0 */
++ if(!mapping)*old|=(cpu==0?1u:3u)<<11; /* modern WC0 -> old WC1 */
++ return true;
+ }
+ struct mfw19_connect_in { uint32_t flags, options, version, build; } PACKED;
+ struct mfw19_connect_out { uint8_t arch; uint32_t caps,pvr,rgx,error; } PACKED;
+@@ -133,6 +147,55 @@
+   return rc;
+  }
+ 
++ if(bridge==PVR_SRV_BRIDGE_MM && function==10){
++  struct pvr_srv_physmem_new_ram_backed_locked_pmr_cmd *in=input;
++  struct pvr_srv_physmem_new_ram_backed_locked_pmr_ret *out=output;
++  struct {uint64_t size,chunk;uint32_t phys,virt;uint64_t table;uint32_t page,flags,annotation_size;uint64_t annotation;} PACKED old_in;
++  struct {uint64_t pmr;uint32_t error;} PACKED old_out={.error=UINT32_MAX};
++  uint32_t flags;
++  _Static_assert(sizeof(old_in)==52&&sizeof(old_out)==12,"1.9 PMR allocation ABI");
++  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||in->pid||in->pdump_flags||
++     in->log2_page_size!=12||!in->size||(in->size&4095)||in->block_size!=in->size||
++     in->phy_blocks!=1||in->virt_blocks!=1||!in->mapping_table||
++     !in->annotation||!in->annotation_size||in->annotation_size>128||
++     !mfw19_memory_flags(in->flags,false,&flags)){errno=EINVAL;return -1;}
++  old_in.size=in->size;old_in.chunk=in->block_size;old_in.phys=1;old_in.virt=1;
++  old_in.table=(uintptr_t)in->mapping_table;old_in.page=12;old_in.flags=flags;
++  old_in.annotation_size=in->annotation_size;old_in.annotation=(uintptr_t)in->annotation;
++  cmd.in_data_ptr=(uintptr_t)&old_in;cmd.in_data_size=sizeof(old_in);
++  cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=sizeof(old_out);
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){out->pmr=(void*)(uintptr_t)old_out.pmr;out->error=mfw19_error(old_out.error);
++   /* No kernel-returned flags in1.9. Unused by pinned Mesa; explicitly unavailable. */
++   out->out_flags=0;}
++  return rc;
++ }
++ if(bridge==PVR_SRV_BRIDGE_MM && function==19){
++  struct pvr_srv_devmem_int_map_pmr_cmd *in=input;
++  struct pvr_srv_devmem_int_map_pmr_ret *out=output;
++  struct {uint64_t heap,reservation,pmr;uint32_t flags;} PACKED old_in;
++  struct {uint64_t mapping;uint32_t error;} PACKED old_out={.error=UINT32_MAX};uint32_t flags;
++  _Static_assert(sizeof(old_in)==28&&sizeof(old_out)==12,"1.9 PMR mapping ABI");
++  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||!in->server_heap||!in->reservation||!in->pmr||
++     !mfw19_memory_flags(in->flags,true,&flags)){errno=EINVAL;return -1;}
++  old_in.heap=(uintptr_t)in->server_heap;old_in.reservation=(uintptr_t)in->reservation;old_in.pmr=(uintptr_t)in->pmr;old_in.flags=flags;
++  cmd.in_data_ptr=(uintptr_t)&old_in;cmd.in_data_size=sizeof(old_in);
++  cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=sizeof(old_out);
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){out->mapping=(void*)(uintptr_t)old_out.mapping;out->error=mfw19_error(old_out.error);}
++  return rc;
++ }
++ if(bridge==PVR_SRV_BRIDGE_MM && (function==8||function==20)){
++  uint64_t handle;uint32_t old_out=UINT32_MAX;
++  if(insize!=8||outsize!=4){errno=EINVAL;return -1;}
++  memcpy(&handle,input,8);if(!handle){errno=EINVAL;return -1;}
++  cmd.in_data_ptr=(uintptr_t)&handle;cmd.in_data_size=8;
++  cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=4;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){enum pvr_srv_error error=mfw19_error(old_out);memcpy(output,&error,4);}
++  return rc;
++ }
++
+  /* Never send an unchecked1.17 command/layout to a1.9 kernel. */
+  errno=ENOTSUP;
+  return -1;

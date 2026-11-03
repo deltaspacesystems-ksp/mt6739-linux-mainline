@@ -1,0 +1,51 @@
+{
+  "status": "Offline public PDS generator candidates PASS",
+  "validation": "ASan/UBSan harness plus explicit lengths/end pointers/canaries; linked PDS library is existing host build",
+  "fragment_kick": {
+    "data_dwords": 8,
+    "code_dwords": 1,
+    "usc_offset": "0x10000",
+    "usc_temps": 9,
+    "phase_change": false,
+    "code": "f4000002",
+    "data_first2": [
+      "00010000",
+      "00000018"
+    ],
+    "padding": "explicit zero"
+  },
+  "fragment_meta": {
+    "shared_register": 0,
+    "value": "00000202",
+    "data_dwords": 2,
+    "code_dwords": 1,
+    "data": [
+      "00000202",
+      "90000000"
+    ],
+    "code": "f4010001",
+    "alignment_bytes": 16,
+    "write_mask": "LOWER DWORD, common store",
+    "no_usc_kick": true
+  },
+  "vertex": {
+    "vertex_id_register": 0,
+    "usc_temps": 6,
+    "data_dwords": 3,
+    "code_dwords": 3,
+    "pds_temps": 2,
+    "entries": 2,
+    "entry_bytes": 16,
+    "code": [
+      "f0024001",
+      "fc000002",
+      "d3000000"
+    ],
+    "entry_map_hex": "02020000008006000000010010000000"
+  },
+  "failed_checks_fixed": [
+    "First fragment kick compile used legacy enum name; corrected to exact current generated symbol",
+    "First metadata harness used data+1, violating required16byte alignment; corrected aligned data+4 and retained canaries"
+  ],
+  "limits": "Offline only; no hardware PDS fragment/vertex execution. Fragment phase_change=false and isolated generator device choices must match final full shader metadata/profile before submit. No triangle."
+}

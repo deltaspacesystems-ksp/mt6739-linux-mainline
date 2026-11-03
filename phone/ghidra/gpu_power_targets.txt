@@ -1,0 +1,4 @@
+spm_mtcmos_ctrl_mfg
+spm_mtcmos_ctrl_mfg_core0
+MTKDisablePowerDomain
+rgx_bvnc_pack_hw

@@ -1,0 +1,18 @@
+{
+  "commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "mirror": "https://chromium.googlesource.com/external/gitlab.freedesktop.org/mesa/mesa/+/2736dd1220d58192f5591ca6f9fcc5e60ee368ad/",
+  "files": [
+    {
+      "path": "src/imagination/common/pvr_device_info.c",
+      "git_blob": "eb586eb1375020f1ba1d517d49403eec4399bbee"
+    },
+    {
+      "path": "src/imagination/common/pvr_device_info.h",
+      "git_blob": "701b28524d142185d086c7ebb8607cec6362f80c"
+    },
+    {
+      "path": "src/imagination/common/device_info/ge8300.h",
+      "git_blob": "1cd1d6ed6be7218d7555aa882d8e432f99d68ba4"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+wersja: 7.3.0
+--- dts mediatek (mt67*/mt65*/mt81* dtsi z 'mt6739|mt6765|mt6761|mt6763|mt6580|mt6797'):
+mt6331.dtsi mt6357.dtsi mt6358.dtsi mt6359.dtsi mt6365.dtsi mt6380.dtsi mt6755-evb.dts mt6755.dtsi mt6779-evb.dts mt6779.dtsi mt6795-evb.dts mt6795-sony-xperia-m5.dts mt6795.dtsi mt6797-evb.dts mt6797-x20-dev.dts mt6797.dtsi mt6858-pinfunc.h mt6878-pinfunc.h mt6893-pinfunc.h 
+--- 'mt6739' w drzewie:
+--- clk / pinctrl / power dla mt6765 i mt6739:
+clk-mt6765-audio.c clk-mt6765-cam.c clk-mt6765-img.c clk-mt6765-mipi0a.c clk-mt6765-mm.c clk-mt6765-vcodec.c clk-mt6765.c 
+pinctrl-mt6765.c pinctrl-mtk-mt6765.h 
+Kconfig Makefile airoha-cpu-pmdomain.c mt6735-pm-domains.h mt6795-pm-domains.h mt6858-pm-domains.h mt6893-pm-domains.h mt8167-pm-domains.h mt8173-pm-domains.h mt8183-pm-domains.h mt8186-pm-domains.h mt8188-pm-domains.h mt8189-pm-domains.h mt8192-pm-domains.h mt8195-pm-domains.h mt8196-pm-domains.h mt8365-pm-domains.h mtk-mfg-pmdomain.c mtk-pm-domains.c mtk-pm-domains.h mtk-scpsys.c 
+--- DRM/simpledrm/musb/mmc:

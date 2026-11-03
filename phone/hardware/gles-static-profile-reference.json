@@ -1,0 +1,12 @@
+{
+  "file": "egl/libGLESv2_mtk.so",
+  "bytes": 1461064,
+  "sha256": "f78d29db51dbb1604a97d1b879f037db9d6a092311b34e72e3aaf9b371d0bc73",
+  "source": "vendor p41 lib64/egl/libGLESv2_mtk.so, ext4 ro,noload, unmounted afterward",
+  "scope": "generic GLES library, private static-only reference; never executed or committed",
+  "executed": false,
+  "mount_verified_absent_after_transfer": true,
+  "transfer_note": "completion marker unrecognized, independent size/SHA/endmarker/ELF checks passed",
+  "recovered_observation": "stock GLES caller sets compiler program-parameter word0x16 to0xf8; USC stores it at state+0x30 and rejects values>0x100",
+  "limitation": "compiler per-program temporary-register budget, NOT unified_store_depth or USC slot count"
+}

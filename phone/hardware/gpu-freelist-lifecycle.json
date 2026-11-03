@@ -1,0 +1,30 @@
+{
+  "status": "LIVE native freelist lifecycle PASS, not rendering",
+  "bridge": 130,
+  "create": 8,
+  "destroy": 9,
+  "input_bytes": 52,
+  "output_bytes": 12,
+  "table": "Owned General4K PMR with CPU-readable/writeable flags removed; no userspace CPU mmap",
+  "pages": {
+    "max": 32,
+    "initial": 32,
+    "grow": 0,
+    "global_parent": null
+  },
+  "validation": [
+    "Kernel populates physical page list and allocates initial pool",
+    "CREATE/DESTROY andrendercontextcleanupPASS",
+    "Complete11mapped-page cleanupRC0"
+  ],
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 1,
+    "HWR_change": 0,
+    "CRR": 0,
+    "GPUutil": "0%"
+  },
+  "critical_limit": "Diagnostic table currently not PM_FW_PROTECT-tagged. Modern device flag atbit26 maps to legacy PMMETA_PROTECT bit24; existing restricted adapter rejects device hints. Must explicitly implement/audit protection before actual TA job. CREATE success does not validate GPU memory protection or TA execution.",
+  "next": "ProtectedGPU-only table, then global/local pair/HWRT lifecycle; use actual FWtypes for TA280/3D664."
+}

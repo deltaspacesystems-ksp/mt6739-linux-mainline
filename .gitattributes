@@ -1,0 +1,8 @@
+# Keep WSL build scripts and kernel inputs usable after a Windows checkout.
+archive/pc_work/*.sh text eol=lf
+phone/kernel/*.patch text eol=lf whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+phone/kernel/config-* text eol=lf
+phone/kernel/*.dtsi text eol=lf
+phone/ui/** text eol=lf
+phone/kernel/display/* text eol=lf
+phone/kernel/gpu/ddk19/*.patch text eol=lf whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab

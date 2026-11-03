@@ -1,0 +1,53 @@
+{
+  "samples": 579,
+  "successful": 546,
+  "failed": 33,
+  "first_utc": "2026-10-25T00:37:40.799293+00:00",
+  "last_utc": "2026-10-25T10:37:14.078293+00:00",
+  "observed_uptime_hours": 9.992241666666667,
+  "uptime_decreases": 0,
+  "voltage_uv": {
+    "first": 3880426,
+    "last": 4251379,
+    "minimum": 3880426,
+    "maximum": 4256652
+  },
+  "temperature_deci_c": {
+    "minimum": 283,
+    "maximum": 293
+  },
+  "status_values": [
+    "Charging"
+  ],
+  "service_first": {
+    "kicks": 17,
+    "errors": 4,
+    "timer_faults_seen": 1,
+    "last_error": 0,
+    "profile_ok": 1,
+    "blocks": 0,
+    "temp": 290,
+    "elapsed_s": 163
+  },
+  "service_last": {
+    "kicks": 4408,
+    "errors": 4,
+    "timer_faults_seen": 1,
+    "last_error": 0,
+    "profile_ok": 1,
+    "blocks": 0,
+    "temp": 285,
+    "elapsed_s": 36135
+  },
+  "observed_fault_values": [
+    0
+  ],
+  "nonzero_service_errors": 0,
+  "blocked_samples": 0,
+  "unsupported_profile_samples": 0,
+  "observed_oreg_values": [
+    142
+  ],
+  "largest_gap_s": 186.77000000000044,
+  "interpretation": "Observed samples only; not a current measurement or proof of a completed charge cycle. VBAT ADC calibration and actual charger CV need comparison."
+}

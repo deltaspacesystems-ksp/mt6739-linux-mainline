@@ -1,0 +1,14 @@
+diff --git a/src/imagination/pco/usclib/common.cl b/src/imagination/pco/usclib/common.cl
+index c532aa6..3c6a2a3 100644
+--- a/src/imagination/pco/usclib/common.cl
++++ b/src/imagination/pco/usclib/common.cl
+@@ -199,7 +199,8 @@ load_store_sr(uint block_size_dw,
+          }
+ 
+          offset += block_size_dw;
+-         size_remaining_dw -= block_size_dw;
++         /* The final DMA burst can be shorter than block_size_dw. */
++         size_remaining_dw -= min(size_remaining_dw, block_size_dw);
+          store_addr = nir_uadd64_32(store_addr.x, store_addr.y, block_size_dw * sizeof(uint32_t));
+       }
+    }

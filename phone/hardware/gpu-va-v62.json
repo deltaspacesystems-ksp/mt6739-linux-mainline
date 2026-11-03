@@ -1,0 +1,26 @@
+{
+  "kernel": "v62/#48",
+  "native_test": "--gpu-memory /dev/dri/renderD128",
+  "result": "PASS",
+  "operations": [
+    "CONNECT exact1.9",
+    "allocate4KiB PMR",
+    "CPU zero/write/read verification",
+    "query General heap",
+    "create device memory context",
+    "create heap",
+    "reserve GPU VA",
+    "map PMR into GPU MMU",
+    "unmap, unreserve, destroy heap/context, CPU unmap, PMR release, DISCONNECT"
+  ],
+  "gpu_va": "0x65c0000000",
+  "driver": "OK",
+  "firmware": "OK",
+  "hwr": 0,
+  "crr": 0,
+  "apm": 0,
+  "vcore_uv": 1150000,
+  "charging": "Charging",
+  "rendering": "NOT submitted; no acceleration claim",
+  "tests": "native ABI/staticassert/build plus ASan/UBSan; normal GPU VM lifecycle and8 forward/teardown failure stages; retain PMR for DISCONNECT if VM teardown fails"
+}

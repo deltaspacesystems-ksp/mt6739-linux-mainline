@@ -1,0 +1,8 @@
+focal_core_module_init
+focal_prase_ic_config_dts
+focal_power_init
+focal_regulator_power_switch
+focal_hardware_reset
+focal_read_reg
+goodix_i2c_test
+goodix_i2c_read

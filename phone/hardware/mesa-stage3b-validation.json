@@ -1,0 +1,30 @@
+{
+  "stage": "3b conservative PMR allocation and GPU mapping",
+  "patch_sha256": "4c50b31d3545af435748b9e7fd3a5774565dad85945fce1320ebfedb73069355",
+  "supported_operations": 13,
+  "host_sanitizers": "PASS actual adapter/modern structs; 64 cache combinations, rejected unknown flag bits, wire ordering and guards/error handling",
+  "host_library_build": "PASS x86_64, not installed on phone",
+  "live_phone": {
+    "native_standalone_adapter": "PASS real DRM ioctls",
+    "bytes": 4096,
+    "zero_initialization": true,
+    "cpu_pattern_write_read": true,
+    "gpu_virtual_map_unmap": true,
+    "resource_cleanup": true,
+    "trial_rc": 0,
+    "driver": "OK",
+    "firmware": "OK",
+    "hwr": 0,
+    "crr": 0
+  },
+  "reboot": false,
+  "rendering": false,
+  "restrictions": [
+    "4K pages, single non-sparse chunk only",
+    "pid and pdump_flags must be zero; explicit foreign pid unsupported",
+    "GPU uncached/incoherent, CPU WC/incoherent only",
+    "sparse/SVM/device/heap hints and all other unverified flags rejected",
+    "old DDK has no out_flags; adapter returns zero, unused by pinned Mesa wrapper",
+    "no GPU job, sync or complete compiler profile"
+  ]
+}

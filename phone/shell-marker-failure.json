@@ -1,0 +1,6 @@
+{
+  "attempt": 2,
+  "rc": "$?",
+  "complete": true,
+  "tail": "# printf 'MFW_SERVICE='; cat /sys/bus/platform/devices/1000d000.pwrap/charger_\nservice\nMFW_SERVICE=kicks=5323 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=320 elapsed_s=229\n~ # printf 'MFW_REGS='; cat /sys/bus/platform/devices/1000d000.pwrap/charger_reg\nisters\nMFW_REGS=id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1\n~ # printf 'MFW_CPU='; cat /sys/bus/platform/devices/mfw-cpu-clock/cpu_rate_hz\nMFW_CPU=949999755\n~ # \n~ # echo "
+}

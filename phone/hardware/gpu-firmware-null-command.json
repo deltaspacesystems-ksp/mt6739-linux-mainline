@@ -1,0 +1,16 @@
+{
+  "test": "exact native DDK1.9 firmware NULL command via RGXKickSync138/2",
+  "initial_cpu_read": "0x12345678",
+  "firmware_update_observed": "0x87654321",
+  "submit": "one UFO update, zero input fences/server syncs, invalid native timelines(-1), no shader or 3D register payload",
+  "native_config_NO_HARDWARE": false,
+  "phone_trial_rc": 0,
+  "driver": "OK",
+  "firmware": "OK",
+  "hwr": 0,
+  "crr": 0,
+  "host_tests": "ASan/UBSan create/submit/completion timeout/destroy failures PASS; exact extracted108-byte input/8-byte output",
+  "shader_execution": false,
+  "rendering": false,
+  "reboot": false
+}

@@ -1,0 +1,24 @@
+// Include after the v58 board DT. Explicit fresh phandles from its compiledDT.
+
+/ {
+ pwrap@1000d000 {
+  phandle = <161>;
+  vcore-readonly {
+   phandle = <159>;
+   regulator-name = "microfw-vcore-readonly";
+  };
+ };
+ mfw-mfg-probe-clock@10000000 {
+  compatible = "microfw,mt6739-mfg-probe-clock";
+  reg = <0 0x10000000 0 0x1000>, <0 0x1000c000 0 0x1000>, <0 0x10006000 0 0x1000>;
+  #clock-cells = <0>;
+  phandle = <160>;
+ };
+ mfw-gpu-id-probe@10006000 {
+  compatible = "microfw,mt6739-gpu-id-probe";
+  reg = <0 0x10006000 0 0x1000>, <0 0x10001000 0 0x1000>, <0 0x1020e000 0 0x1000>;
+  clocks = <160>;
+  vcore-supply = <159>;
+  microfw,pmic-provider = <161>;
+ };
+};

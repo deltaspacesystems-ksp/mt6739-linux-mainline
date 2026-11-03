@@ -1,0 +1,69 @@
+{
+  "source_commit": "096323c2d5db8a05e84df31608fc0c9d22e47b31",
+  "source_scope": "Public MT6739 Wiko reference; not exact Huawei proof",
+  "verified_source_hashes": [
+    "Makefile",
+    "common/drv/inc/drv_api.h",
+    "common/drv/src/drv_base.c",
+    "common/hal/src/hal.c",
+    "common/val/src/val.c",
+    "videocodec_kernel_driver.c",
+    "videocodec_kernel_driver.h"
+  ],
+  "implemented_ioctl_cases": [
+    "VCODEC_WAITISR",
+    "VCODEC_LOCKHW",
+    "VCODEC_INC_ENC_EMI_USER",
+    "VCODEC_DEC_ENC_EMI_USER",
+    "VCODEC_INC_DEC_EMI_USER",
+    "VCODEC_DEC_DEC_EMI_USER",
+    "VCODEC_INITHWLOCK",
+    "VCODEC_DEINITHWLOCK",
+    "VCODEC_ALLOC_NON_CACHE_BUFFER",
+    "VCODEC_FREE_NON_CACHE_BUFFER",
+    "VCODEC_SET_THREAD_ID",
+    "VCODEC_INC_PWR_USER",
+    "VCODEC_DEC_PWR_USER",
+    "VCODEC_GET_CPU_LOADING_INFO",
+    "VCODEC_GET_CORE_LOADING",
+    "VCODEC_GET_CORE_NUMBER",
+    "VCODEC_SET_CPU_OPP_LIMIT",
+    "VCODEC_UNLOCKHW",
+    "VCODEC_MB",
+    "VCODEC_SET_LOG_COUNT"
+  ],
+  "declared_without_case": [
+    "MFV_TEST_CMD",
+    "MFV_INIT_CMD",
+    "MFV_DEINIT_CMD",
+    "MFV_SET_CMD_CMD",
+    "MFV_SET_PWR_CMD",
+    "MFV_SET_ISR_CMD",
+    "MFV_ALLOC_MEM_CMD",
+    "MFV_FREE_MEM_CMD",
+    "MFV_MAKE_PMEM_TO_NONCACHED",
+    "MFV_ALLOC_INT_MEM_CMD",
+    "MFV_FREE_INT_MEM_CMD",
+    "VCODEC_PMEM_FLUSH",
+    "VCODEC_PMEM_CLEAN",
+    "VCODEC_INC_SYSRAM_USER",
+    "VCODEC_DEC_SYSRAM_USER",
+    "VCODEC_SET_SYSRAM_INFO",
+    "VCODEC_GET_SYSRAM_INFO"
+  ],
+  "observations": {
+    "userspace_control": "Character driver maps MMIO and allocated noncache memory; lock/unlock/waitISR/power/accounting interfaces. No complete frame-level V4L2 bitstream decoder in these7 reference files.",
+    "hal_stub": "hal.c eHalCmdProc SET_CMD_QUEUE/SET_POWER/SET_ISR cases do nothing and return success; not decoding implementation",
+    "clock_order": "Decoder MT_SCP_SYS_VDE then MT_CG_VDEC; encoder MT_SCP_SYS_VEN then MT_CG_VENC; reference only",
+    "codec_enums": "HEVC_DEC and H264_DEC share lock/unlock/waitISR paths. HEVC_ENC references are generic enum branches, not proof of MT6739 HEVC encoder hardware support.",
+    "mmap_caution": "Legacy checks start and length separately; do not port unchecked. Native mapping must validate complete range, ownership and lifetime.",
+    "native_requirement": "Need frame-level bitstream/parser/register programming or verified compatible open native backend; porting lock ioctl alone cannot decode video."
+  },
+  "hardware_changes": "none; no power/clock/MMIO operations",
+  "next": [
+    "Map exact engine register blocks/interrupt acknowledgement to native safe ownership",
+    "Locate native register programming for H264/HEVC and compare actual MT6739 engine revision",
+    "Implement proper DMA/cache/IOMMU and V4L2 controls/buffers; no raw vendor runtime",
+    "Known8bit H264 and HEVC clips checked against CPU decoded-frame oracle separately"
+  ]
+}

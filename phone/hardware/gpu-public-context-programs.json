@@ -1,0 +1,37 @@
+{
+  "mesa_commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "status": "offline artifact audit only; no GPU upload",
+  "programs": {
+    "cs_store_sr_1024_common": {
+      "temps": 10,
+      "vtxins": 0,
+      "binary_bytes": 544,
+      "binary_sha256": "bc7b879c06c16bc2cd33e01bab638afb8a8657e211cca26ffcf88f2fbfa76597"
+    },
+    "cs_load_sr_256_common": {
+      "temps": 10,
+      "vtxins": 0,
+      "binary_bytes": 488,
+      "binary_sha256": "19ad6a6b27891b73acd904e3a76be38ee632a3b9336fa918e4b3808228195c45"
+    },
+    "cs_load_sr_16_common": {
+      "temps": 22,
+      "vtxins": 0,
+      "binary_bytes": 1040,
+      "binary_sha256": "f105720afc3eb306b65c5d83aee6d011a52d5cbce6fcde0fa30d2621f8bdd4da"
+    }
+  },
+  "profile": {
+    "source": "src/imagination/pco/uscgen/pco_clc.c pvr_device_info_common",
+    "unified_store_depth": 64,
+    "usc_slots": 14,
+    "warning": "Generic offline compiler inputs, NOT measured22.49.21.16 limits; common suffix is not target validation"
+  },
+  "interface_difference": "CORRECTED: stock helper0x36230 DOES emit twoDOUTW pointer inputs beforeDOUTU. Complete public PDS data/code matches old expressions at corresponding encoding; see gpu-pds-context-pair-comparison.json. Earlier minimal-DOUTU-only conclusion was incomplete decompiler-call analysis.",
+  "legacy_sizes_bytes": {
+    "store": 312,
+    "load": 232,
+    "note": "Private static reference only. Byte size difference is not proof of incompatible ISA."
+  },
+  "next_gate": "Audit exact DMA/shared-register instructions and target quirks/profile; validate native state-buffer contract and program pairing before any submission."
+}

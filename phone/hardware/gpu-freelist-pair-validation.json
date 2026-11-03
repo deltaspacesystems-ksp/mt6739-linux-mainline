@@ -1,0 +1,17 @@
+{
+  "status": "LIVE protected global/local freelist pair CREATE/DESTROY PASS",
+  "global_pages": 32,
+  "local_pages": 32,
+  "table_policy": "Separate owned GPU-only PM-protected PMRs; local references global handle",
+  "cleanup": "Local then global then render context; 12 pages, RC0",
+  "after": {
+    "driver": "OK",
+    "firmware": "OK",
+    "HWR": 1,
+    "HWR_change": 0,
+    "CRR": 0,
+    "GPU_utilisation": "0%"
+  },
+  "limits": "No TA/3D submission; no triangle or rendered pixels",
+  "next_contract": "Exact rgx_fwif_shared.h enum: local index0, global index1, total2. RenderTarget CREATE130/2 input8 output16; DESTROY130/3 input8 output4."
+}

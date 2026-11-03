@@ -1,0 +1,61 @@
+PROMPT DLA CODEXA — projekt microfw (Linux 7.3 na Huawei Y5 2018)
+=====================================================================
+Wklej to na początku rozmowy. Jestem właścicielem projektu; mówię po polsku, chcę krótkich i konkretnych odpowiedzi
+i oszczędzania tokenów. Poprzedni agent (Claude) wyczerpał limit; kontynuujesz jego pracę na tych samych maszynach.
+Za kilka dni wróci Claude, więc wszystko co ustalisz zapisuj w repo (phone/NOTES.md i docs/).
+
+CEL
+Uruchomić na Huawei Y5 2018 (MT6739, model DURA-L21) mainline Linux 7.3 z własnym userlandem (Alpine) o nazwie MICROFW,
+docelowo: konsola graficzna z logiem startu, nowoczesny interfejs w stylu iOS napisany w C, modem, GPS, czujniki, LED, latarka, IMU,
+bez Androida. Telefon i 2 PC zostają te same; zmienia się tylko agent.
+
+JAK DZIAŁASZ (TRYB LOKALNY — most do chmury NIE jest teraz potrzebny)
+Pracujesz bezpośrednio na moim PC (Windows + WSL). Nie używaj bridge/y5sh_cloud.py ani kluczy; most zostaje na później (gdy wróci Claude w chmurze).
+1. Repo lokalne: X:\y5linux (git, bez remote; to dysk sieciowy \\<server>\x). Jest tam folder secrets\ z kluczami mostu: NIE czytaj go, NIE kopiuj
+   i NIE commituj. Nie dodawaj remote i nie pushuj stamtąd. Jeśli potrzebujesz najnowszych zmian z GitHuba (prywatne repo deltaspacesystems-ksp/y5linux, main),
+   zapytaj mnie. Dokumentacja jest też w D:\y5_linux_work\DOKUMENTACJA oraz na pulpicie.
+2. ZACZNIJ OD docs\HANDOFF.md, potem docs\MAPA_PLIKOW.md (gdzie co leży), docs\BUILD_AND_FLASH.md, phone\NOTES.md (dziennik wszystkich przełomów i błędnych tropów).
+3. Pliki robocze: D:\y5_linux_work\ (obrazy wd_v*.img, out\, bm_wd*.py, export\). Kernel: WSL distro archlinux, /home/y5/linux-7.3
+   (wsl -d archlinux -- bash /mnt/d/y5_linux_work/skrypt.sh). BROM: D:\mtkclient_work\mtk.py (robię to ja).
+4. Telefon po USB (RNDIS): telefon 192.168.7.2, PC 192.168.7.20. Powłoka (telnetd, bez hasła, TYLKO TEST):
+   python D:\y5_linux_work\phone_shell.py "polecenie"   (lub --file skrypt.sh)
+   pliki na telefon: python D:\y5_linux_work\phone_push.py LOKALNY /sciezka/na/telefonie --port 9500 --mode 755
+   (kopie tych narzędzi: tools\ w repo). Gdy telefon nie odpowiada na ping 192.168.7.2, poproś mnie o zdjęcie ekranu telefonu.
+
+STAN (2026-10-24, noc)
+- Działa: kernel 7.3 z naszym patchem (phone/kernel/y5-kernel-7.3.patch + config-7.3-y5), ekran (własny renderer, baza 0x775E8E38, 720 px, wyzwalanie DSI),
+  eMMC (mmcblk0, 47 partycji), USB (MUSB w trybie PIO, gadżet configfs RNDIS), sieć (DHCP + telnet), rootfs na flash:
+  partycja userdata = mmcblk0p46, ext4, etykieta "microfw" (GPT nadal nazywa ją userdata; nie ruszamy tablicy).
+- Obraz wd_v44.img (initramfs robi switch_root na rootfs z flash) JEST WGRANY I DZIAŁA (potwierdzone: hostname microfw, / = /dev/mmcblk0p46 ext4 rw, init = busybox, telnet i ekran diagnostyczny działają).
+  Awaryjnie wd_v43.img (bez switch_root). Własne logo startowe i ikony ładowania (ASCII): partycja logo, plik D:\y5_linux_work\logo_microfw_all.img (generatory: tools/render_logo.py, render_battery.py, build_logo_all.sh). Android 4.4 da się przywrócić: boot.img z D:\y5_backups\20261023_201905\.
+- Brak: konsola fbcon na panelu, SSH z kluczem (telnet bez hasła to tymczasowy test), sterownik zegarów MT6739, PMIC/ładowanie,
+  sterowniki sprzętu, UI, modem.
+
+ZASADY (KRYTYCZNE)
+1. Każdy test kernela = flash przez BROM, który robię JA ręcznie. Podaj mi gotową komendę:
+   cd D:\mtkclient_work ; python mtk.py w boot D:\y5_linux_work\wd_vNN.img   i napisz, co mam obserwować/sfotografować na ekranie.
+2. Pisz TYLKO do partycji boot (przez BROM) oraz do rootfs microfw (mmcblk0p46). Nigdy do nvdata, nvram, nvcfg, proinfo, protect*, preloader, lk, expdb, flashinfo.
+3. Nie uruchamiaj nvram_daemon i nie zapisuj NVRAM przed zweryfikowaną kopią (IMEI, kalibracje).
+4. Kopie partycji (D:\huawei_y5_backup, D:\y5_backups) zawierają IMEI/MAC: nigdy do repo ani do czatu.
+5. Zawsze make ... ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- (także olddefconfig), inaczej .config traci symbole arm64.
+6. Kernel buduj w WSL (distro archlinux) w /home/y5/linux-7.3 przez nohup bash /mnt/d/y5_linux_work/bld.sh; log /home/y5/build73f.log. Zmiana rozmiaru kernela: obecnie 12,8 MB działa,
+   16,5 MB (z wbudowanym initramfs) psuło rozruch.
+7. Długie zadania (budowanie kernela, ok. kilkanaście minut) uruchamiaj w tle (nohup w WSL, log do pliku) i sprawdzaj log. Zagnieżdżone cudzysłowy PowerShell->wsl->bash psują się: pisz skrypty .sh i uruchamiaj plik.
+8. Nie zakładaj uprawnień administratora (nie instaluj sterowników, nie zmieniaj ustawień sieci Windows bez pytania).
+9. Nie zgaduj. Rozróżniaj to, co zmierzone, od hipotez, i zapisuj wnioski w phone/NOTES.md. Przed nieodwracalnymi operacjami (format partycji, zapis do eMMC) zapytaj mnie.
+10. X:\y5linux ma jawne klucze (folder secrets\) i nie ma remote. Commituj tylko zmiany w kodzie/dokumentacji (git add konkretnych plików, nie git add -A), nigdy secrets\ ani obrazów *.img ani kopii partycji.
+
+NAJBLIŻSZE KROKI (kolejność)
+1. (v44 potwierdzone) Sprawdzić stan: python D:\y5_linux_work\phone_shell.py "hostname; uptime; free -m".
+2. Zamienić telnet na SSH z kluczem (dropbear z Alpine, nasłuch tylko 192.168.7.2) i usunąć telnetd z rc.sh/initramfs.
+3. Konsola graficzna z logiem startu: poprawić simple-framebuffer w DTB (adres 0x775E8E38, stride 2880, XRGB8888) + w kernelu wątek/timer wyzwalający
+   odświeżanie panelu (MUTEX 0x14015020=1, RDMA 0x1400B010=1, DSI 0x14012000 zapis 0 potem 1), console=tty0. Wtedy diag.sh/y5txt do usunięcia.
+4. Sprzątanie: usunąć hooki diagnostyczne (y5cp*, checkpointy watchdoga, Y5A w mediatek.c), nasze węzły z extras_v9.dtsi do właściwego mt6739.dtsi, czysty patchset.
+5. Sterownik zegarów clk-mt6739 (tablice w phone/infra_gates_44.txt i top_muxes_44.txt), PMIC/regulatory/ładowanie, DMA MUSB (Inventra) zamiast PIO.
+6. Sterowniki sprzętu (dotyk, LED, latarka, IMU, podświetlenie, panel DSI jako DRM, audio, GPS, modem). Dane z kernela 4.4: phone/ghidra, kallsyms_44.txt. Ghidra: D:\y5_linux_work\ghidra_k44.
+7. Interfejs w C (wlroots/pixman), styl iOS; założenia w phone/NOTES.md (sekcje "Decyzje użytkownika", "Na później").
+8. Utrzymuj dokumentację: po każdym przełomie dopisz sekcję do phone/NOTES.md, a zmiany procedur do docs/. Skrypty z PC (skan pod kątem sekretów i IMEI przed commitem!) eksportuj do archive/pc_work/.
+
+PIERWSZE DZIAŁANIE
+Przeczytaj docs\HANDOFF.md i docs\MAPA_PLIKOW.md, potem sprawdź telefon: ping 192.168.7.2 oraz python D:\y5_linux_work\phone_shell.py "uname -a; hostname".
+Podsumuj mi w 5 zdaniach, co rozumiesz i co zrobisz najpierw.

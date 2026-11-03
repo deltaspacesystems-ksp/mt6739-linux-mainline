@@ -1,0 +1,40 @@
+{
+  "status": "FIRST actual native PCO/USC shader store on Y5 PASS",
+  "scope": "One normal compute shader, NOT3D triangle, desktop acceleration or full MesaICD",
+  "kernel": "Linux7.3 v62, exact firmware22.49.21.16/DDK1.9; no reboot",
+  "native_stack": "AlpineC client -> exact legacyCDMbridge -> actualfirmware -> openMesaPCO USC code. No Bionic/HAL/vendor CPU execution.",
+  "fix": "Owned4K mappings at both queried MMU INIA/INIB BRN65273 heap bases, covering stock5B/alignment512 requirements.12pages/5heaps total.",
+  "observed": {
+    "shader_output": "0x12345678 from initial0xdeadbeef",
+    "firmware_ufo": "0x87654321 from initial0x12345678",
+    "untouched_output_words": 1023,
+    "trial_returncode": 0,
+    "cleanup": "All imported sync/compute context/syncblock/12PMRs/maps/reservations/5heaps/memctx/DISCONNECT released",
+    "HWR_before": 1,
+    "HWR_after": 1,
+    "CRR_before": 0,
+    "CRR_after": 0,
+    "Driver": "OK",
+    "Firmware": "OK",
+    "idle_utilisation_after": "0%",
+    "trial_process_remaining": false
+  },
+  "compiler": "Explicit software RA budget8 with unknown hardwarecapacity fields; compiled output4temps/1vtxin/0shared,128B; no spills. Context USC candidates budget20/10temps each; context-switch execution not separately validated.",
+  "bundle_manifest": {
+    "compute-pds-candidate.bin": {
+      "bytes": 4096,
+      "sha256": "fdc27d91472f3721e4b911f099d55d8f0b7d85316da0f9151337ac84a1022006"
+    },
+    "compute-usc-candidate.bin": {
+      "bytes": 4096,
+      "sha256": "e999eb707e2f4e116b064d2af4da8e16c4d93f3dc9f6b8dc7f6f2adf193a4827"
+    },
+    "compute-stream-candidate.bin": {
+      "bytes": 60,
+      "sha256": "271dcb5fd06f70a64cc3cb9f7ee5e13d4b604bfd7e79de3b308047ac1e203108"
+    }
+  },
+  "source_sha256": "645c0e83ea1f966bea98f79d235c5c9b8d427bcabb5316aa67626afb5a994b67",
+  "proof_limit": "First value/address only; follow with independently changed shader literal and output offset, then offscreenTA/3D. Does not establish physical unifieddepth/slots or fullISA/errata coverage.",
+  "previous_failure": "HWR1 is historical first missing-MMUinit failure; no new recovery in successful run."
+}

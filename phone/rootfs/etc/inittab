@@ -1,0 +1,4 @@
+::sysinit:/etc/y5/rc.sh
+::respawn:/etc/y5/diag.sh
+::ctrlaltdel:/sbin/reboot
+::shutdown:/bin/umount -a -r

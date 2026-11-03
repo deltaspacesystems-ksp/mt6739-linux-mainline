@@ -1,0 +1,37 @@
+{
+  "status": "static comparison only; engines untouched",
+  "decoder_irq": {
+    "reference": "MT6739 videocodec_kernel_driver.c dec_isr and DT setup",
+    "misc_offset_hex": "0x5000",
+    "irq_register_offset_hex": "0xa4",
+    "combined_offset_hex": "0x50a4",
+    "done_mask_hex": "0x10000",
+    "ack_sequence": [
+      "read irqreg OR0x11 then write",
+      "read irqreg AND~0x10 then write"
+    ],
+    "mainline_match": "Linux7.3 mtk_vcodec_dec_drv.c and mtk_vcodec_dec_hw.h use same MISC+0xa4 and OR0x11/AND~0x10 acknowledgement",
+    "limits": "One matching interrupt protocol does not establish compatible engine revision, frame programming, firmware, clocks or DT bindings"
+  },
+  "power_sequence": {
+    "reference_branch": "non CONFIG_MTK_CLKMGR, non FPGA",
+    "decoder": [
+      "smi_bus_enable SMI_LARB_VENCSYS",
+      "clk_prepare_enable MT_SCP_SYS_VDE",
+      "clk_prepare_enable MT_CG_VDEC"
+    ],
+    "encoder": [
+      "smi_bus_enable SMI_LARB_VENCSYS",
+      "clk_prepare_enable MT_SCP_SYS_VEN",
+      "clk_prepare_enable MT_CG_VENC"
+    ],
+    "off": "reverse clocks then smi_bus_disable",
+    "error_caution": "Reference logs prepare failures but proceeds; native implementation needs transactional unwind and balanced references"
+  },
+  "native_backend_dependency": {
+    "observed": "Mainline legacy vdec_h264_if.c calls vpu_dec_init/start/reset through vdec_vpu_if; existing ioctl reference does not supply this protocol",
+    "requirement": "Establish exact supported firmware coprocessor and ABI or implement verified native register backend before binding",
+    "unsupported_inference": "Do not add MT6739 compatible to mainline driver merely because IRQ acknowledgement matches"
+  },
+  "next": "Compare core register block inventory and actual stock coprocessor/firmware responsibilities; no MMIO probe until power/clock/domain/SMI ownership verified"
+}

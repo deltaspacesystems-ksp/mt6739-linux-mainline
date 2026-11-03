@@ -1,0 +1,14 @@
+[
+  {
+    "file": "wlr-foreign-toplevel-management-unstable-v1.xml",
+    "source": "https://gitlab.freedesktop.org/wlroots/wlr-protocols/-/raw/master/unstable/wlr-foreign-toplevel-management-unstable-v1.xml",
+    "sha256": "4ecc4588858e29fe680a33521e1f22bcf22071d66d1553fe96b4ddec03d591d2",
+    "license": "Original copyright/license retained in XML"
+  },
+  {
+    "file": "wlr-layer-shell-unstable-v1.xml",
+    "source": "https://gitlab.freedesktop.org/wlroots/wlr-protocols/-/raw/master/unstable/wlr-layer-shell-unstable-v1.xml",
+    "sha256": "87e0b9c837aecd6977f76f3c47d73088b7159871f5d979dc1840f6cadb5e2ed8",
+    "license": "Original copyright/license retained in XML"
+  }
+]

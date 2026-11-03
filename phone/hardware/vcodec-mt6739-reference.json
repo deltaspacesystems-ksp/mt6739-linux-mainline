@@ -1,0 +1,49 @@
+{
+  "repository": "https://github.com/parthibx24/android_kernel_wiko_p200",
+  "commit": "096323c2d5db8a05e84df31608fc0c9d22e47b31",
+  "files": [
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/Makefile",
+      "git_blob": "01d3495d029d9790597b682a472151925e5e4207",
+      "bytes": 1154,
+      "sha256": "f841139b05bef8017d31dc9345ec0d2ff8b49a16670ca42b500a797e6f2456d0"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/common/drv/inc/drv_api.h",
+      "git_blob": "05a25c8c8164a722afd1fcf450063128a953eef0",
+      "bytes": 2832,
+      "sha256": "fb4a7fa6559f8743d62bedd0fc27613e5ab401105edddc48ac03acb745f31a29"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/common/drv/src/drv_base.c",
+      "git_blob": "e00c206c83d8f877943c7633839d9876108a732a",
+      "bytes": 13051,
+      "sha256": "7f249de9cffa907acda32cc19b5140ab6029efb3e44c427a73b7f0cb7f31da88"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/common/hal/src/hal.c",
+      "git_blob": "37290503dc2d1178fb1d86a359318229a3cc8048",
+      "bytes": 1019,
+      "sha256": "db2400d78455a2b131ff2cb7eee73abff031d0dfc21bc915815e3ce09cb105f8"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/common/val/src/val.c",
+      "git_blob": "d4df4ce828d01e08ccf62cf6d66d557c70f2d013",
+      "bytes": 7259,
+      "sha256": "8fa43ae1d2042bbd67216b28a8aeb1b17a7dd1944e0f01c246ff540dfcd749be"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/videocodec_kernel_driver.c",
+      "git_blob": "118806a8998741e47a940cbb615742a51ac3cbe0",
+      "bytes": 83747,
+      "sha256": "7724918ef6366bd0233ee75aabe13f12eea4d4b36c19edb7b19351716093a0e6"
+    },
+    {
+      "path": "drivers/misc/mediatek/videocodec/mt6739/videocodec_kernel_driver.h",
+      "git_blob": "4d4575d287ac5b8310fb5898c9426b1c6f102a23",
+      "bytes": 4376,
+      "sha256": "08cfeb0ec5703a533e651528cb1dba0654d37e1d20997ebd1560bf633f9d9af2"
+    }
+  ],
+  "confidence": "MT6739 public reference, not exact Huawei source proof"
+}

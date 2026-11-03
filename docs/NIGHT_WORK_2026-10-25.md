@@ -1,0 +1,66 @@
+# Praca nocna i kontynuacja — 2026-10-25
+
+## Najnowsze ustalenia właściciela
+
+- Po nocnym zakazie resetów właściciel wrócił następnego dnia i **ponownie zezwolił na restart/testy przy telefonie**. Nie oznacza to polecenia natychmiastowego resetu; przygotować konkretną zmianę i test. Ostatni wykonany restart to startv53; później żadnego nie wysłano.
+- UI ma być prawdziwym środowiskiem desktopowym w **C/C++**, po angielsku, z dużo mniejszą skalą CAŁOŚCI. **Desktop, nie home screen iPhone'a.** Istniejące ikony zachować. Domyślne fullscreen aplikacji, gesty i pasek na dole; wyjście do zwykłych okien i prawdziwy multitasking. Standardowy toolbar/dekoracje kompozytora na teraz wystarczą. To zastępuje starsze decyzje o odkładaniu trybu okienkowego.
+
+## Telefon i ładowanie
+
+V53 (#39) nadal działa. Monitor PC pracował przez10h (UTC00:37:40–10:37:14), bez zapisów na telefonie. 579 prób, 546 poprawnych, 33 z ogólnym błędem odczytu powłoki; nie zgadywać przyczyny tych braków. Największa luka między poprawnymi próbkami186.77s. W poprawnych próbkach brak spadku uptime, errors stale4, timer_faults_seen stale1, fault0, profile_ok1, blocks0. Kicks17->4408; temperatura28.3–29.3°C, napięcie3.880426->4.251379V, maksimum4.256652V. Status wyłącznieCharging, nie zaobserwowanoFull. Podsumowanie: phone/mfw-night-summary-10h.json.
+
+Świeży odczyt po11h20min: kicks4977, errors4, timer_faults_seen1, last_error0, profil8e/81/24/7b, control78, temp31.0°C, VBAT4.254675V. Nie twierdzić, że cykl ładowania jest zakończony ani że prąd jest znany. Odczyt ADC ~4.25V różni się od interpretacji OREG8e jako4.20V: trzeba zweryfikować kalibrację/skale ADC i rzeczywiste napięcie regulacji, najlepiej niezależnym pomiarem. Nie zmieniać na tej podstawie losowo CV ani kompensacji. Producent podaje precyzję regulacji ±1% w0–85°C: https://hmisemi.com/hl7005d/ ; to nie jest dowód poprawności naszej skali ADC.
+
+Pierwotny logger zakończył zaplanowane10h. Uruchomiono kolejne2h zbierania tym samym narzędziem, aby uchwycić przejście programowego limitu sesji43200s, bez resetu i bez odłączania USB. Wynik granicy12h jeszcze niepotwierdzony. Log lokalny out/mfw-night-telemetry.jsonl, latest.json; PID out/mfw-night-monitor.pid. Nie kopiować prywatnych backupów boot do repo. Nocna automatyzacja aplikacji ma obecnie statusPAUSED, nie wznawiano jej po powrocie właściciela. Nie zakładać, że wykonała dodatkowe prace w repo.
+
+Dodatkowy problem: zegar telefonu nadal wskazuje1970, brak /sys/class/rtc. Nie mylić zegara ściennego z uptime/jiffies. Limit12h używa jiffies, więc nie zależy od ustawienia daty. Synchronizacja czasu z PC/RTC to kolejny krok używalności, jeszcze niewykonany.
+
+## UI — rzeczywisty zakres
+
+Działający prototyp C/Wayland na PC: D:\y5_linux_work\microfw-ui, eksport phone/ui. README opisuje build, kryteria i ograniczenia. Kompaktowy desktop720x1440, skala1.0, angielskie napisy, oryginalne SVG, buforowanie wl_shm, frame callbacks, standard xdg-decoration, natywny tracker wielu kontaktów i gestów. Kompilacja z pełnymi ostrzeżeniami oraz test Wayland na headless Weston/pixman PASS. To klient testowy, nie gotowy kompozytor/DE; podgląd overview nie zarządza jeszcze prawdziwymi oknami, skróty Files/Terminal nie uruchamiają aplikacji. Na telefonie niczego graficznego nie aktywowano. Brak dotyku w mainline nadal blokuje test fizycznego multitouch.
+
+## Sprzęt — co ustalono offline
+
+- Sysfs v53: brak adapterów I2C, GPIOchip, backlight/LED i thermal zones. GPIO10005000 i pinctrl1000b000 bez sterowników; PWRAP obsługiwany przez bootstrap y5-pmic-monitor, klawisze przez event0, CPU przez mfw-cpu-clock. Nie mapować nazw stockowego DT na rzekomo działające sterowniki.
+- W lokalnym7.3 brak pełnych clk/pinctrl MT6739. Jest obsługa MT6357 jako slave PWRAP oraz MFD/regulator/AUXADC, ale host PWRAP MT6739 nie został zweryfikowany/przełączony. Nie podszywać urządzenia podMT6765 tylko dlatego, że część offsetów wygląda podobnie.
+- Ghidra: phone/ghidra/k44_hardware_next.c. mtk_pinctrl_probe przekazuje soc-data0xffffff8008bac100. Metadata npins169, regmaps8. Sprawdzone wywołania pobierają tabliceDO/DI/DIR z offsetówa0/b0/c0 soc-data; rekord12B: pin32, offset32, bit8,width8,bank8,pad8. Każda ma154 unikalne wpisy GPIO0..153, bank0. DIR=0+0x10*floor(pin/32), DO=0x100+..., DI=0x200+..., bit=pin%32; bank0 stockowego DT to10005000.
+- Eksporter extract_mt6739_pin_tables.py waliduje nagłówek Image, adresy, liczby wpisów, pola i unikalność. phone/hardware/mt6739-pin-tables.json zawiera te trzy zdekodowane tablice i tylko wskaźniki/liczebności pozostałych. Nie interpretować innych slotów jako tych samych rekordów: próba takiego założenia dała niezgodne pola/duplikaty. To zapisany błędny trop, nie powód rozluźniania walidacji.
+- Następny krokGPIO: wyciągnąć mux/pull/drive i funkcje pinów ze sprawdzeniem callerów, EINT oraz powiązania pinów dotyku/LED. Dopiero potem właściwy pinctrl, I2C i identyfikacja kontrolera dotyku na tej sztuce. Stock DT zawiera wiele wariantów paneli; GT917D w DT nie potwierdza zamontowanego układu.
+
+## GPU
+
+Lokalny kernel ma drivers/gpu/drm/imagination; sam fakt istnienia drivera nie potwierdza obsługi GE8100 tej sztuki. Potrzebne rzeczywiste BVNC, poprawny firmware, zegary/zasilanie/reset oraz dopasowana ścieżka Mesa. Dokumentacja Mesa rozróżnia wsparcie poBVNC: https://docs.mesa3d.org/drivers/powervr.html . GE8100 nie figuruje w tabeli wspieranych modeli. Nie używać firmwareGX6250/GE8300 ani overridegpuid na zgadywanie. Nie włączać napięć/zegarów GPU przed ustaleniem tych zależności. Pixman pozostaje backendem do testów DE.
+
+## Najbliższe testy
+
+1. Utrwalić odczyt po43200s: blocks2, CE wyłączone(control7c przy tym profilu), watchdog nadal obsługiwany. Nie resetować sesji wcześniej bez potrzeby.
+2. Zweryfikować napięcie/kalibrację i warunek zakończenia ładowania; brak current_now i capacity pozostaje jawny.
+3. Dokończyć prawdziwe powierzchnie desktop/status/home i zarządzanie zewnętrznymi oknami, potem build Alpine/aarch64. Nie wgrywać binarkiPC x86_64 na telefon.
+4. GPIO/pinctrl/I2C i dotyk; każdą nową zmianę kernela oznaczyć kolejną wersją i zachować działającyv53.
+
+## 2026-10-25: zegar UTC i strefa Warsaw bez restartu
+Telefon miał1970-01-01 i brakRTC. Narzędzie tools/mfw_sync_time.py --set ustawiło zegar ścienny z aktualnego UTC komputera; readback różnił się o-2s. Nie zmienia jiffies ani licznika sesji ładowania. Skopiowano publiczny plik zoneinfo Europe/Warsaw z WSL do /etc/localtime i zapisano /etc/timezone na rootfs; wcześniej oba pliki nie istniały. Odczyt telefonu: 2026-10-25 13:07:39 CET +0100, uptime41563s, elapsed_s41558, kicks5070/errors4/faults_seen1. Restart nadal niewykonany. Strefa przetrwa na rootfs, zegar UTC po nowym boot nadal może wrócić do1970, dopóki brakRTC/NTP; narzędzie PC należy wtedy wykonać ponownie. Skrypt instalacji strefy wyeksportowany do archive/pc_work/set_local_timezone.sh.
+Prototyp desktopu: make test previews po integracji pełnego trackera wielu kontaktów PASS; -Wall -Wextra -Werror bez wyciszania ostrzeżeń. Brak fizycznego testu dotyku i zarządzania obcymi oknami pozostaje jawnym ograniczeniem.
+
+## 2026-10-25: natywny desktop zarządza rzeczywistymi oknami na PC
+Dodano tryb --desktop: trzy powierzchnie layer-shell (tło/status/home), lista rzeczywistych foreign-toplevel, fullscreen nowych aplikacji i kontrola aktywacji/minimalizacji/zamknięcia. Overview pokazuje prawdziwe tytuły/stan okien; klik aktywuje lub zamyka wybrany handle. Settings otwiera się jako oddzielny natywny klient C, Terminal uruchamia weston-terminal naPC. Files pozostaje nieaktywnym placeholderem. Standardowe dekoracje dostarcza labwc, bez własnego malowanego toolbara.
+Test labwc0.20.2/wlroots0.20.2/pixman z dwoma rzeczywistymi klientami: fullscreen -> przedstawienie overview ponad zasłoniętym tłem (potwierdzony callback) -> restore -> minimize -> activate -> maximize -> unmaximize -> close PASS. Stan każdej operacji potwierdzały zdarzenia kompozytora; close zakończyło rzeczywistego klienta. Wyłapano błąd pierwszego testu: callback zasłoniętego tła może nie przyjść nigdy; zmiana warstwy musi zostać zatwierdzona osobnym commit przed oczekiwaniem na callback. Test regresji to obejmuje. Drugi testC++17 wywołujący rzeczywiste CAPI modelu i kontaktów PASS. Transportxdg-shell i testyUBSan kontaktów równieżPASS. Dowód bez tytułów terminala/nazwyPC: phone/ui-desktop-integration.txt.
+To działający początek DE naPC, nie gotowy system telefonu. Brak pakietu Alpine/aarch64, fizycznego dotyku, thumbnail capture, ogólnego launchera i pełnych globalnych gestów w obrębie aplikacji. Insety pasków przy fullscreen oraz reguły transient/dialogów do dopracowania; polityka bootstrap obecnie rozciąga każdy nowy toplevel. Własnego kompozytora projektu jeszcze nie napisano: używany jest labwc (C/wlroots). Kod powłoki nativeC, API kompatybilneC++, bez interpreteraPython w runtimeUI. Telefon nadal na v53, żadnego kolejnego resetu nie wykonano.
+Brakujące paczkiPC glycin2.2.3-1 i librsvg2:2.63.3-1 pobrano w dokładnych wersjach z oficjalnego archive.archlinux.org wraz z podpisami; normalny pacman potwierdził integralność i podpisy. labwc zainstalowany. Nie wyłączano weryfikacji zależności/podpisów i nie robiono ogólnego upgrade systemu. Reprodukcja: archive/pc_work/{fetch_librsvg_pc.py,prepare_ui_deps_pc.sh}; binaria paczek poza repo.
+
+## GPU: konkretny trop BVNC ze stockowego kodu
+Eksporter odnalazł jedyny null-terminated string22.49.21.16 pod VA0xffffff8008e7a006 w stock_Image oraz buildDDK Rogue_DDK_Android rogueddk1.9@4893595. To wariant kompilacyjny/fallback, NIE potwierdzony odczyt rejestru GPU. Stock DT: mediatek,AUCKLAND, MMIO13000000/80000, IRQ SPI226/level-low przez stocksysirq, clock-frequency570MHz wDT (nie pomiar), mfg_cfg13ffe000, zależności CLK_TOP_MFG/OFF/ON iCG_SCP_SYS_MFG0/1. Nie aktywowano GPU ani jego zegarów/napięć. Materiał phone/hardware/gpu-stock-evidence.json, dekompilacja phone/ghidra/k44_gpu_bvnc.c. Funkcja rgx_bvnc_pack_hw mimo nazwy tylko pakuje przekazane parametry, nie jest dowodem czytaniaMMIO. Następne: prześledzić pobieranieGPUId i wybór firmware, dopiero potem zweryfikować sprzęt przy prawidłowym zasilaniu; nie podstawiać innegoBVNC ani firmware na zgadywanie.
+
+## 2026-10-25: RZECZYWISTY limit sesji12h PASS, bez restartu
+Próbka elapsed43188: blocks0/control78/Charging/kicks5269. Próbka43204: blocks2/control7c/Not charging/kicks5271. Kolejne próbki do43294: blocks2, CE nadal wyłączone7c, kicks rośnie do5282, errors nadal4, timer_faults_seen nadal1, last_error0, fault0. Obserwacja po wyłączeniu przekroczyła32s watchdoga. To pomiar na telefonie, nie tylko unit test. VBAT spadł do4.169641V, NTC32.3C; nie interpretować tego jako pomiaru prądu lub dowodu kalibracjiADC. Dowód phone/charge-limit-12h.json i kod obserwacji archive/pc_work/observe_charge_limit_12h.py.
+Ładowanie pozostawione zatrzymane zgodnie z limitem. Właściciel dostał prośbę o odłączenieUSB na20s i ponowne podłączenie bez wyłączania, aby sprawdzić CHRDET/reset sesji/wznowienie. Wynik tego osobnego testu JESZCZE NIEZNANY. Nie symulować odłączenia resetem kontrolera. Telefon nadal v53, bez kolejnego reboot.
+
+## 2026-10-25: fizyczne odłączenie/podłączenie USB po limicie
+Właściciel odłączył kabel na około20s i podłączył ponownie bez wyłączania telefonu. Świeży odczyt: uptime43448s (bez reboot), elapsed_s16, blocks0, profile_ok1, control78, online1, statusCharging, kicks5297, errors4, timer_faults_seen1/fault0. Sesja została wyzerowana i ładowanie wznowione. Nie odczytaliśmy online0 podczas braku połączenia: dowodem odłączenia jest czynność właściciela oraz nowy licznik sesji przy ciągłym uptime. Dłuższy odczyt powtórny trwa, wynik zostanie dopisany. Nie wykonywano restartu kontrolera ani kernela.
+
+## Narzędzie USB: potwierdzony błąd markera zakończenia
+Dłuższy odczyt po reconnect przerwał się z RuntimeError telemetry failed, ale świeży stan telefonu/ładowania był poprawny. Odtworzono przyczynę w trzecim kontrolowanym wywołaniu: phone_shell.run zwrócił rc='$?' i complete=True, ponieważ pump uznał echo komendy echo __Y5END__ $? za rzeczywistą linię wyniku. To błąd klientaPC, nie dowód awarii sieci lub sterownika. Może tłumaczyć część33 błędów nocnego loggera; nie mamy surowych wyników wszystkich33, więc nie przypisywać mu automatycznie wszystkich.
+Poprawka tools/phone_shell.py czeka na pełną linię __Y5END__ <liczba0..255> zakończonąLF; sam prefiks/telnetecho ani częściowo przesłany kod127 nie kończą odczytu. Trzy testy regresji (echo, segmentacjaTCP/kod127, poprawne kody i odrzucanie błędnych) PASS. Dowód phone/shell-marker-failure.json i kod probe_shell_completion.py w archive/pc_work. Nie zmieniono API run ani mechanizmu wykonywania komend. Aktualizator boot nie został uruchomiony ponownie.
+LoggerPC dostał lokalny plikstop do łagodnego zamknięcia starego procesu, aby kolejny uruchomić już z poprawionym modułem. Nie jest to restart telefonu. Fizyczny retest ładowania na nowym kliencie trwa.
+
+Retest po poprawce klienta PASS: cztery próbki nowej sesji253->303s, kicks5326->5332, errors4 i timer_faults_seen1 bez zmian, control78/online1/blocks0/Charging/fault0 w każdej próbce, uptime>12h. Dowód phone/charge-reconnect.json. Poprawiony loggerPC uruchomiony na dalsze2h (bez żadnych automatycznych działań na telefonie).

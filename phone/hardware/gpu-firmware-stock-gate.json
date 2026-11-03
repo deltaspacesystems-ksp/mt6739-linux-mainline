@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-25",
+  "stock_firmware": {
+    "path": "vendor/firmware/rgx.fw.signed",
+    "bytes": 1265664,
+    "sha256": "8a843eb1678c0e2fd630c66d4a8070a0a6d4ca5ba7bfd16904d89d66f9fa074c",
+    "elf_class": 1,
+    "elf_data": 1,
+    "elf_machine": 8,
+    "initial_linux73_header_gate": "REJECT",
+    "first_rejection": "info_version at filesize-4096 interpreted as little-endian is33554432; required3",
+    "hardware_bvnc_verified": false,
+    "blob_exported": false
+  },
+  "read_method": "Only vendor p41 and system p42 mounted ext4 ro,noload; exact generic GPU firmware globs; unmounted and mountpoint removed",
+  "vcore_dependency": "Stock MTKEnableMfgClock calls mt_gpufreq_voltage_enable_set(1); this requests vcorefs_request_dvfs_opp(8,opp) before clock enable",
+  "mesa_support_url": "https://docs.mesa3d.org/drivers/powervr.html",
+  "mesa_candidate_bvnc_listed": false,
+  "candidate_only_bvnc": "22.49.21.16",
+  "gpu_power_writes_performed": false
+}

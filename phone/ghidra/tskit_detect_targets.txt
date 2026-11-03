@@ -1,0 +1,7 @@
+huawei_ts_chip_register
+tpd_probe
+ts_thread
+goodix_ts_module_init
+mstar_ts_module_init
+focal_chip_detect
+ts_i2c_read

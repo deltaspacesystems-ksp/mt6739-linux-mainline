@@ -1,0 +1,45 @@
+{
+  "scope": "Lexical C/H device-query sites in pinned PCO, excluding uscgen profile generator and comments; not whole-program reachability proof",
+  "sites": [
+    {
+      "file": "pco_nir_tex.c",
+      "line": 149,
+      "expression": "if (PVR_HAS_QUIRK(ctx->dev_info, 74056)) {"
+    },
+    {
+      "file": "pco_ra.c",
+      "line": 1058,
+      "expression": "unsigned hw_temps = rogue_get_temps(shader->ctx->dev_info);"
+    },
+    {
+      "file": "pco_ra.c",
+      "line": 1077,
+      "expression": "rogue_max_wg_temps(shader->ctx->dev_info,"
+    },
+    {
+      "file": "pco_trans_nir.c",
+      "line": 494,
+      "expression": "PVR_HAS_FEATURE(tctx->pco_ctx->dev_info, usc_itrsmp_enhanced);"
+    }
+  ],
+  "restricted_compute_analysis": {
+    "probe": "normal compute, explicitWG1, one global store, no texture/interpolation/barriers",
+    "direct_queries": "usc_itrsmp_enhanced in interpolation helper; quirk74056 in texture lowering. These features are not general compute-capacity inputs. Must establish helper unreachability for each tested shader.",
+    "transitive_queries": "RA calls rogue_get_temps -> unified_store_depth; compute adds rogue_max_wg_temps -> usc_slots max-instance assertion, barrier arithmetic only whenWG>32 and barriers",
+    "demand": "Current offline normal store precomp metadata temps5,vtxins1,shareds0,128B at synthetic64/4; not guaranteed physical demand under unknown ISA/errata",
+    "remaining": "Prove selected instructions and target errata, safe allocation budget, exact submission packet/context program contract. Do not fill74 unknown features withfalse or declare full profile unnecessary."
+  },
+  "post_lowering_nir_validation": {
+    "status": "offline PASS with synthetic64/4 only",
+    "shader": "MESA_SHADER_COMPUTE workgroup1,1,1",
+    "allowed_intrinsics": {
+      "load_local_invocation_index": 1,
+      "store_global_2x32": 1
+    },
+    "guard": "Reject any tex instruction, any other intrinsic, wrong store/load count before PCO translation",
+    "observed_control_flow": "Compare local invocation index<1 then store immediate0x12345678 to constant64bit address represented as2x32",
+    "implication": "This final NIR supplies no texture or interpolation intrinsic to PCO translation; narrows selected path review, not whole compiler/device proof",
+    "remaining": "RA capacity/ISA/target errata, context programs and exact firmware packet unresolved; no upload",
+    "nir_dump": "/tmp/mfw-pco-restricted.nir on build host"
+  }
+}

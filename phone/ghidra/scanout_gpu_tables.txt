@@ -1,0 +1,7 @@
+DISPLAY_PORT_MAP index=0 module=0 port=0
+DISPLAY_PORT_MAP index=1 module=7 port=1
+DISPLAY_PORT_MAP index=2 module=10 port=2
+PORT_TABLE index=0 name=DISP_OVL0 packed=00 larb_port=0
+PORT_TABLE index=1 name=DISP_RDMA0 packed=00 larb_port=1
+PORT_TABLE index=2 name=DISP_WDMA0 packed=00 larb_port=2
+GPU_FIRMWARE_FALLBACK=rgx.fw.signed

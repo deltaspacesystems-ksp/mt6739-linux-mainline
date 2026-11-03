@@ -1,0 +1,56 @@
+{
+  "kernel": "v62/#48 after kexec",
+  "gpu": "native firmware+PMR CPU mapping PASS after kexec; Driver/FirmwareOK,HWR0,CRR0; no rendering job",
+  "sensor_bus": "explicit native external module, I2C1 at11008000, gate12 already enabled; no clock/GPIO/PMIC changes",
+  "sensor_id": "0xc2 at I2C1/0x53, repeated stable; stock name ltr577 is not exact chip identity proof",
+  "initial_config": {
+    "ctrl": 0,
+    "rate": 34,
+    "gain": 1
+  },
+  "als_trial": {
+    "enable": "MAIN_CTRL=2 only, no IR/PS",
+    "raw_als": [
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16,
+      16
+    ],
+    "raw_channel0a": [
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56,
+      56
+    ],
+    "restore_ctrl": 0
+  },
+  "iio": {
+    "name": "mfw-stock-c2-light",
+    "illuminance_raw": 16,
+    "intensity_channel0a_raw": 54,
+    "lux": "not calibrated",
+    "freshness": "not independently verified"
+  },
+  "tests": [
+    "ARM64 W=1/-Werror modules PASS",
+    "ASan/UBSan 1280 read register/length plus malformed messages, DMA_SAFE annotation and65536 write register/value pairs PASS",
+    "Exact IIO raw callback sample, each transaction failure and restore/mutex cases PASS"
+  ],
+  "pending": "owner away; controlled cover/lamp test deferred",
+  "module_install": "two own modules installed extra/, depmod PASS; explicit mfw-light-start, no autostart",
+  "known_limits": [
+    "diagnostic restricted PIO adapter, not general I2C/pinctrl/clock driver",
+    "stock non-b1 callers confirm raw map; exact marketing part unknown",
+    "out-of-tree module taint expected",
+    "adapter latches/pins on transaction fault; no blind retries",
+    "PS/proximity not enabled"
+  ]
+}

@@ -1,0 +1,962 @@
+{
+  "source_sha256": "e4b90ff2a56daaecddc4ab7c00f7aa38a5704779ae8c123aca1d0d922e660b5d",
+  "platform_table": "0xffffff800969bb98 is outside the file-backed image; populated at runtime, not decoded as static data.",
+  "confidence": "Compiled candidates only, not camera identity. Numeric pin/state enums remain unverified.",
+  "semantics": "Power-on traverses forward, sets on state then delays; power-off traverses reverse, delays on_delay_ms then sets off state (caller uses +8, not +16).",
+  "tables": {
+    "sensor": [
+      {
+        "name": "hi1333_mipi_raw",
+        "descriptor_va": "0xffffff800947ca70",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "s5k3l6_mipi_raw",
+        "descriptor_va": "0xffffff800947cb68",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 2,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "s5k3l6mam_mipi_raw",
+        "descriptor_va": "0xffffff800947cc60",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 2,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "ov13855_mipi_raw",
+        "descriptor_va": "0xffffff800947cd58",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "hi846_mipi_raw",
+        "descriptor_va": "0xffffff800947ce50",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 2,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "ov8856_mipi_raw",
+        "descriptor_va": "0xffffff800947cf48",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 2,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "gc8034_mipi_raw",
+        "descriptor_va": "0xffffff800947d040",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 2,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "gc8034a_mipi_raw",
+        "descriptor_va": "0xffffff800947d138",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 2,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "hi556_mipi_raw",
+        "descriptor_va": "0xffffff800947d230",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "gc5025a_mipi_raw",
+        "descriptor_va": "0xffffff800947d328",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "gc5025h_mipi_raw",
+        "descriptor_va": "0xffffff800947d420",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "gc5025aw_mipi_raw",
+        "descriptor_va": "0xffffff800947d518",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "ov5675_mipi_raw",
+        "descriptor_va": "0xffffff800947d610",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 6,
+            "on_state_enum": 9,
+            "on_delay_ms": 1,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      },
+      {
+        "name": "s5k5e9yx_mipi_raw",
+        "descriptor_va": "0xffffff800947d708",
+        "steps": [
+          {
+            "pin_enum": 7,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 5,
+            "on_state_enum": 7,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 3,
+            "on_state_enum": 9,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 4,
+            "on_state_enum": 3,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 0,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 1,
+            "on_state_enum": 11,
+            "on_delay_ms": 0,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          },
+          {
+            "pin_enum": 2,
+            "on_state_enum": 11,
+            "on_delay_ms": 5,
+            "off_state_enum": 0,
+            "off_delay_ms": 0
+          }
+        ]
+      }
+    ]
+  }
+}

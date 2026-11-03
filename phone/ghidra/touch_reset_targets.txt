@@ -1,0 +1,4 @@
+gt1x_select_addr
+mtk_pmx_set_mode
+tpd_gpio_output
+tpd_gpio_as_int

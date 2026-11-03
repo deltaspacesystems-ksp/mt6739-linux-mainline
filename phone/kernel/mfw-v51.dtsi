@@ -1,0 +1,22 @@
+/ {
+	pwrap@1000d000 {
+		reg = <0 0x1000d000 0 0x1000>, <0 0x10010000 0 0x20>, <0 0x11016000 0 0x1000>;
+		reg-names = "pwrap", "keypad", "charger-i2c5";
+		microfw,infracfg = <&infracfg_ao>;
+		microfw,charger-monitor;
+	};
+	i2c@11016000 { status = "disabled"; };
+	topckgen_ao@1001b000 { compatible = "mediatek,topckgen_ao", "syscon"; };
+	mfw_cpu_clock: mfw-cpu-clock {
+		compatible = "microfw,mt6739-boot-cpu-clock";
+		mediatek,apmixedsys = <&apmixed>;
+		mediatek,topckgen-ao = <&{/topckgen_ao@1001b000}>;
+		clocks = <&clk26m>;
+		clock-names = "xtal";
+		#clock-cells = <0>;
+	};
+};
+&cpu0 { clocks = <&mfw_cpu_clock>; clock-names = "cpu"; /delete-property/ clock-frequency; };
+&cpu1 { clocks = <&mfw_cpu_clock>; clock-names = "cpu"; /delete-property/ clock-frequency; };
+&cpu2 { clocks = <&mfw_cpu_clock>; clock-names = "cpu"; /delete-property/ clock-frequency; };
+&cpu3 { clocks = <&mfw_cpu_clock>; clock-names = "cpu"; /delete-property/ clock-frequency; };

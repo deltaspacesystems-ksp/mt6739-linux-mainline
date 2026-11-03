@@ -1,0 +1,300 @@
+{
+  "source_sha256": "e4b90ff2a56daaecddc4ab7c00f7aa38a5704779ae8c123aca1d0d922e660b5d",
+  "evidence": "Static stock module descriptors; name/PA/IRQ offsets and count verified against k44_display_modules.c. IRQ field may be populated at runtime, not a DT SPI number.",
+  "modules": [
+    {
+      "module": 0,
+      "name": "ovl0",
+      "physical_base": "0x1400a000",
+      "irq_initial": 0
+    },
+    {
+      "module": 1,
+      "name": "ovl1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 2,
+      "name": "ovl0_2l",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 3,
+      "name": "ovl1_2l",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 4,
+      "name": "ovl0_virtual",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 5,
+      "name": "ovl0_2l_virtual",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 6,
+      "name": "ovl1_2l_virtual",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 7,
+      "name": "rdma0",
+      "physical_base": "0x1400b000",
+      "irq_initial": 0
+    },
+    {
+      "module": 8,
+      "name": "rdma1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 9,
+      "name": "rdma2",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 10,
+      "name": "wdma0",
+      "physical_base": "0x1400c000",
+      "irq_initial": 0
+    },
+    {
+      "module": 11,
+      "name": "wdma1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 12,
+      "name": "wdma_virtual0",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 13,
+      "name": "wdma_virtual1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 14,
+      "name": "color0",
+      "physical_base": "0x1400d000",
+      "irq_initial": 0
+    },
+    {
+      "module": 15,
+      "name": "color1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 16,
+      "name": "ccorr0",
+      "physical_base": "0x1400e000",
+      "irq_initial": 0
+    },
+    {
+      "module": 17,
+      "name": "ccorr1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 18,
+      "name": "aal0",
+      "physical_base": "0x1400f000",
+      "irq_initial": 0
+    },
+    {
+      "module": 19,
+      "name": "aal1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 20,
+      "name": "gamma0",
+      "physical_base": "0x14010000",
+      "irq_initial": 0
+    },
+    {
+      "module": 21,
+      "name": "gamma1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 22,
+      "name": "od",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 23,
+      "name": "dither0",
+      "physical_base": "0x14011000",
+      "irq_initial": 0
+    },
+    {
+      "module": 24,
+      "name": "dither1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 25,
+      "name": "path0",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 26,
+      "name": "path1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 27,
+      "name": "ufoe",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 28,
+      "name": "ufoe",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 29,
+      "name": "dsc",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 30,
+      "name": "dsc2",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 31,
+      "name": "split0",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 32,
+      "name": "dpi0",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 33,
+      "name": "dbi0",
+      "physical_base": "0x14013000",
+      "irq_initial": 0
+    },
+    {
+      "module": 34,
+      "name": "dsi0",
+      "physical_base": "0x14012000",
+      "irq_initial": 0
+    },
+    {
+      "module": 35,
+      "name": "dsi1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 36,
+      "name": "dsidual",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 37,
+      "name": "pwm0",
+      "physical_base": "0x1100e000",
+      "irq_initial": 0
+    },
+    {
+      "module": 38,
+      "name": "pwm1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 39,
+      "name": "config",
+      "physical_base": "0x14000000",
+      "irq_initial": 0
+    },
+    {
+      "module": 40,
+      "name": "mutex",
+      "physical_base": "0x14001000",
+      "irq_initial": 0
+    },
+    {
+      "module": 41,
+      "name": "sim_common",
+      "physical_base": "0x14002000",
+      "irq_initial": 0
+    },
+    {
+      "module": 42,
+      "name": "smi_larb0",
+      "physical_base": "0x14003000",
+      "irq_initial": 0
+    },
+    {
+      "module": 43,
+      "name": "smi_larb1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 44,
+      "name": "mipi0",
+      "physical_base": "0x11c80000",
+      "irq_initial": 0
+    },
+    {
+      "module": 45,
+      "name": "mipi1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 46,
+      "name": "rsz0",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 47,
+      "name": "rsz1",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    },
+    {
+      "module": 48,
+      "name": "unknown",
+      "physical_base": "0x0",
+      "irq_initial": 0
+    }
+  ]
+}

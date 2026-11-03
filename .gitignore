@@ -1,0 +1,33 @@
+# SEKRETY - nigdy nie commitowac
+secrets/
+TOKEN.txt
+BRIDGE_SIGN_KEY.txt
+PS_TOKEN.txt
+PS_SIGN_KEY.txt
+PATH_SEGMENT.txt
+PC_PATH_SEGMENT.txt
+y5_locations.conf
+nginx.conf
+nginx.conf.new
+*.key
+*.pem
+ps_audit.log
+bridge_audit.log
+ps_jobs/
+
+# dane urzadzenia (IMEI, kalibracje, kopie partycji) i duze obrazy
+*.img
+*.bin
+*.tar.gz
+shots/
+backup*/
+__pycache__/
+*.pyc
+
+# dane urzadzenia z raportow
+report.txt
+archive/pc_work/report.txt
+
+# jawne klucze nigdy; zaszyfrowany secrets.enc wolno
+secrets.env
+!secrets.enc

@@ -1,0 +1,38 @@
+{
+  "commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "files": [
+    "src/compiler/clc/clc_helpers.cpp",
+    "src/compiler/nir/nir_fixup_is_exported.c",
+    "meson.options",
+    "src/imagination/vulkan/meson.build",
+    "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.c",
+    "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.h",
+    "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h"
+  ],
+  "patch_replay": "PASS exact byte match",
+  "patches": [
+    {
+      "name": "mesa-llvm23-build.patch",
+      "sha256": "2e07ef317fa27480aad6d8e54d091183b7ae2d172bce5eedaba4b79d7a20d264"
+    },
+    {
+      "name": "mesa-ddk19-stage1.patch",
+      "sha256": "5b2741c214635d94804479c505f38e143a304fc23efcb0b2db6b6a5eb9086f51"
+    }
+  ],
+  "host_build": "PASS full x86_64 Vulkan PowerVR shared library, baseline and experimentalDDK19 flag",
+  "library_sha256": "e689dd6b10107723a0b4502a8de2caa4b18147377bce0af05ff151606403bd14",
+  "phone_deployed": false,
+  "rendering": false,
+  "adapter": "CONNECT/DISCONNECT only; all other bridge calls fail ENOTSUP",
+  "tests": [
+    "ASan/UBSan six exact NIR export-pass cases",
+    "ASan/UBSan exact Mesa header/wire adapter guards, conversions, failure and unsupported calls"
+  ],
+  "target_selection": "Explicit DURA-L21 build target BVNC22.49.21.16, not a fresh hardware query",
+  "pending": [
+    "complete1.9 memory/sync/job wire translation",
+    "complete GE8100 compiler/tile profile",
+    "native Alpine/aarch64 build and first shader/readback"
+  ]
+}

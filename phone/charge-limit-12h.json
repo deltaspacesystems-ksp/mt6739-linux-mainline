@@ -1,0 +1,205 @@
+[
+  {
+    "uptime_s": 43194.88,
+    "voltage_uv": 4251708,
+    "temp_deci_c": 319,
+    "status": "Charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5269,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 0,
+      "temp": 319,
+      "elapsed_s": 43188
+    },
+    "registers": {
+      "id": 65,
+      "status": 208,
+      "control": 120,
+      "special": 36,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:34:53.263269+00:00"
+  },
+  {
+    "uptime_s": 43212.1,
+    "voltage_uv": 4187438,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5271,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 319,
+      "elapsed_s": 43204
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:35:10.487155+00:00"
+  },
+  {
+    "uptime_s": 43229.3,
+    "voltage_uv": 4181341,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5273,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 323,
+      "elapsed_s": 43221
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:35:27.728489+00:00"
+  },
+  {
+    "uptime_s": 43246.57,
+    "voltage_uv": 4177880,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5276,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 323,
+      "elapsed_s": 43245
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:35:44.996667+00:00"
+  },
+  {
+    "uptime_s": 43263.79,
+    "voltage_uv": 4174420,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5278,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 323,
+      "elapsed_s": 43262
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:36:02.175357+00:00"
+  },
+  {
+    "uptime_s": 43281.04,
+    "voltage_uv": 4171453,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5280,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 323,
+      "elapsed_s": 43278
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:36:19.427461+00:00"
+  },
+  {
+    "uptime_s": 43298.26,
+    "voltage_uv": 4169641,
+    "temp_deci_c": 323,
+    "status": "Not charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5282,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 2,
+      "temp": 322,
+      "elapsed_s": 43294
+    },
+    "registers": {
+      "id": 65,
+      "status": 192,
+      "control": 124,
+      "special": 52,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:36:36.694202+00:00"
+  }
+]

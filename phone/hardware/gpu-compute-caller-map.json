@@ -1,0 +1,58 @@
+{
+  "status": "static caller provenance only; not firmware register semantics",
+  "source": "Private libGLESv2_mtk.so ELF0xb7664 (Ghidra0x1b7664), call to RGXKickCDM",
+  "input_bytes_zeroed": 112,
+  "caller_fields": [
+    {
+      "offset_hex": "0x08",
+      "value": "context member atctx+33000, then+0x18",
+      "packet_effect": "packet+0 raw64; semantic unknown"
+    },
+    {
+      "offset_hex": "0x10",
+      "value": "resource chain ctx+0x82d0 ->+0xc8 ->+0x10 ->+0x08",
+      "packet_effect": "packet+8 shifted right2; semantic unknown"
+    },
+    {
+      "offset_hex": "0x34",
+      "value": "ctx+0x745c value, clamped >=12 earlier",
+      "packet_effect": "common-size helper input unless context branch overrides to0x800; not hardware capacity"
+    },
+    {
+      "offset_hex": "0x3c",
+      "value": "1 from64bit constant atinput+0x3c",
+      "packet_effect": "packet+16 boolean1"
+    },
+    {
+      "offset_hex": "0x44",
+      "value": "1 conditionally if ctx byte+0x8031 bit6",
+      "packet_effect": "packet+112 flags bit1"
+    },
+    {
+      "offset_hex": "0x48",
+      "value": "resource chain ctx+0x1ce0 ->+0x1a8 ->+0x08, conditionally or0",
+      "packet_effect": "packet+32 shifted right2 and masked38bits; semantic unknown"
+    },
+    {
+      "offset_hex": "0x54",
+      "value": "0x20",
+      "packet_effect": "packet+40 zero-extended32bit"
+    },
+    {
+      "offset_hex": "0x5c",
+      "value": "ctx+0x8288",
+      "packet_effect": "packet+116 fallback deadline; exact caller semantic unknown"
+    }
+  ],
+  "observed_zero_fields": [
+    "input+0x38 (explicit)",
+    "input+0x50 (from112byte memset; no later assignment observed in this caller excerpt)"
+  ],
+  "limits": [
+    "Caller initialization of input does NOT initialize unwritten packet bytes48..55 in separate RGXKickCDM stack frame",
+    "Single GLES caller path; not complete contract for all APIs",
+    "No claim about commandstream/base register identities without independent evidence",
+    "No vendor runtime execution, shader upload or phone changes"
+  ],
+  "next": "Trace resources behind input+08/+10/+48, compare exact register encodings; keep packet48..55 unresolved"
+}

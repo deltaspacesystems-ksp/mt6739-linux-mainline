@@ -1,0 +1,16 @@
+usb_phy_poweron
+usb_phy_recover
+usb_enable_clock
+usb_prepare_enable_clock
+mt_usb_enable_clk
+mt_usb_prepare_clk
+mt_usb_probe
+musb_platform_reset
+usb_phy_savecurrent_internal
+ddp_dsi_trigger
+DSI_Start
+ddp_dsi_start
+_trigger_display_interface
+primary_display_trigger_nolock.isra.46
+msdc_ungate_clock
+msdc_init_hw

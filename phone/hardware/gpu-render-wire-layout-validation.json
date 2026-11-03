@@ -1,0 +1,13 @@
+{
+  "status": "Exact render firmware byte-storage layout compile checks PASS on host and native Y5 ARM64",
+  "types": {
+    "TA_registers": 104,
+    "3D_registers": 608,
+    "TA_command": 280,
+    "3D_command": 664
+  },
+  "source": "Previously extracted exact loaded firmware DWARF facts gpu-exact-firmware-render-dwarf.json",
+  "guards": "sizeof and offsetof static assertions for every known-sized member. Unknown array aui16ZSliceOffsets remains opaque16byte gap, no semantic length/type inferred.",
+  "scope": "Storage header only; no submission API and no TA/3D job",
+  "next": "VDM/PPP/ISP/PBE and EOT commands, context switching data and sync/fence semantics before first draw"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "patch": "stage2 applies on stage1, not pristine alone",
+  "patch_sha256": "e7693680841b083f369bd03e5a63faf8c727fe874f05505978c2154079f91e92",
+  "host_tests": "ASan+UBSan translation/guards/error25 cases PASS",
+  "live_phone": "standalone native smoke uses exact Mesa adapter/structs, real DRM ioctl; CONNECT/context/heapcount/create/destroy/DISCONNECT PASS",
+  "heap_count": 17,
+  "cpu_cache_line": 64,
+  "driver": "OK",
+  "firmware": "OK",
+  "hwr": 0,
+  "crr": 0,
+  "rendering": false,
+  "scope": "7 implemented operations total; details/reserve/map/PMR/sync/jobs still blocked",
+  "full_Mesa_on_phone": false
+}

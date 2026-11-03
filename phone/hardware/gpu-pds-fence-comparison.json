@@ -1,0 +1,54 @@
+{
+  "status": "offline PASS; not GPU execution",
+  "mesa_commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "reference": "Private stock libsrv_um.so ELF function 0x36580, static analysis only",
+  "method": "Extract exact public Mesa branch/doutc inline functions with original MIT notice; include public PDS encoder; compare barrier conditional + DOUTC + HALT sequence",
+  "words_hex": [
+    "c1100001",
+    "db000000",
+    "c1080001",
+    "f0000005",
+    "d3000000"
+  ],
+  "result": "All five instruction words match",
+  "limitations": [
+    "Only this PDS primitive sequence is validated offline",
+    "Does not establish whether target requires additional software barrier workaround",
+    "No USC shader, complete compute packet, actual hardware profile, GPU dispatch or 3D result",
+    "Vendor library not executed or committed"
+  ],
+  "reproduce": "WSL python /mnt/d/y5_linux_work/compare_pds_fence.py; requires pinned Mesa build-mfw compile_commands.json",
+  "doutu_comparison": {
+    "reference": "Private stock libsrv_um.so ELF0x364a8, static expression",
+    "public_function": "pvr_pds_encode_doutu(cc, 1, aligned_dword_offset >> 1)",
+    "tested": "All 128 even dword offsets 0..254, both predicate values: 256 comparisons PASS",
+    "data_layout": "Both stock helper and public pvr_pds_kick_usc use 8 dwords of data, 1 code word, 64-bit task control at data start for initial offset zero",
+    "limits": "Does not establish allocation alignment/base helper semantics or valid USC task control contents"
+  },
+  "generator_caution": "Modern shared store/load generators also contain DOUTW and feature-dependent barrier logic. Matching generic kick USC primitive does not validate copying entire modern context program.",
+  "usc_task_control_reference": {
+    "source": "Stock helper ELF0x2fa30 descriptor+0x48, consumed by ELF0x364a8",
+    "store_base_hex": "0x1000000000",
+    "load_base_hex": "0x2800000000",
+    "execution_offset_expression": "OR (USC address & 0xfffffffc); heap-relative semantics still require independent confirmation",
+    "public_mask_decode": "TEMPS encoded units: store2/load5; SAMPLE_RATE instance0; DUAL_PHASE off; execution offset initially0",
+    "validation": "Native host assertions against pinned public pvr_rogue_pds_defs.h PASS",
+    "unit_caution": "pvr_pds_setup_doutu uses ceil(temps/4), mapping these units to8/20 dwords under that helper convention. pds.xml UNIT_SIZE is2; do not assume equivalent interpretation or target capacity without tracing consumers. This is per-task allocation, never unified_store_depth or usc_slots."
+  },
+  "xml_unit_consumer_audit": {
+    "generated_header": "build-mfw/src/imagination/csbgen/rogue/pds.h",
+    "result": "384 combinations of64 TEMPS encoded values,3 sample rates,2 phase values preserve exact bits through generated pack/unpack; no rescaling",
+    "consumer": "pvr_arch_cmd_buffer.c fragment PDS patch unpacks, changes only sample_rate, repacks; TEMPS preserved",
+    "unit_define": "UNIT_SIZE2 is emitted as macro but has no consumers in pinned imagination source. Does not introduce a demonstrated /2 conversion. Physical meaning of unused define not inferred.",
+    "resolved": "No observed conflict in encoded TEMPS between legacy bitmasks and XML packing; carry encoded values unchanged. Per-task API /4 interpretation remains separate from unknown actual hardware capacity.",
+    "execution_address_helper": "pvr_set_usc_execution_address64 reduces to execution_address & 0xfffffffc, matching stock bit expression; address origin/carveout still unresolved"
+  },
+  "heap_address_origin": {
+    "evidence": "Private static decompile ELF0x2f3a4: allocate/map; when param7!=0 query heap base via helper0x10f3c and subtract it from mapped VA",
+    "call_chain": "Compute CREATE finds PDS Code and Data and USC Code heaps; 0x2f650 calls allocator with param7=1 for each PDS/USC program. Task control thus uses USC-heap-relative offset. Compute state allocated General with param7=0 stays full VA.",
+    "scope": "Static reference evidence; no new phone execution or independent instruction-level check in this step",
+    "native_helper": "mfw_cdm19_heap_offset rejects underflow, >32bit, misalignment, invalid alignment and null output; does not establish resource ownership/heap bounds",
+    "validation": "ASan/UBSan boundary tests and existing packing regressions PASS; ARM64 -Wall -Wextra -Werror compile PASS"
+  },
+  "context_caller_correction": "Generic kick8dword/1instruction is suffix only. Actual context descriptor requests2DOUTW constants; helper0x36230 emits prefix8dataDWORDS/2instructions. Total16dataDWORDS/6codeDWORDS incl3barrier instructions. See gpu-pds-context-pair-comparison.json."
+}

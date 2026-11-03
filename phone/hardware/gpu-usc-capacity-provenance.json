@@ -1,0 +1,30 @@
+{
+  "status": "private static compiler provenance audit; no library execution",
+  "reference": "libusc.so SHA7add2476595549ec8059b1ef799b2d139d3db3ce842161af8658e759f68eae6b",
+  "observations": [
+    {
+      "function": "PVRUniFlexCompileToHw ELF0xac28",
+      "expression": "state[0x22a] as64bit = caller param4; byte offset0x1150",
+      "meaning": "Pointer consulted by register allocator is caller program parameters, not an independently observed hardware capability table"
+    },
+    {
+      "function": "register allocator ELF0x39dd0",
+      "expression": "reads *(state+0x1150)+0x14, +0x20, +0x24",
+      "meaning": "These values are derived from caller parameters; cannot rebrand as physical unified-store depth/slot count"
+    },
+    {
+      "function": "compiler init ELF0xcc08",
+      "meaning": "Allocates/zeros0x78-byte state+0x34a8 object; no hardware profile discovery found"
+    },
+    {
+      "function": "register setup ELF0x7fc6c",
+      "meaning": "Builds register ranges using caller parameters atstate+0x1150; inspected static output, no new physical capacity source established"
+    }
+  ],
+  "unchanged_blockers": [
+    "Actual unified_store_depth and usc_slots still UNKNOWN",
+    "Caller budget0xf8 and generic COMMON64/14 are not physical limits",
+    "Need exact target instruction/quirk validation or independently proven restricted compiler path before shader dispatch"
+  ],
+  "limits": "Static decomp evidence only, no fresh instruction-level verification; raw vendor output remains private outside repo"
+}

@@ -1,0 +1,6 @@
+from pathlib import Path
+import hashlib
+b=Path('D:/y5_linux_work');code=Path('//wsl.localhost/archlinux/tmp/mfw-pco-restricted.bin').read_bytes();assert hashlib.sha256(code).hexdigest()=='039a121c3de88b59e5d5c98798128a1889ed38ff939ff36d179458ab8bbae770'
+image=bytearray((b/'out/compute-usc-candidate.bin').read_bytes());assert len(code)==128;image[:128]=code;(b/'out/compute-usc-challenge.bin').write_bytes(image);print('CHALLENGE_IMAGE_SHA',hashlib.sha256(image).hexdigest())
+s=(b/'compute19_store_trial_mmu.c').read_text().replace('trial_output[0]','trial_output[16]').replace('trial_output[16]!=0x12345678','trial_output[16]!=0xa1b2c3d4').replace('for(unsigned w=1;w<1024;w++)if(trial_output[w]!=0xdeadbeef)','for(unsigned w=0;w<1024;w++)if(w!=16&&trial_output[w]!=0xdeadbeef)').replace('/tmp/compute-usc-candidate.bin','/tmp/compute-usc-challenge.bin').replace('USC_STORE_READBACK_PASS','USC_STORE_CHALLENGE_PASS').replace('COMPUTE_STORE_TRIAL_RC','COMPUTE_STORE_CHALLENGE_RC');(b/'compute19_store_trial_challenge.c').write_text(s)
+s=(b/'launch_compute_store_trial_mmu.sh').read_text().replace('compute19-store-trial-mmu','compute19-store-trial-challenge');(b/'launch_compute_store_challenge.sh').write_text(s,encoding='utf-8',newline='\n')

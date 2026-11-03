@@ -1,0 +1,35 @@
+{
+  "status": "LIVE Y5 compute memory footprint preflight PASS; no GPU task",
+  "heap_query": "Exact legacy MM6/30 input20B/output40B; actual queried names/bases/sizes used, not hardcoded heap creation",
+  "heaps": {
+    "General": {
+      "base_hex": "0x65c0000000",
+      "bytes_hex": "0x80000000"
+    },
+    "PDS Code and Data": {
+      "base_hex": "0xa800000000",
+      "bytes_hex": "0x40000000"
+    },
+    "USC Code": {
+      "base_hex": "0xba00000000",
+      "bytes_hex": "0x40000000"
+    }
+  },
+  "pages": 10,
+  "layout": "8adjacent General4K mappings (includes5page contiguous VA state arena),1PDS4K,1USC4K; PDS/USC offset0x10000",
+  "validation": [
+    "Every4K PMR initiallyzero, uniqueCPUwrite/readback1024words perpagePASS",
+    "All10PMRs reserved/mapped toGPUVA",
+    "Reverse cleanupCPUunmap/GPUunmap/reservation/PMR/heaps/memctx/DISCONNECT completedRC0",
+    "Native Alpine and host -Wall -Wextra -Werror compilePASS"
+  ],
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 0,
+    "CRR": 0,
+    "APM": 0
+  },
+  "source_sha256": "9a829e9b2f0ea84a8f4a017b9a0fe624566563a9ff85b0a98ae3b06fdb93df9e",
+  "limits": "CPU access and GPU page-table mappings only; does not prove shader execution, GPU cachevisibility, stateprograms or3D. No reboot."
+}

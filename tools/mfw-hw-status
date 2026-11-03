@@ -1,0 +1,38 @@
+#!/bin/sh
+# MICROFW read-only snapshot. No scans, device opens, MMIO or identifiers.
+set -u
+if [ "$#" -ne 0 ]; then echo 'Usage: mfw-hw-status (read-only snapshot)' >&2; exit 2; fi
+value() {
+    label=$1; path=$2
+    if [ -r "$path" ]; then
+        result=$(cat "$path" 2>/dev/null) || result=unavailable
+        printf '%s: %s\n' "$label" "$result"
+    else printf '%s: unavailable\n' "$label"; fi
+}
+count() {
+    label=$1; shift; n=0
+    for node do [ ! -e "$node" ] || n=$((n+1)); done
+    printf '%s: %s\n' "$label" "$n"
+}
+printf 'MICROFW hardware snapshot (availability is not a functional test)\n'
+value uptime_seconds /proc/uptime
+value battery_status /sys/class/power_supply/microfw-battery/status
+value battery_voltage_uV /sys/class/power_supply/microfw-battery/voltage_now
+value battery_temperature_0.1C /sys/class/power_supply/microfw-battery/temp
+value battery_percent /sys/class/power_supply/microfw-battery/capacity
+value usb_online /sys/class/power_supply/microfw-usb/online
+value charger_status /sys/class/power_supply/microfw-usb/status
+value cpu_rate_Hz /sys/bus/platform/devices/mfw-cpu-clock/cpu_rate_hz
+value gpu_runtime_enabled /sys/module/pvrsrvkm/parameters/enable
+if [ -r /sys/kernel/debug/pvr/status ]; then
+    grep -E '^(Driver Status|Firmware Status|HWR Event Count|CRR Event Count|APM Event Count|GPU Utilisation):' /sys/kernel/debug/pvr/status
+else echo 'gpu_status: unavailable'; fi
+count i2c_adapters /sys/bus/i2c/devices/i2c-*
+count iio_devices /sys/bus/iio/devices/iio:device*
+count video_nodes /dev/video*
+count audio_pcm_nodes /dev/snd/pcm*
+count bluetooth_controllers /sys/class/bluetooth/hci*
+count wireless_phys /sys/class/ieee80211/phy*
+count remote_processors /sys/class/remoteproc/remoteproc*
+count gnss_nodes /dev/gnss*
+echo 'GPU status does not prove rendering; absent battery percentage is not estimated.'

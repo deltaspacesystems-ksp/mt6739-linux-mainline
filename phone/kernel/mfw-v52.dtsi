@@ -1,0 +1,4 @@
+/* Board identity scopes the watchdog restart-priority workaround. */
+/ {
+	compatible = "huawei,dura-l21", "mediatek,mt6739";
+};

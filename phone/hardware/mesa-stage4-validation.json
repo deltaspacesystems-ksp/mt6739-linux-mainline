@@ -1,0 +1,26 @@
+{
+  "stage": "4a sync primitive block lifecycle",
+  "supported_operations": 16,
+  "patch_sha256": "9c7d612727298380a2ea62f0f41054bc583417db75b2149fdb223f4b1b4cf1a2",
+  "host_sanitizers": "PASS exact adapter, old-wire layout, size/null guards, ioctl errors, RETRY",
+  "host_library": "PASS x86_64 full link, not phone library",
+  "phone_standalone_exact_adapter": {
+    "alloc_set_clear_free": "PASS",
+    "block_size": 4096,
+    "pmr_lifecycle_regression": "PASS",
+    "trial_rc": 0,
+    "driver": "OK",
+    "firmware": "OK",
+    "hwr": 0,
+    "crr": 0
+  },
+  "reboot": false,
+  "rendering": false,
+  "gpu_completion_tested": false,
+  "limitations": [
+    "sync PMR field is old PMR_LOCAL_EXPORT_HANDLE child of block, not directly mmap-able ordinary PMR",
+    "local import and GPU job completion remain unimplemented",
+    "heap reserved_size semantics unresolved",
+    "nonzero PMR allocation pid rejected, modern caller uses getpid; full Mesa still blocked"
+  ]
+}

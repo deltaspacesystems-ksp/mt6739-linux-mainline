@@ -1,0 +1,38 @@
+{
+  "scope": "source/static ABI audit only, no phone operation",
+  "legacy_generated": {
+    "create_input_bytes": 32,
+    "kick_input_bytes": 132,
+    "kick_cmd_size_offset": 104,
+    "kick_cmd_pointer_offset": 108,
+    "compute_bridge": 129,
+    "kick_function": 2
+  },
+  "pinned_mesa_modern": {
+    "create_input_bytes": 56,
+    "kick_input_bytes": 108,
+    "kick_function": 5
+  },
+  "stock_firmware_packet": {
+    "bytes": 120,
+    "confidence": "private stock UM caller+wrapper static decompilation and independent ARM64 immediate check",
+    "ELF_size_immediate_address": "0x20fdc",
+    "Ghidra_image_base": "0x100000",
+    "ELF_instruction": "ORR w9,wzr,#0x78; STR w9,[sp,#80]",
+    "shader_or_packet_executed": false
+  },
+  "source_boundary": {
+    "pinned_public_tree_has_rgx_fwif_client_header": false,
+    "reason": "exact client-command body not defined by generated bridge; KM accepts opaque psDMCmd/size",
+    "modern_fw_api_present": "Mesa winsys/pvrsrvkm/fw-api/pvr_rogue_fwif.h",
+    "warning": "modern firmware struct is not established as1.9-compatible"
+  },
+  "context_state_difference": "modern creation carries static_compute_context_state; old create lacks it; old stock caller includes seven context-derived64-bit words in each kick. Need retained context-state translation, not dropped fields. Exact register semantics not yet established.",
+  "next": [
+    "reconstruct120-byte old FW packet fields with ARM64 write offsets and verified register definitions",
+    "map modern static context state to old per-kick state with explicit lifetime",
+    "verify real GPU profile, PDS and USC before shader dispatch"
+  ],
+  "reboot": false,
+  "rendering": false
+}

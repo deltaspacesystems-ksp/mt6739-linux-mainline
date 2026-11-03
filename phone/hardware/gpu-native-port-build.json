@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-25",
+  "decision": "Entire userspace stack native; no Bionic/HAL runtime, explicitly confirmed by owner",
+  "phone": "v59 unchanged; /tmp is tmpfs; no GPU request or restart in this phase",
+  "native_probe": {
+    "host_abi": "PASS",
+    "aarch64_static": "PASS",
+    "phone_abi_rc": 0,
+    "phone_dev_null_refusal_rc": 1,
+    "input_size": 16,
+    "output_size": 17,
+    "error_offset": 13,
+    "build_options": "80000010",
+    "binary_sha256": "423aea6748427bdaedd04b2410ae5fa5993f44685c69a0de8b1bf99037886927"
+  },
+  "kernel_port": {
+    "archive": "PASS",
+    "relocatable_link": "PASS",
+    "missing_symbols_vs_v59_vmlinux": [],
+    "text": 586839,
+    "data": 37856,
+    "bss": 59356,
+    "new_power_binding": "compile only, default disabled; not in Image or on phone"
+  },
+  "tests": {
+    "exact_source_replay_full_build_link_symbols": "PASS",
+    "dmabuf_fault_injection_asan_ubsan": "PASS mock exporter",
+    "string_cases_asan_ubsan": 147
+  },
+  "mesa": {
+    "native_srv_backend_reference": "1.17@6256262",
+    "target_ddk": "1.9@4893595",
+    "abi_port_and_gpu22_support": "pending; never fake version or BVNC"
+  }
+}

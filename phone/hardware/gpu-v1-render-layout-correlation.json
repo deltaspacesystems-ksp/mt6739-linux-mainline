@@ -1,0 +1,28 @@
+{
+  "status": "Static exact-stock render geometry correlation; no GPU execution",
+  "source": "Private libsrv_um.so RGXAddRenderTarget ELF0x220e4; private decomp and full ARM64 disassembly, no vendor code committed",
+  "verified_asm": {
+    "0x222c0_0x222dc": "width/height plus15 then logical shift4 ->16x16 tiles",
+    "0x22314_0x2231c": "tile product times5 plus63 masked64alignment",
+    "0x223b8_0x223c0": "next-power-of-two side squared times8 tail bytes"
+  },
+  "candidate_64x64": {
+    "width": 64,
+    "height": 64,
+    "tiles_x": 4,
+    "tiles_y": 4,
+    "tile_max_x": 3,
+    "tile_max_y": 3,
+    "region_bytes_aligned64": 128,
+    "tail_bytes": 128,
+    "ppp_screen": 4128831,
+    "te_screen": 12291,
+    "grid_candidate": 262148,
+    "sample_count": 1,
+    "layers": 1
+  },
+  "mapping_limit": "ppp_screen/te_screen/grid values are candidate local fields; exact downstream field mapping still pending",
+  "mesa_gap": "pvr_arch_rt_mtile_info_init asserts parameter_format_version2 whenever simple_internal_parameter_format enabled. Actual target version1. Do not disable guard or pretend version2; reconstruct v1 path. Public helpers already distinguish1x1 macrotiles/v1 vs4x4/v2 and5byte vs6byte region headers.",
+  "checks": "Selected dimensions1,16,17x33,64,4096 CPU arithmetic bounds/alignment passed; not hardware validation",
+  "next": "Trace stock local geometry to HWRT bridge fields; derive PDS shared metadata and real VHeap/MList/region addressing before TA/3D."
+}

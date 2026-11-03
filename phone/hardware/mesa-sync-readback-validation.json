@@ -1,0 +1,32 @@
+{
+  "stage": "sync local import readback diagnostic",
+  "live_phone": {
+    "result": "PASS",
+    "value": "0x12345678",
+    "bytes": 4096,
+    "path": [
+      "MM3 make process import handle",
+      "MM6 local import PMR",
+      "mmap read-only",
+      "read expected sync value",
+      "munmap",
+      "MM7 unref imported PMR",
+      "MM4 unmake import handle",
+      "SYNC1 free block"
+    ],
+    "trial_rc": 0,
+    "driver": "OK",
+    "firmware": "OK",
+    "hwr": 0,
+    "crr": 0
+  },
+  "host_sanitizers": "PASS exact production helper, success plus7 injected failure paths; cleanup order checked",
+  "generic_Mesa_adapter_added_operations": 0,
+  "limitations": [
+    "diagnostic uses explicit legacy-only commands, not generic modern opcode forwarding",
+    "ordinary PMR free8 must not replace imported PMR unref7",
+    "GPU completion/fence signaling and rendering still untested",
+    "pid/heap reserved semantics remain blocked"
+  ],
+  "reboot": false
+}

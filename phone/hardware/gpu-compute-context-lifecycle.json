@@ -1,0 +1,36 @@
+{
+  "status": "live native Y5 compute-context lifecycle PASS",
+  "kernel": "Linux7.3 v62; no restart in this trial",
+  "abi": {
+    "bridge": 129,
+    "create_function": 0,
+    "destroy_function": 1,
+    "create_input_bytes": 32,
+    "create_output_bytes": 12,
+    "framework": "16 zero bytes; disabled",
+    "resume_signal": 0,
+    "private_data": "Actual native memory context private handle",
+    "submission_guard": "compute_call rejects fn>1; no CDM kick operation"
+  },
+  "observed": [
+    "COMPUTE_CREATE_PASS",
+    "COMPUTE_DESTROY_PASS",
+    "COMPUTE_LIFECYCLE_RC=0"
+  ],
+  "before_after": {
+    "Driver Status": "OK",
+    "Firmware Status": "OK",
+    "HWR": 0,
+    "CRR": 0,
+    "APM": 0
+  },
+  "build": "Native Alpine cc -std=c11 -O2 -Wall -Wextra -Werror; host compile alsoPASS",
+  "source_sha256": "e171d0a6a4206624ccc1f974b7b9a456b86f502a57bd73bbe6ab9cf70e5c4d77",
+  "cleanup": "Compute destroy before memory-context destroy and DISCONNECT; bounded retry for error25, dependent context retained on failure until DISCONNECT",
+  "limitations": [
+    "No shader, CDM register payload or firmware120B command submitted",
+    "No 3D render or completion/readback established",
+    "Target profile and context USC/PDS programs remain unresolved"
+  ],
+  "source_reference": "Exact generated/rgxcmp_bridge/common_rgxcmp_bridge.h and services/server/devices/rgx/rgxcompute.c; standalone uses only legacy CREATE/DESTROY layouts"
+}

@@ -1,0 +1,20 @@
+{
+  "stage": "3a reservation lifecycle",
+  "patch_sha256": "747d2dd0d04774119d7c6b25b2b1ef419a6e1957c1ec26bc5ace5581f749627f",
+  "host_sanitizers": "PASS exact adapter / modern Mesa structs / old-wire ordering / alignment, null heap, zero size, overflow, size guards, ioctl failure, error translation and RETRY",
+  "host_library_build": "PASS x86_64, not a phone Mesa library",
+  "phone": "PASS native standalone exact Mesa adapter, real ioctls, context+heap+4096-byte reservation+cleanup",
+  "heap_count": 17,
+  "cache_line": 64,
+  "firmware": "OK",
+  "driver": "OK",
+  "hwr": 0,
+  "crr": 0,
+  "reboot": false,
+  "rendering": false,
+  "limitations": [
+    "no PMR flag translation yet",
+    "no map/sync/job translation",
+    "no complete hardware compiler profile"
+  ]
+}

@@ -1,0 +1,72 @@
+47.54 188.48
+kicks=2 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=289 elapsed_s=41
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+289
+3869549
+Charging
+64.72 257.17
+kicks=4 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=57
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+289
+3872845
+Charging
+81.89 325.81
+kicks=6 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=289 elapsed_s=73
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+289
+3873999
+Charging
+99.07 394.54
+kicks=8 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=90
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3876800
+Charging
+116.25 463.20
+kicks=11 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=114
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3877954
+Charging
+133.42 531.90
+kicks=13 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=131
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3878118
+Charging
+150.59 600.54
+kicks=15 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=147
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3878942
+Charging
+167.78 669.12
+kicks=17 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=163
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3879602
+Charging
+184.95 737.78
+kicks=19 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=180
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3880920
+Charging
+202.14 806.50
+kicks=21 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=196
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3881250
+Charging
+219.31 875.18
+kicks=23 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=213
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3881909
+Charging
+236.49 943.82
+kicks=25 errors=4 timer_faults_seen=1 last_error=0 profile_ok=1 blocks=0 temp=290 elapsed_s=229
+id=0x41 status=0xd0 control=0x78 special=0x24 oreg=0x8e ibat=0x81 safety=0x7b fault=0 online=1
+290
+3882073
+Charging

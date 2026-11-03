@@ -1,0 +1,1824 @@
+{
+  "target": "22.49.21.16",
+  "scope": "direct evidence only; not a runnable device profile; unknown is not false",
+  "mesa_commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "fields": [
+    {
+      "field": "has_astc",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_cluster_grouping",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 109,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 894,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1198,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_compute.c",
+          "line": 67,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 646,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_common_store_size_in_dwords",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_compute",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_context.c",
+          "line": 70,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 288,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_compute_morton_capable",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 102,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_context.c",
+          "line": 1058,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.h",
+          "line": 61,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_compute.c",
+          "line": 62,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_compute_overlap",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 2023,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 8139,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 9028,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 529,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 553,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_eight_output_registers",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 125,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 474,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_spm.c",
+          "line": 361,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_pass.c",
+          "line": 421,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 1178,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_blit.c",
+          "line": 1655,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 190,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_fb_cdc_v4",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_fbcdc_algorithm",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_gpu_multicore_support",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3046,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 5878,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 5897,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 131,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 189,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1155,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1241,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1271,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 829,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_compute.c",
+          "line": 77,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 590,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_transfer.c",
+          "line": 115,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 657,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 673,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/powervr/pvr_drm.c",
+          "line": 343,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 297,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 308,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 327,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_gs_rta_support",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_pass.c",
+          "line": 850,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_clear.h",
+          "line": 110,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_clear.h",
+          "line": 197,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 2024,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 3198,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 4030,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 9086,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_blit.c",
+          "line": 1585,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_blit.c",
+          "line": 1860,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_blit.c",
+          "line": 2181,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_clear.c",
+          "line": 493,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_clear.c",
+          "line": 869,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_ipf_creq_pf",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4406,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4536,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4568,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_isp_max_tiles_in_flight",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_isp_samples_per_pixel",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_max_instances_per_pds_task",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_max_multisample",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_max_partitions",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_max_usc_tasks",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_num_clusters",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": []
+    },
+    {
+      "field": "has_num_raster_pipes",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": []
+    },
+    {
+      "field": "has_paired_tiles",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1262,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1319,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1425,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1453,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 461,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_pbe2_in_xe",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_hw_pass.c",
+          "line": 384,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_usc.c",
+          "line": 92,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_mrt.c",
+          "line": 64,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 484,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_pbe_filterable_f16",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1988,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_formats.c",
+          "line": 348,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_pbe_stride_align_1pixel",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_image.c",
+          "line": 325,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_pbe_yuv",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1473,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_pds_ddmadt",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_pipeline.c",
+          "line": 223,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 5379,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 804,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1008,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1222,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1362,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1393,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1414,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1437,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1576,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 1733,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pipeline_pds.c",
+          "line": 678,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pipeline_pds.c",
+          "line": 745,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pipeline_pds.c",
+          "line": 1075,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pipeline_pds.c",
+          "line": 1089,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_roguexe",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 391,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 429,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 557,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 455,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 552,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_screen_size8K",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 68,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3662,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 2871,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 251,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_simple_internal_parameter_format",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3216,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3229,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3333,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3419,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3519,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3601,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3703,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3820,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3891,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3905,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4005,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4014,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4361,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 415,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 452,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 130,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 174,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 378,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 497,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 538,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 2864,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 7932,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 280,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 288,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 156,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 180,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 206,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 222,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 239,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 250,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_simple_internal_parameter_format_v1",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": []
+    },
+    {
+      "field": "has_simple_internal_parameter_format_v2",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 3433,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4377,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4436,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4539,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 4567,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 7947,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_simple_parameter_format_version",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": []
+    },
+    {
+      "field": "has_slc_cache_line_size_bits",
+      "status": "reference-confirmed",
+      "value": true,
+      "uses": []
+    },
+    {
+      "field": "has_slc_mcu_cache_controls",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 111,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1211,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 112,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 174,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 392,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 466,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 4328,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 4386,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pipeline_pds.c",
+          "line": 262,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tf_bicubic_filter",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1586,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tile_per_usc",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_device.c",
+          "line": 89,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 483,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 493,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tile_size_16x16",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 6933,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tile_size_x",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_tile_size_y",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_tpu_array_textures",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1664,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_image.c",
+          "line": 250,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tpu_border_colour_enhanced",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_border.c",
+          "line": 214,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_border.c",
+          "line": 230,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tpu_dm_global_registers",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_compute.c",
+          "line": 126,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_compute.c",
+          "line": 72,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tpu_extended_integer_lookup",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_descriptor_set.c",
+          "line": 187,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_descriptor_set.c",
+          "line": 220,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 285,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 324,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tpu_image_state_v2",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 286,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 295,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 325,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_tex_state.c",
+          "line": 340,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_tpu_parallel_instances",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_unified_store_depth",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_usc_alu_roundingmode_rne",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 507,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_usc_f16sop_u8",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 1124,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_usc_itrsmp",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_usc_itrsmp_enhanced",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/pco/pco_trans_nir.c",
+          "line": 494,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_usc_itr_parallel_instances",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_usc_min_output_registers_per_pix",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_usc_pixel_partition_mask",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 482,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_usc_slots",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_uvs_banks",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_uvs_pba_entries",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_uvs_vtx_entries",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_vdm_cam_size",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "has_vdm_degenerate_culling",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 8558,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/rogue/pvr_dump_csb.c",
+          "line": 893,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_xpu_max_slaves",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 298,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_xt_top_infrastructure",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 389,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 498,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_zls_subtile",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1248,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 1305,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 662,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "common_store_size_in_dwords",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 370,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 495,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "fbcdc_algorithm",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "isp_max_tiles_in_flight",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 411,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_device.c",
+          "line": 98,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 1960,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 2708,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 519,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "isp_samples_per_pixel",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_usc.c",
+          "line": 93,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1377,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 335,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 195,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 251,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 67,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "max_instances_per_pds_task",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 528,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "max_multisample",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 2030,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_transfer_frag_store.c",
+          "line": 70,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 494,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_formats.c",
+          "line": 615,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/common/pvr_limits.h",
+          "line": 81,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "max_partitions",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 366,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 479,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "max_usc_tasks",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "num_clusters",
+      "status": "reference-confirmed",
+      "value": 1,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 403,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_device.c",
+          "line": 79,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_device.c",
+          "line": 86,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pds/pvr_pds.c",
+          "line": 3983,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 470,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 508,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "num_raster_pipes",
+      "status": "reference-confirmed",
+      "value": 1,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 392,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_device.c",
+          "line": 76,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "simple_parameter_format_version",
+      "status": "reference-confirmed",
+      "value": 1,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 416,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 453,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 131,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 179,
+          "macro": "PVR_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 271,
+          "macro": "PVR_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 365,
+          "macro": "PVR_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 157,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 175,
+          "macro": "PVR_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 203,
+          "macro": "PVR_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 236,
+          "macro": "PVR_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "slc_cache_line_size_bits",
+      "status": "reference-confirmed",
+      "value": 512,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/pvr_hw_utils.h",
+          "line": 20,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "tile_size_x",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_usc.c",
+          "line": 84,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 849,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1338,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 351,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_pass.c",
+          "line": 1099,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 122,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 477,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 63,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 177,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "tile_size_y",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_usc.c",
+          "line": 85,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 850,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_transfer.c",
+          "line": 1340,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 352,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_pass.c",
+          "line": 1100,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 123,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 478,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 65,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 178,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "tpu_parallel_instances",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/pvr_hw_utils.h",
+          "line": 35,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "unified_store_depth",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 372,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "usc_itr_parallel_instances",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": []
+    },
+    {
+      "field": "usc_min_output_registers_per_pix",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_common.c",
+          "line": 327,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 1257,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv.c",
+          "line": 483,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "usc_slots",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_physical_device.c",
+          "line": 524,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 362,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 419,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "uvs_banks",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/pvr_hw_utils.h",
+          "line": 31,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "uvs_pba_entries",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/pvr_hw_utils.h",
+          "line": 28,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "uvs_vtx_entries",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 7965,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 7972,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "vdm_cam_size",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_cmd_buffer.c",
+          "line": 7929,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "xpu_max_slaves",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/include/hwdef/rogue_hw_utils.h",
+          "line": 299,
+          "macro": "PVR_GET_FEATURE_VALUE"
+        }
+      ]
+    },
+    {
+      "field": "has_requires_fb_cdc_zls_setup",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 866,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/pvr_arch_job_render.c",
+          "line": 1029,
+          "macro": "PVR_HAS_FEATURE"
+        },
+        {
+          "path": "src/imagination/vulkan/winsys/pvrsrvkm/pvr_arch_srv_job_render.c",
+          "line": 597,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    },
+    {
+      "field": "has_s8xe",
+      "status": "UNKNOWN",
+      "value": null,
+      "uses": [
+        {
+          "path": "src/imagination/vulkan/pvr_arch_device.c",
+          "line": 75,
+          "macro": "PVR_HAS_FEATURE"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "declared": 88,
+    "known": 14,
+    "unknown": 74
+  },
+  "parser_limit": "direct macro calls including multiline; not complete transitive reachability"
+}

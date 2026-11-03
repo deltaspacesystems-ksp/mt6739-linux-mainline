@@ -1,0 +1,62 @@
+{
+  "status": "Offline graphics stream/PBE/EOT candidates prepared; not render proof",
+  "stock_cam": {
+    "source": "Private exact GLES FUN_001e3040, ELF0xe3040; callerFUN_0014f1c8. ARM64 disassembly independently checked",
+    "formula": "size=outputs*4+(raster?20:4); selected outputs5,raster=true =>40<56 =>CAM31,maxInstances16",
+    "limits": "Selected output allocation, not complete physical hardware capacity profile"
+  },
+  "vdm": {
+    "words": [
+      "4c000f80",
+      "00010000",
+      "00010010",
+      "00000005",
+      "20000441",
+      "68000600",
+      "00000003",
+      "c0000000"
+    ],
+    "validation": "Public generated packers + independent field-expression oracle +ASan/UBSan/canaries PASS",
+    "missing": "PPP references/state/sync; standalone8word segment is NOT submit-ready",
+    "fixed_failed_oracle": "Scratch FIVE enum is0, not1; corrected oracle headerfc0->f80 after XML check",
+    "correction": "Updated afterfinalVSmetadataaudit:implicitpointsize makes5outputs,old4notuploaded"
+  },
+  "pbe": {
+    "target_va": "65c0010000",
+    "format": "RGBA8 packed1output,linear64x64,identityswizzle,stride64pixels,clip0..63",
+    "state": [
+      "70004000",
+      "00082019"
+    ],
+    "regs": [
+      "0200007c68800000",
+      "0000003f0000003f",
+      "0000000000000000"
+    ],
+    "validation": "Actual public pvr_arch_pbe_pack_state compiled with ASan/UBSan and canary harness PASS",
+    "limits": "Not stock cross-correlated or GPU executed"
+  },
+  "eot": {
+    "bytes": 40,
+    "temps": 2,
+    "vtxins": 0,
+    "shareds": 0,
+    "internal": true,
+    "sha256": "0be956f90e60f18a4ed5b30a4f792137caeb1c8b4f08052f004cffb0d13fb3ff",
+    "ir": "2 immediate loads then emitpix.freep.end; PBE state literal pair above",
+    "software_RA_budget": 20,
+    "spill": false,
+    "hardware_validated": false
+  },
+  "eot_pds": {
+    "data": [
+      "00010800",
+      "00000008"
+    ],
+    "code": [
+      "f4000002"
+    ],
+    "validation": "Public generator ASan/UBSan/endpointer/canaries PASS"
+  },
+  "next": "Complete PPP/ISP, VDM context-switch resources/state, native-owned render backing, exact fences/flags before actual first draw."
+}

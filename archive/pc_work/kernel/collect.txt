@@ -1,0 +1,4 @@
+ls: cannot access '/home/y5/linux-7.3/arch/arm64/boot/Image.gz': No such file or directory
+-rw-r--r-- 1 root root 43399680 Oct 20 23:41 /home/y5/linux-7.3/arch/arm64/boot/Image
+-rw-r--r-- 1 root root     2957 Oct 20 23:24 /home/y5/linux-7.3/arch/arm64/boot/dts/mediatek/mt6739-huawei-dra.dtb
+copied

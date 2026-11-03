@@ -1,0 +1,849 @@
+--- a/drivers/video/Makefile
++++ b/drivers/video/Makefile
+@@ -21,3 +21,4 @@
+ ifeq ($(CONFIG_OF),y)
+ obj-$(CONFIG_VIDEOMODE_HELPERS) += of_display_timing.o of_videomode.o
+ endif
++obj-y += y5disp.o
+--- /dev/null
++++ b/drivers/video/y5disp.c
+@@ -0,0 +1,103 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * y5disp: reczne wyzwalanie odswiezania panelu DSI na MT6739 (Huawei Y5 2018).
++ * Panel wymaga wyzwolenia po kazdej zmianie bufora (mutex + RDMA + DSI start). Sekwencja zmierzona z uzytkownikowego y5txt:
++ *   MUTEX0 EN   0x14015020 = 1
++ *   RDMA0 start 0x1400b010 = 1
++ *   DSI0 START  0x14012000 = 0, potem 1
++ * Wyzwalanie: y5disp_kick() z simpledrm po zmianie bufora (z odstepem >= 40 ms). Tymczasowe, do czasu prawdziwego sterownika DRM/DSI.
++ * Sterowanie: /sys/kernel/y5disp/{hz,trigger}.
++ */
++#include <linux/init.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/kobject.h>
++#include <linux/sysfs.h>
++#include <linux/workqueue.h>
++
++static void __iomem *y5d_mtx, *y5d_rdma, *y5d_dsi;
++static unsigned int y5d_hz;		/* 0 = bez cyklicznego odswiezania (domyslnie): wyzwalamy tylko po zmianie bufora */
++static bool y5d_ready;
++static unsigned long y5d_last;
++static struct delayed_work y5d_work;
++
++static void y5d_fire(void)
++{
++	writel(1, y5d_mtx + 0x20);
++	writel(1, y5d_rdma + 0x10);
++	writel(0, y5d_dsi);
++	writel(1, y5d_dsi);
++}
++
++static void y5d_fn(struct work_struct *w)
++{
++	unsigned long min_gap = msecs_to_jiffies(40);
++
++	/* nie wyzwalaj czesciej niz co 40 ms: powtorzone wyzwolenie w trakcie skanowania daje migotanie i polowki klatek */
++	if (time_before(jiffies, y5d_last + min_gap)) {
++		schedule_delayed_work(&y5d_work, y5d_last + min_gap - jiffies);
++		return;
++	}
++	y5d_last = jiffies;
++	y5d_fire();
++	if (y5d_hz)
++		schedule_delayed_work(&y5d_work, max(1UL, HZ / y5d_hz));
++}
++
++/* wywolywane z simpledrm po kazdej zmianie bufora; zbiera zmiany z ostatnich 25 ms w jedno wyzwolenie */
++void y5disp_kick(void)
++{
++	if (y5d_ready)
++		schedule_delayed_work(&y5d_work, msecs_to_jiffies(25));
++}
++
++static ssize_t hz_show(struct kobject *k, struct kobj_attribute *a, char *buf)
++{
++	return sysfs_emit(buf, "%u\n", y5d_hz);
++}
++
++static ssize_t hz_store(struct kobject *k, struct kobj_attribute *a, const char *buf, size_t n)
++{
++	unsigned int v;
++	bool start;
++
++	if (kstrtouint(buf, 0, &v) || v > 60)
++		return -EINVAL;
++	start = !y5d_hz && v;
++	y5d_hz = v;
++	if (start)
++		schedule_delayed_work(&y5d_work, 0);
++	return n;
++}
++
++static ssize_t trigger_store(struct kobject *k, struct kobj_attribute *a, const char *buf, size_t n)
++{
++	y5d_fire();
++	return n;
++}
++
++static struct kobj_attribute y5d_hz_attr = __ATTR_RW_MODE(hz, 0644);
++static struct kobj_attribute y5d_trigger_attr = __ATTR_WO(trigger);
++
++static int __init y5d_init(void)
++{
++	struct kobject *kobj;
++
++	y5d_mtx = ioremap(0x14015000, 0x1000);
++	y5d_rdma = ioremap(0x1400b000, 0x1000);
++	y5d_dsi = ioremap(0x14012000, 0x1000);
++	if (!y5d_mtx || !y5d_rdma || !y5d_dsi)
++		return -ENOMEM;
++
++	INIT_DELAYED_WORK(&y5d_work, y5d_fn);
++	kobj = kobject_create_and_add("y5disp", kernel_kobj);
++	if (kobj) {
++		sysfs_create_file(kobj, &y5d_hz_attr.attr);
++		sysfs_create_file(kobj, &y5d_trigger_attr.attr);
++	}
++	y5d_ready = true;
++	schedule_delayed_work(&y5d_work, HZ / 2);		/* pierwsze wyzwolenie: pokaz to, co fbcon juz narysowal */
++	pr_info("y5disp: wyzwalanie panelu po zmianie bufora (opcjonalnie cyklicznie: /sys/kernel/y5disp/hz)\n");
++	return 0;
++}
++late_initcall(y5d_init);
+--- a/drivers/gpu/drm/sysfb/drm_sysfb_modeset.c
++++ b/drivers/gpu/drm/sysfb/drm_sysfb_modeset.c
+@@ -326,6 +326,8 @@
+ }
+ EXPORT_SYMBOL(drm_sysfb_plane_helper_atomic_check);
+ 
++extern void y5disp_kick(void);
++
+ void drm_sysfb_plane_helper_atomic_update(struct drm_plane *plane, struct drm_atomic_commit *state)
+ {
+ 	struct drm_device *dev = plane->dev;
+@@ -364,6 +366,7 @@
+ 			     &shadow_plane_state->fmtcnv_state);
+ 	}
+ 
++	y5disp_kick();
+ 	drm_dev_exit(idx);
+ out_drm_gem_fb_end_cpu_access:
+ 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+--- a/init/main.c
++++ b/init/main.c
+@@ -18,7 +18,87 @@
+ #include <linux/module.h>
+ #include <linux/proc_fs.h>
+ #include <linux/binfmts.h>
++#include <linux/delay.h>
+ #include <linux/kernel.h>
++#include <linux/y5cp.h>
++void __iomem *y5_wdt_base;
++
++static int __init y5_clk_hack(void)
++{
++	/* ungate zegarow USB: infracfg infra_icusb (CLR 0x84 bit 8), topckgen usb_top_sel (CLR 0xb8 bit 31 + UPD 0x4 bit 30) */
++	void __iomem *infra = ioremap(0x10001000, 0x1000);
++	void __iomem *top = ioremap(0x10000000, 0x1000);
++	if (infra) { writel(BIT(8), infra + 0x84); iounmap(infra); }
++	if (top) { writel(BIT(31), top + 0xb8); writel(BIT(30), top + 0x4); iounmap(top); }
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 2);
++	{
++		/* sekwencja usb_phy_recover() z 4.4 (PHY @0x11cc0000), przed sondowaniem musb */
++		void __iomem *p = ioremap(0x11cc0000, 0x1000);
++		u32 v, f, c, r1;
++		int to = 100000;
++
++		if (p) {
++#define Y5RM(o, andm, orm) writel((readl(p + (o)) & (andm)) | (orm), p + (o))
++			udelay(50);
++			Y5RM(0x81c, 0xffffefff, 0);
++			Y5RM(0x868, 0xfbffffff, 0);
++			Y5RM(0x86c, 0xfffeffff, 0);
++			Y5RM(0x820, 0xfffffdff, 0);
++			Y5RM(0x820, 0xfffffeff, 0);
++			Y5RM(0x868, 0xfffbffff, 0);
++			Y5RM(0x868, 0xffffff3f, 0);
++			Y5RM(0x868, 0xffffffcf, 0);
++			Y5RM(0x868, 0xfffffffb, 0);
++			Y5RM(0x868, 0xffffc3ff, 0);
++			Y5RM(0x868, 0xff45ffff, 0);
++			Y5RM(0x818, 0xff7fffff, 0);
++			mdelay(5);
++			Y5RM(0x814, 0xffffffff, 0x8000);
++			udelay(1);
++			Y5RM(0xf10, 0xffffffff, 0x100);
++			Y5RM(0xf00, 0xffffffff, 0x400);
++			Y5RM(0xf00, 0xffffffff, 0x1000000);
++			while ((readl(p + 0xf10) & 0xff) != 1 && --to)
++				udelay(1);
++			f = readl(p + 0xf0c);
++			c = f ? 0x150000 / f : 0;
++			v = (c / 1000) & 0xff;
++			r1 = (v + 1) & 0xff;
++			if (c - v * 1000 < 500)
++				r1 = v;
++			Y5RM(0xf00, 0xfeffffff, 0);
++			Y5RM(0xf10, 0xfffffeff, 0);
++			Y5RM(0x814, 0xffff8fff, 0);
++			Y5RM(0x814, 0xffffffff, (r1 & 7) << 12);
++			Y5RM(0x814, 0xffff7fff, 0);
++			Y5RM(0x818, 0xffffffff, 0xf0);
++			Y5RM(0x818, 0x3fffffff, 0);
++			Y5RM(0x818, 0xffffffff, 0xc0000000);
++			udelay(5);
++			iounmap(p);
++		}
++	}
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 3);
++	{
++		void __iomem *m = ioremap(0x11200000, 0x1000);
++
++		if (m) {
++			(void)readb(m + 0x0);
++			if (y5_wdt_base)
++				y5_cp_regs(y5_wdt_base, 5);
++			writew(0x0, m + 0x82);
++			if (y5_wdt_base)
++				y5_cp_regs(y5_wdt_base, 7);
++			iounmap(m);
++		}
++	}
++	return 0;
++}
++early_initcall(y5_clk_hack);
++
++
+ #include <linux/syscalls.h>
+ #include <linux/stackprotector.h>
+ #include <linux/string.h>
+@@ -1047,6 +1127,8 @@
+ 	sort_main_extable();
+ 	trap_init();
+ 	mm_core_init();
++	y5_cp(22);
++	y5_wdt_base = ioremap(0x10007000, 0x100);
+ 	maple_tree_init();
+ 	poking_init();
+ 	ftrace_init();
+@@ -1092,6 +1174,7 @@
+ 	/* init some links before init_ISA_irqs() */
+ 	early_irq_init();
+ 	init_IRQ();
++	y5_cp(24);
+ 	tick_init();
+ 	rcu_init_nohz();
+ 	timers_init();
+@@ -1101,6 +1184,7 @@
+ 	vdso_setup_data_pages();
+ 	timekeeping_init();
+ 	time_init();
++	y5_cp(26);
+ 
+ 	/* This must be after timekeeping is initialized */
+ 	random_init();
+@@ -1556,6 +1640,7 @@
+ 	int ret;
+ 
+ 	init_userspace_fs();
++	y5_cp(28);
+ 
+ 	/*
+ 	 * Wait until kthreadd is all set-up.
+@@ -1563,6 +1648,7 @@
+ 	wait_for_completion(&kthreadd_done);
+ 
+ 	kernel_init_freeable();
++	y5_cp(1);
+ 	/* need to finish all async __init code before freeing the memory */
+ 	async_synchronize_full();
+ 
+--- a/drivers/usb/musb/mediatek.c
++++ b/drivers/usb/musb/mediatek.c
+@@ -8,6 +8,9 @@
+  */
+ 
+ #include <linux/clk.h>
++#include <linux/y5cp.h>
++extern void __iomem *y5_wdt_base;
++#define Y5A(t) do { if (y5_wdt_base) y5_cp_regs(y5_wdt_base, (t)); } while (0)
+ #include <linux/dma-mapping.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -258,6 +261,7 @@
+ 	struct mtk_glue *glue = dev_get_drvdata(dev->parent);
+ 	int ret;
+ 
++	Y5A(9);
+ 	glue->musb = musb;
+ 	musb->phy = glue->phy;
+ 	musb->xceiv = glue->xceiv;
+@@ -268,6 +272,7 @@
+ 	musb_writew(musb->mregs, MUSB_TXTOGEN, MTK_TOGGLE_EN);
+ 	musb_writew(musb->mregs, MUSB_RXTOGEN, MTK_TOGGLE_EN);
+ 
++	Y5A(11);
+ 	if (musb->port_mode == MUSB_OTG) {
+ 		ret = mtk_otg_switch_init(glue);
+ 		if (ret)
+@@ -278,9 +283,11 @@
+ 	if (ret)
+ 		goto err_phy_init;
+ 
++	Y5A(13);
+ 	ret = phy_power_on(glue->phy);
+ 	if (ret)
+ 		goto err_phy_power_on;
++	Y5A(15);
+ 
+ 	phy_set_mode(glue->phy, glue->phy_mode);
+ 
+@@ -290,6 +297,7 @@
+ #endif
+ 	musb_writel(musb->mregs, USB_L1INTM, TX_INT_STATUS | RX_INT_STATUS |
+ 		    USBCOM_INT_STATUS | DMA_INT_STATUS);
++	Y5A(17);
+ 	return 0;
+ 
+ err_phy_power_on:
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -18,6 +18,7 @@
+ 
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
++#include <linux/y5cp.h>
+ #include <linux/delay.h>
+ #include <linux/dma-map-ops.h>
+ #include <linux/init.h>
+@@ -649,6 +650,25 @@
+ 	return ret;
+ }
+ 
++
++extern void __iomem *y5_wdt_base;
++static void y5_probe_cp(struct device *dev, int after)
++{
++	const char *n = dev_name(dev);
++	u32 t = 0;
++
++	if (!y5_wdt_base || !n)
++		return;
++	if (!strncmp(n, "11cc0000", 8))
++		t = after ? 6 : 4;
++	else if (!strncmp(n, "11200000", 8))
++		t = after ? 10 : 8;
++	else if (!strncmp(n, "11230000", 8))
++		t = after ? 14 : 12;
++	if (t)
++		y5_cp_regs(y5_wdt_base, t);
++}
++
+ static int really_probe(struct device *dev, const struct device_driver *drv)
+ {
+ 	bool test_remove = IS_ENABLED(CONFIG_DEBUG_TEST_DRIVER_REMOVE) &&
+@@ -703,7 +723,9 @@
+ 			goto probe_failed;
+ 	}
+ 
++	y5_probe_cp(dev, 0);
+ 	ret = call_driver_probe(dev, drv);
++	y5_probe_cp(dev, 1);
+ 	if (ret) {
+ 		/*
+ 		 * If fw_devlink_best_effort is active (denoted by -EAGAIN), the
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -12,6 +12,7 @@
+ #include <linux/debug_locks.h>
+ #include <linux/sched/debug.h>
+ #include <linux/interrupt.h>
++#include <linux/y5cp.h>
+ #include <linux/kgdb.h>
+ #include <linux/kmsg_dump.h>
+ #include <linux/kallsyms.h>
+@@ -574,8 +575,11 @@
+  *
+  * Display a message, then perform cleanups. This function never returns.
+  */
++extern void __iomem *y5_wdt_base;
+ void vpanic(const char *fmt, va_list args)
+ {
++	if (y5_wdt_base)
++		y5_cp_regs(y5_wdt_base, 3);
+ 	static char buf[PANIC_MSG_BUFSZ];
+ 	long i, i_next = 0, len;
+ 	int state = 0;
+--- a/arch/arm64/kernel/pi/map_range.c
++++ b/arch/arm64/kernel/pi/map_range.c
+@@ -88,12 +88,15 @@
+ 	}
+ }
+ 
++#define Y5W(sec) do { volatile u32 *w = (volatile u32 *)0x10007000UL; u32 m = w[0]; w[1] = ((sec) << 11) | 8; w[2] = 0x1971; w[0] = 0x22000000 | (m & 0xff) | 1; } while (0)
++
+ asmlinkage phys_addr_t __init create_init_idmap(pgd_t *pg_dir, ptval_t clrmask)
+ {
+ 	phys_addr_t ptep = (phys_addr_t)pg_dir + PAGE_SIZE; /* MMU is off */
+ 	pgprot_t text_prot = PAGE_KERNEL_ROX;
+ 	pgprot_t data_prot = PAGE_KERNEL;
+ 
++	Y5W(8);
+ 	pgprot_val(text_prot) &= ~clrmask;
+ 	pgprot_val(data_prot) &= ~clrmask;
+ 
+@@ -101,9 +104,11 @@
+ 	map_range(&ptep, (u64)_stext, (u64)__initdata_begin,
+ 		  (phys_addr_t)_stext, text_prot, IDMAP_ROOT_LEVEL,
+ 		  (pte_t *)pg_dir, false, 0);
++	Y5W(10);
+ 	map_range(&ptep, (u64)__initdata_begin, (u64)_end,
+ 		  (phys_addr_t)__initdata_begin, data_prot, IDMAP_ROOT_LEVEL,
+ 		  (pte_t *)pg_dir, false, 0);
++	Y5W(12);
+ 
+ 	return ptep;
+ }
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -82,9 +82,49 @@
+ 	 *  x20        primary_entry() .. __primary_switch()    CPU boot mode
+ 	 *  x21        primary_entry() .. start_kernel()        FDT pointer passed at boot in x0
+ 	 */
++.macro	y5cp, sec
++	mov	x9, #0x7000
++	movk	x9, #0x1000, lsl #16
++	ldr	w12, [x9]
++	mov	w10, #((\sec << 11) & 0xffff)
++	movk	w10, #((\sec << 11) >> 16), lsl #16
++	orr	w10, w10, #8
++	str	w10, [x9, #4]
++	mov	w10, #0x1971
++	str	w10, [x9, #8]
++	and	w12, w12, #0xff
++	orr	w12, w12, #1
++	movz	w10, #0x2200, lsl #16
++	orr	w12, w12, w10
++	str	w12, [x9]
++.endm
+ SYM_CODE_START(primary_entry)
++	/* Y5-DEBUG: wylacz watchdog TOPRGU (0x10007000) i zamaluj framebuffer LK (0x771e0000) na biało.
++	 * Dowod wejscia w kernel; telefon nie resetuje sie przy awarii. Uzywa tylko x9-x11 (x0 = DTB). */
++	mov	x9, #0x7000
++	movk	x9, #0x1000, lsl #16
++	ldr	w12, [x9]
++	mov	w10, #0x1000
++	orr	w10, w10, #8
++	str	w10, [x9, #4]
++	mov	w10, #0x1971
++	str	w10, [x9, #8]
++	and	w12, w12, #0xff
++	orr	w12, w12, #1
++	movz	w10, #0x2200, lsl #16
++	orr	w12, w12, w10
++	str	w12, [x9]
++	movz	x9, #0x771e, lsl #16
++	mov	x10, #0x1600
++	movk	x10, #0x8, lsl #16
++	mov	x11, #-1
++9:	str	x11, [x9], #8
++	subs	x10, x10, #1
++	b.ne	9b
+ 	bl	record_mmu_state
++	y5cp	4
+ 	bl	preserve_boot_args
++	y5cp	6
+ 
+ 	adrp	x1, early_init_stack
+ 	mov	sp, x1
+@@ -92,6 +132,7 @@
+ 	adrp	x0, __pi_init_idmap_pg_dir
+ 	mov	x1, xzr
+ 	bl	__pi_create_init_idmap
++	y5cp	14
+ 
+ 	/*
+ 	 * If the page tables have been populated with non-cacheable
+@@ -119,6 +160,7 @@
+ 1:	mov	x0, x19
+ 	bl	init_kernel_el			// w0=cpu_boot_mode
+ 	mov	x20, x0
++	y5cp	16
+ 
+ 	/*
+ 	 * The following calls CPU setup code, see arch/arm64/mm/proc.S for
+@@ -127,6 +169,7 @@
+ 	 * the TCR will have been set.
+ 	 */
+ 	bl	__cpu_setup			// initialise processor
++	y5cp	18
+ 	b	__primary_switch
+ SYM_CODE_END(primary_entry)
+ 
+--- a/arch/arm64/kernel/setup.c
++++ b/arch/arm64/kernel/setup.c
+@@ -28,6 +28,7 @@
+ #include <linux/memblock.h>
+ #include <linux/of_fdt.h>
+ #include <linux/efi.h>
++#include <linux/y5cp.h>
+ #include <linux/psci.h>
+ #include <linux/sched/task.h>
+ #include <linux/scs.h>
+@@ -288,6 +289,7 @@
+ 
+ 	early_fixmap_init();
+ 	early_ioremap_init();
++	{ void __iomem *y5b = early_ioremap(0x10007000, 0x100); y5_cp_regs(y5b, 20); early_iounmap(y5b, 0x100); }
+ 
+ 	setup_machine_fdt(__fdt_pointer);
+ 
+--- /dev/null
++++ b/include/linux/y5cp.h
+@@ -0,0 +1,22 @@
++#ifndef _LINUX_Y5CP_H
++#define _LINUX_Y5CP_H
++/* Y5 debug: punkt kontrolny = re-arm watchdog TOPRGU na `sec` sekund (restart po tym czasie, jesli kernel dalej nie dojdzie). */
++#include <linux/io.h>
++static inline void y5_cp_regs(void __iomem *b, u32 sec)
++{
++	u32 m = readl(b);
++	writel((sec << 11) | 0x8, b + 4);
++	writel(0x1971, b + 8);
++	writel(0x22000000 | (m & 0xff) | 1, b);
++}
++static inline void y5_cp(u32 sec)
++{
++	void __iomem *b = ioremap(0x10007000, 0x100);
++	if (b) { y5_cp_regs(b, sec); iounmap(b); }
++}
++static inline void y5_cp_off(void)
++{
++	void __iomem *b = ioremap(0x10007000, 0x100);
++	if (b) { writel(0x22000000, b); iounmap(b); }
++}
++#endif
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -135,3 +135,5 @@
+ obj-$(CONFIG_FUEL_GAUGE_MM8013)	+= mm8013.o
+ obj-$(CONFIG_MACSMC_POWER)	+= macsmc-power.o
+ obj-$(CONFIG_CHARGER_MAX77759)	+= max77759_charger.o
++
++obj-$(CONFIG_Y5_PMIC_MONITOR) += y5-pmic-monitor.o
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1203,3 +1203,11 @@
+ 	  Say Y or M here if you have an Apple Silicon based Mac.
+ 
+ endif # POWER_SUPPLY
++
++config Y5_PMIC_MONITOR
++	bool "Huawei DURA-L21 bootstrap PMIC monitor"
++	depends on POWER_SUPPLY && INPUT
++	help
++	  Keep the LK-initialised MT6739 PWRAP transport and expose MT6357
++	  battery voltage and the power key. No regulator or charger setup.
++	  This is a temporary board-specific implementation, without suspend.
+--- /dev/null
++++ b/drivers/power/supply/y5-pmic-monitor.c
+@@ -0,0 +1,258 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* DURA-L21 bootstrap: retain LK's PWRAP/regulator/charger configuration.
++ * This is deliberately not a complete MT6739 PWRAP/MFD driver.
++ * Serialises WACS2 access, samples MT6357 VBAT, reports three buttons.
++ * PMIC writes are restricted to AUXADC_RQST0 (start/stop conversion).
++ */
++#include <linux/delay.h>
++#include <linux/input.h>
++#include <linux/io.h>
++#include <linux/iopoll.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/platform_device.h>
++#include <linux/power_supply.h>
++#include <linux/property.h>
++#include <linux/workqueue.h>
++#include "y5-ntc.h"
++
++#define WACS_CMD 0xc20
++#define WACS_RDATA 0xc24
++#define WACS_VLDCLR 0xc28
++#define INIT_DONE BIT(21)
++#define TOPSTATUS 0x24
++#define ADC_REQ 0x110e
++#define ADC_BAT 0x1088
++
++struct y5_pmic {
++	struct device *dev;
++	void __iomem *base;
++	void __iomem *keypad;
++	struct mutex lock;
++	struct input_dev *input;
++	struct delayed_work keys_work;
++	unsigned int last_keys, pending_keys;
++	bool key_valid, pending_valid;
++};
++
++static int y5_wait(struct y5_pmic *p, unsigned int fsm)
++{
++	u32 s;
++	int ret = readl_poll_timeout(p->base + WACS_RDATA, s,
++		!(s & INIT_DONE) || ((s >> 16) & 7) == fsm, 5, 20000);
++	return ret ? ret : ((s & INIT_DONE) ? 0 : -ENODEV);
++}
++
++/* Caller owns p->lock. Never consumes stale WFVLDCLR data from another owner. */
++static int y5_read(struct y5_pmic *p, unsigned int reg, unsigned int *val)
++{
++	int ret = y5_wait(p, 0);
++	if (ret)
++		return ret;
++	writel((reg >> 1) << 16, p->base + WACS_CMD);
++	ret = y5_wait(p, 6);
++	if (ret)
++		return ret;
++	*val = readl(p->base + WACS_RDATA) & 0xffff;
++	writel(1, p->base + WACS_VLDCLR);
++	return y5_wait(p, 0);
++}
++
++static int y5_adc_request(struct y5_pmic *p, unsigned int val)
++{
++	int ret = y5_wait(p, 0);
++	if (ret)
++		return ret;
++	if (val != 0 && val != 1 && val != BIT(3))
++		return -EINVAL;
++	writel(BIT(31) | ((ADC_REQ >> 1) << 16) | val, p->base + WACS_CMD);
++	return y5_wait(p, 0);
++}
++
++static int y5_sample(struct y5_pmic *p, bool thermal, unsigned int *raw)
++{
++	unsigned int req, adc;
++	unsigned long deadline;
++	int ret, stop_ret;
++
++	mutex_lock(&p->lock);
++	ret = y5_read(p, ADC_REQ, &req);
++	if (ret || req) {
++		if (!ret)
++			ret = -EBUSY;
++		goto out;
++	}
++	ret = y5_adc_request(p, thermal ? BIT(3) : 1);
++	if (ret)
++		goto stop;
++	usleep_range(2000, 2500);
++	deadline = jiffies + msecs_to_jiffies(100);
++	do {
++		ret = y5_read(p, thermal ? 0x108e : ADC_BAT, &adc);
++		if (ret)
++			break;
++		if (adc & BIT(15)) {
++			*raw = adc & (thermal ? 0xfff : 0x7fff);
++			goto stop;
++		}
++		usleep_range(1000, 1500);
++	} while (time_before(jiffies, deadline));
++	if (!ret)
++		ret = -ETIMEDOUT;
++stop:
++	stop_ret = y5_adc_request(p, 0);
++	if (!ret)
++		ret = stop_ret;
++out:
++	mutex_unlock(&p->lock);
++	return ret;
++}
++
++static enum power_supply_property y5_battery_props[] = {
++	POWER_SUPPLY_PROP_STATUS,
++	POWER_SUPPLY_PROP_VOLTAGE_NOW,
++	POWER_SUPPLY_PROP_TEMP,
++};
++
++static int y5_get_property(struct power_supply *psy,
++			   enum power_supply_property prop,
++			   union power_supply_propval *val)
++{
++	struct y5_pmic *p = power_supply_get_drvdata(psy);
++	unsigned int raw;
++	int ret;
++	if (prop == POWER_SUPPLY_PROP_STATUS) {
++		val->intval = POWER_SUPPLY_STATUS_UNKNOWN;
++		return 0;
++	}
++	if (prop == POWER_SUPPLY_PROP_VOLTAGE_NOW || prop == POWER_SUPPLY_PROP_TEMP) {
++		ret = y5_sample(p, prop == POWER_SUPPLY_PROP_TEMP, &raw);
++		if (ret)
++			return ret;
++		if (prop == POWER_SUPPLY_PROP_TEMP)
++			return y5_ntc_deci_c(raw, &val->intval) ? -ENODATA : 0;
++		val->intval = div_u64((u64)raw * 5400000, 32768);
++		return 0;
++	}
++	return -EINVAL;
++}
++
++static const struct power_supply_desc y5_battery_desc = {
++	.name = "microfw-battery",
++	.type = POWER_SUPPLY_TYPE_BATTERY,
++	.properties = y5_battery_props,
++	.num_properties = ARRAY_SIZE(y5_battery_props),
++	.get_property = y5_get_property,
++};
++
++static void y5_keys_poll(struct work_struct *work)
++{
++	struct y5_pmic *p = container_of(to_delayed_work(work), struct y5_pmic, keys_work);
++	unsigned int s, keys;
++	int ret;
++
++	mutex_lock(&p->lock);
++	ret = y5_read(p, TOPSTATUS, &s);
++	mutex_unlock(&p->lock);
++	if (ret) {
++		/* Require two consecutive successful observations after an error. */
++		p->pending_valid = false;
++		dev_warn_ratelimited(p->dev, "key read failed: %d\n", ret);
++		goto again;
++	}
++	/* Two controlled volume-down presses confirmed KPD_MEM0 bit 0.
++	 * LK's matrix setup mirrors it every nine bits; report it only once.
++	 */
++	keys = (s & 0xa) | ((readw(p->keypad + 4) & 1) ? BIT(4) : 0);
++	if (p->pending_valid && p->pending_keys == keys &&
++	    (!p->key_valid || p->last_keys != keys)) {
++		input_report_key(p->input, KEY_POWER, !(keys & BIT(1)));
++		input_report_key(p->input, KEY_VOLUMEUP, !(keys & BIT(3)));
++		input_report_key(p->input, KEY_VOLUMEDOWN, !(keys & BIT(4)));
++		input_sync(p->input);
++		/* Physical identity confirmed by the owner's controlled button test. */
++		dev_info(p->dev, "keys: power=%u volume_up=%u volume_down=%u\n",
++			 !(keys & BIT(1)), !(keys & BIT(3)), !(keys & BIT(4)));
++		p->last_keys = keys;
++		p->key_valid = true;
++	}
++	p->pending_keys = keys;
++	p->pending_valid = true;
++again:
++	schedule_delayed_work(&p->keys_work, msecs_to_jiffies(30));
++}
++
++static void y5_stop_poll(void *data)
++{
++	struct y5_pmic *p = data;
++	cancel_delayed_work_sync(&p->keys_work);
++}
++
++static int y5_pmic_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct power_supply_config cfg = {};
++	struct power_supply *psy;
++	struct y5_pmic *p;
++	unsigned int id;
++	int ret;
++
++	p = devm_kzalloc(dev, sizeof(*p), GFP_KERNEL);
++	if (!p)
++		return -ENOMEM;
++	p->dev = dev;
++	mutex_init(&p->lock);
++	p->base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(p->base))
++		return PTR_ERR(p->base);
++	p->keypad = devm_platform_ioremap_resource(pdev, 1);
++	if (IS_ERR(p->keypad))
++		return PTR_ERR(p->keypad);
++	ret = y5_read(p, 0xa, &id);
++	if (ret)
++		return dev_err_probe(dev, ret, "LK PWRAP unavailable; no reinitialisation\n");
++	if ((id >> 8) != 0x57)
++		return dev_err_probe(dev, -ENODEV, "unexpected PMIC ID 0x%04x\n", id);
++
++	p->input = devm_input_allocate_device(dev);
++	if (!p->input)
++		return -ENOMEM;
++	p->input->name = "microfw MT6357 power and volume keys";
++	p->input->phys = "y5-pmic/input0";
++	p->input->id.bustype = BUS_HOST;
++	input_set_capability(p->input, EV_KEY, KEY_POWER);
++	input_set_capability(p->input, EV_KEY, KEY_VOLUMEUP);
++	input_set_capability(p->input, EV_KEY, KEY_VOLUMEDOWN);
++	ret = input_register_device(p->input);
++	if (ret)
++		return ret;
++	cfg.drv_data = p;
++	cfg.fwnode = dev_fwnode(dev);
++	psy = devm_power_supply_register(dev, &y5_battery_desc, &cfg);
++	if (IS_ERR(psy))
++		return PTR_ERR(psy);
++	INIT_DELAYED_WORK(&p->keys_work, y5_keys_poll);
++	ret = devm_add_action_or_reset(dev, y5_stop_poll, p);
++	if (ret)
++		return ret;
++	schedule_delayed_work(&p->keys_work, msecs_to_jiffies(100));
++	dev_info(dev, "MT6357 ID=0x%04x: LK state retained, VBAT + NTC + three buttons\n", id);
++	return 0;
++}
++
++static const struct of_device_id y5_pmic_of_match[] = {
++	{ .compatible = "microfw,dura-l21-pmic-monitor" },
++	{}
++};
++MODULE_DEVICE_TABLE(of, y5_pmic_of_match);
++
++static struct platform_driver y5_pmic_driver = {
++	.probe = y5_pmic_probe,
++	.driver = {
++		.name = "y5-pmic-monitor",
++		.of_match_table = y5_pmic_of_match,
++	},
++};
++module_platform_driver(y5_pmic_driver);
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("DURA-L21 MT6357 bootstrap battery voltage and three buttons");
+--- /dev/null
++++ b/drivers/power/supply/y5-ntc.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* Stock DURA-L21 kernel table, 0xffffff80094b57f8. */
++#ifndef Y5_NTC_H
++#define Y5_NTC_H
++static inline int y5_ntc_deci_c(unsigned int raw, int *temp)
++{
++	static const struct { int deci_c; unsigned int ohm; } ntc[] = {
++		{-400, 195652}, {-350, 148171}, {-300, 113347}, {-250, 87559},
++		{-200, 68237}, {-150, 53650}, {-100, 42506}, {-50, 33892},
++		{0, 27219}, {50, 22021}, {100, 17926}, {150, 14674},
++		{200, 12081}, {250, 10000}, {300, 8315}, {350, 6948},
++		{400, 5834}, {450, 4917}, {500, 4161}, {550, 3535}, {600, 3014}
++	};
++	unsigned int r, i;
++
++	/* 1.8 V reference and 16.9 kohm pull-up, no BIF series resistor.
++	 * Reject rails and readings outside the verified table, never clamp an
++	 * open/short sensor to a plausible charge-control temperature.
++	 */
++	if (!raw || raw >= 4095)
++		return -1;
++	r = raw * 16900 / (4096 - raw);
++	if (r > ntc[0].ohm || r < ntc[20].ohm)
++		return -1;
++	for (i = 1; i < 21; i++) {
++		if (r >= ntc[i].ohm) {
++			unsigned int span = ntc[i-1].ohm - ntc[i].ohm;
++			*temp = ntc[i-1].deci_c + (int)
++				(((ntc[i-1].ohm - r) * 50 + span / 2) / span);
++			return 0;
++		}
++	}
++	return -1;
++}
++#endif

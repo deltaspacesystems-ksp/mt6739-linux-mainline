@@ -1,0 +1,8 @@
+MTKEnableMfgClock.isra.3
+MTKDisableMfgClock.isra.1
+MTKDevPrePowerState
+MTKDevPostPowerState
+mt_gpufreq_voltage_enable_set
+mt_gpufreq_voltage_lpm_set
+_mt_gpufreq_get_cur_volt
+mt_gpufreq_clock_switch

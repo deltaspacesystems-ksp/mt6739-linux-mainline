@@ -1,0 +1,25 @@
+{
+  "status": "source audit and offline guard tests; no new hardware test",
+  "brn65273": {
+    "source": "services/server/devices/rgx/rgxheapconfig.h and rgxinit.c",
+    "pds": {
+      "base_hex": "0xa800000000",
+      "bytes_hex": "0x40000000"
+    },
+    "usc": {
+      "base_hex": "0xba00000000",
+      "bytes_hex": "0x40000000"
+    },
+    "selection": "RGXInitHeaps checks runtime ui64ErnsBrns bitmask",
+    "effect": "PDS/USC each1GiB rather than default4GiB; offset32bit alone does not validate heap membership",
+    "other_requirements": "MMU_INIA and MMU_INIB region headers4GiB apart; General/non4K/VisTest/TQ also use workaround layouts"
+  },
+  "brn63553": {
+    "source": "services/server/devices/rgx/rgxstartstop.c near297",
+    "effect": "MIPS firmware delay-slot prefetch with TLB miss: remap5 configured to boot remap physical address",
+    "scope": "Existing kernel firmware startup responsibility; not evidence of USC instruction workaround or active-GPU kexec safety"
+  },
+  "native_range_guard": "mfw_cdm19_heap_range checks nonzero span within supplied queried heap size and32bit representability, safe subtraction, no silent truncation",
+  "validation": "ASan/UBSan boundary cases and existing regression PASS; ARM64 Werror compile PASS",
+  "limits": "Do not replace actual queried heap bounds with hardcoded addresses; source constants are reference only. Resource ownership and exact target USC quirks unresolved."
+}

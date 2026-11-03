@@ -1,0 +1,14 @@
+{
+  "scope": "accept PMR pid0 or getpid only; no foreign-pid override in legacy ABI",
+  "host_sanitizers": "PASS current-process acceptance, foreign-pid rejection, prior adapter regression",
+  "host_library": "PASS full x86_64 library link",
+  "phone": "PASS current-pid PMR zero/write/read/map/unmap/free plus sync import readback12345678",
+  "driver": "OK",
+  "firmware": "OK",
+  "hwr": 0,
+  "crr": 0,
+  "reboot": false,
+  "rendering": false,
+  "patch_sha256": "fe46edc0a97b952a2008bb7d7b591cb1b8b6795e0542577eb735406924f8170a",
+  "remaining_heap_gap": "modern carveout_size used by pvr_srv_heap_init; old details has no reserved-size output; not substituted with invented0"
+}

@@ -1,0 +1,25 @@
+{
+  "status": "LIVE PM-protectedGPU-only freelist lifecycle PASS plushost adapter regression/buildPASS",
+  "translation": "Modern PM_FW_PROTECT devicebit26 ->legacy PMMETA_PROTECT devicebit24, applied to bothPMR allocation andGPU mapping. Otherdevice hints still rejected.",
+  "guards": "RejectprotectedPMR withuserCPUread/write permissions; permitkernel-only access neededbyPMRWritePMPageList",
+  "source_evidence": [
+    "modern pvr_srv_bo.h DEVICE_FLAGS_OFFSET26 andPM_FW_PROTECT0",
+    "legacy pvrsrv_memallocflags.h DEVICE_FLAGS_OFFSET24 andrgx_memallocflags.h PMMETA_PROTECT0"
+  ],
+  "validation": [
+    "Explicitflag vectors andnegativeCPUpermission/unknownflag/upperbit cases underASan/UBSanPASS",
+    "Existing full adaptermock regressionASan/UBSanPASS",
+    "PatchapplycheckPASS afternormalizingLF",
+    "Fullhost libvulkan_powervr_mesa.so rebuildPASS, includingregeneratedfixedcontextusclib",
+    "NativeAlpineprotectedtable/freelist32pagesCREATE/DESTROY+rendercontextcleanupRC0"
+  ],
+  "after": {
+    "HWR": 1,
+    "HWR_change": 0,
+    "CRR": 0,
+    "Driver": "OK",
+    "Firmware": "OK",
+    "GPUutil": "0%"
+  },
+  "limits": "NoTA/3Djob or pixel output. Hostlibrary isx86_64, not deployedARM64MesaICD. ProtectedCPUpermissions limitedpolicy; no broaderdeviceflags enabled."
+}

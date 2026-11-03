@@ -1,0 +1,40 @@
+{
+  "status": "offline grouped IR inspected; no GPU upload",
+  "profile": "Synthetic depth64/slots4, identifier22.49.21.16 only; incomplete hardware profile",
+  "shader": "Normal compute internalfalse, workgroup1, guarded global32bit store",
+  "observed": {
+    "instruction_groups": 12,
+    "temps": 5,
+    "vtxins": 1,
+    "shareds": 0,
+    "input": "vi0 read for local invocation index, compared signed<1",
+    "operations": [
+      "mbyp",
+      "pck.zero",
+      "tst.s32.l",
+      "movc",
+      "cndst.if",
+      "tst.u32.z",
+      "br.allinst",
+      "bbyp0bm_imm32",
+      "st.writethrough",
+      "wdf",
+      "cndend",
+      "nop"
+    ],
+    "memory": "One32bit store to hardcoded diagnostic VA0x65c0000000; DRC0 thenWDF",
+    "control_flow": "Compiler emits conditional-execution prologue/epilogue using r4; not an unconditionally executing single store"
+  },
+  "dispatch_requirements": [
+    "PDS must supply correct vi0 local invocation index (0 for single invocation); cannot leave input undefined",
+    "USC task temp allocation must cover final metadata5temps, with exact validated unit rounding",
+    "Validate conditional-execution, store/cache, WDF and ending encodings for actual target/errata",
+    "Back diagnostic GPUVA with owned PMR and correct CPU/GPU cache/synchronization; sentinel readback after completion",
+    "Complete old120B firmware packet and context USC/PDS state contract before any kick"
+  ],
+  "not_proven": [
+    "Actual hardware capacity or opcode compatibility",
+    "Correct PDS input setup or legacy submission",
+    "Shader completion/readback or3D"
+  ]
+}

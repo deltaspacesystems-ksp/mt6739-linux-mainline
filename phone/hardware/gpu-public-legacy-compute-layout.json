@@ -1,0 +1,32 @@
+{
+  "status": "Independent historical public layout correlation PASS; not exact DDK1.9 target proof",
+  "source_url": "https://android.googlesource.com/kernel/mediatek/+/4f43e6b499c6d194030df8d2506485db9d5165bd/drivers/staging/imgtec/rogue/rgx_fwif_client.h",
+  "source_commit": "4f43e6b499c6d194030df8d2506485db9d5165bd",
+  "file_sha256": "27a93d28432b4ca99912366887b64d15899634b7d3136b272b87acf17339452d",
+  "license": "DualMIT/GPLv2; original notice preserved in extracted test",
+  "layout": "Historical declarations compiled with optional feature branches disabled:56 runtime+56context+flags4+deadline4=120bytes",
+  "validation": "Host offsetof/sizeof assertions PASS; ARM64-Wall-Wextra-Werror compile PASS",
+  "candidate_semantics_by_offset": {
+    "0": "CDM_CTRL_STREAM_BASE",
+    "8": "TPU_BORDER_COLOUR_TABLE",
+    "16": "COMPUTE_THREAD_BARRIER",
+    "24": "PDS_CTRL",
+    "32": "TPU_YUV_CSC_COEFFICIENTS",
+    "40": "TPU (or TPU_CEM_CDM if corresponding feature enabled)",
+    "48": "TPU_ARRAYS_CDM",
+    "56": "context-switch7qwords",
+    "112": "flags",
+    "116": "max deadlineMS"
+  },
+  "cross_checks": [
+    "All7context roles/order agree with prior private stockhelper analysis",
+    "flags/deadline offsets agree with independent ARM64 stock wrapper",
+    "Candidate runtime order agrees with7qword boundary, but semantics still need exact version/register validation"
+  ],
+  "critical_limit": "Public source is historical android-mtk3.18 branch, not established as exact1.9@4893595. Feature-neutral compilation is a candidate hypothesis, not proof that target features are absent. Packet48..55 remains unwritten in observed stock wrapper; matching header field does not prove firmware uses or ignores it.",
+  "next": [
+    "Find exact register definitions or firmware consumers to corroborate runtime fields/feature branches",
+    "Validate PDS_CTRL constant0x44000000 and TPU0x20 against target register masks",
+    "Keep full packet submission disabled pending target programs/profile and unresolved fields"
+  ]
+}

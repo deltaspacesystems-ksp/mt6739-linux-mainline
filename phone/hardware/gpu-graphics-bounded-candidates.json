@@ -1,0 +1,23 @@
+{
+  "status": "Offline selected VS/FS compiled with unknown physical capacities and explicit standalone software RA budget20",
+  "budget_is_hardware_limit": false,
+  "production_compiler_changed": false,
+  "vertex": {
+    "bytes": 176,
+    "temps": 6,
+    "vtxins": 1,
+    "shareds": 0,
+    "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+  },
+  "fragment": {
+    "bytes": 440,
+    "temps": 9,
+    "vtxins": 0,
+    "shareds": 1,
+    "sha256": "90c2cde42b3385bfa2a4952a011deebc2033bc6c0a4ae79ee655668d283ae14f"
+  },
+  "failed_trial": "Budget8 VS passed; FS needs spill path and failed setup_spill_base guard. Do not enable unconfigured spilling. Budget20 no-spill guard passes.",
+  "fs_shared_contract": "pvr_alloc_fs_sysvals reserves one shared DWORD fs.meta at0. Explicit guard permits exactly that for FS; VS shareds0. Fragment NIR also uses sample ID, coverage and ISP feedback.",
+  "fs_meta_candidate": "Upstream builder: alpha_to_one bit0, color_write_enables<<1, sample_mask<<9, alpha_to_coverage bit25. Single sample/color0 enabled gives0x202; must deliver via PDS shared load, not implicit zero.",
+  "limits": "Offline only; VS/FS not uploaded or executed, no triangle. Physical profile, ISP/PBE/VDM/PDS contracts and real render buffers remain unverified."
+}

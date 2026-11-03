@@ -1,0 +1,92 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Huawei Y5 2018 (DRA-L21 / DURA-L21) - MT6739, LPDDR3 2 GB, ILI9881C 720x1440
+ */
+/dts-v1/;
+#include "mt6739.dtsi"
+
+/ {
+	model = "Huawei Y5 2018 (DRA-L21)";
+	compatible = "huawei,dra-l21", "mediatek,mt6739";
+
+	chosen {
+		/* LK dopisuje swoje parametry (androidboot.*) i linux,initrd-start/end */
+		bootargs = "earlycon=uart8250,mmio32,0x11002000 console=tty0 loglevel=8 keep_bootcon clk_ignore_unused pd_ignore_unused";
+		stdout-path = &uart0;
+	};
+
+	/* LK podmienia rozmiar po wykryciu DRAM (2 GB LPDDR3, do 0xbfe00000 + consys) */
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0 0x40000000 0 0x7fe00000>;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		/* ARM Trusted Firmware */
+		atf@44600000 {
+			reg = <0 0x44600000 0 0x40000>;
+			no-map;
+		};
+		/* TEE (TEEI) */
+		tee@70000000 {
+			reg = <0 0x70000000 0 0x3c40000>;
+			no-map;
+		};
+		/* MCUPM + SPM firmware */
+		pm-fw@771c0000 {
+			reg = <0 0x771c0000 0 0x20000>;
+			no-map;
+		};
+		/* framebuffer zainicjowany przez LK (ILI9881C 720x1440) */
+		fb_mem: framebuffer@771e0000 {
+			reg = <0 0x771e0000 0 0xe20000>;
+			no-map;
+		};
+		emi@7ffff000 {
+			reg = <0 0x7ffff000 0 0x1000>;
+			no-map;
+		};
+		consys@bfe00000 {
+			reg = <0 0xbfe00000 0 0x200000>;
+			no-map;
+		};
+		dram-dummy-r0@5bfff000 {
+			reg = <0 0x5bfff000 0 0x1000>;
+			no-map;
+		};
+		dram-dummy-r1@8dfff000 {
+			reg = <0 0x8dfff000 0 0x1000>;
+			no-map;
+		};
+		/* log po restarcie (ten sam obszar co pstore stocka) */
+		ramoops@44410000 {
+			compatible = "ramoops";
+			reg = <0 0x44410000 0 0xe0000>;
+			console-size = <0x40000>;
+			record-size = <0x10000>;
+			pmsg-size = <0x10000>;
+			ftrace-size = <0>;
+			no-map;
+		};
+	};
+
+	soc {
+		fb0: framebuffer@771e0000 {
+			compatible = "simple-framebuffer";
+			reg = <0 0x771e0000 0 0xe20000>;
+			memory-region = <&fb_mem>;
+			width = <720>;
+			height = <1440>;
+			stride = <2944>;
+			format = "a8b8g8r8";
+		};
+	};
+};
+
+&uart0 {
+	status = "okay";
+};

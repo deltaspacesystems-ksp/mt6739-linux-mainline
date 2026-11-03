@@ -1,0 +1,3430 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,5 @@
+ OPTIM = -Os
++MTK_PLATFORM := mt6739
+ 
+ MTK_GPU_VERSION = $(subst ",,$(CONFIG_MTK_GPU_VERSION))
+ 
+@@ -12,7 +13,7 @@
+ 	ECO := ""
+ endif
+ 
+-RGX_TOP := $(dir $(lastword $(MAKEFILE_LIST)))
++RGX_TOP := $(src)/
+ VER := $(if $(filter eng,$(TARGET_BUILD_VARIANT)),eng,user)
+ 
+ #MTK_DDK_DEBUG := y
+@@ -28,14 +29,16 @@
+ 	-fno-strict-aliasing \
+ 	-W -Wall \
+ 	-Wno-missing-field-initializers \
+-	-Wdeclaration-after-statement \
+ 	-Wno-format-zero-length \
+ 	-Wmissing-prototypes \
+ 	-Wstrict-prototypes \
+ 	-Wno-unused-parameter \
+ 	-Wno-sign-compare \
+ 	-Wno-type-limits \
+-	-Wno-error
++	-Wno-unused-but-set-variable \
++	-Wno-unused-const-variable \
++	-Wno-suggest-attribute=format \
++	-Werror
+ 
+ pvrsrvkm-y += \
+ 	services/server/env/linux/event.o \
+@@ -89,9 +92,7 @@
+ 	services/server/common/info_page_km.o \
+ 	services/server/common/devicemem_history_server.o \
+ 	services/server/env/linux/handle_idr.o \
+-	services/server/env/linux/pvr_gputrace.o \
+-	services/server/env/linux/sync_native_server.o \
+-	services/server/env/linux/trace_events.o \
++	services/server/env/linux/dma_fence_sync_native_server.o \
+ 	services/server/devices/rgx/env/linux/km/rgxfwload.o \
+ 	services/server/devices/rgx/rgxsignals.o \
+ 	services/server/devices/rgx/debugmisc_server.o \
+@@ -133,7 +134,10 @@
+ 	services/system/common/env/linux/dma_support.o \
+ 	services/system/common/env/linux/interrupt_support.o \
+ 	kernel/drivers/staging/imgtec/pvr_platform_drv.o \
+-	kernel/drivers/staging/imgtec/pvr_sync2.o \
++	kernel/drivers/staging/imgtec/pvr_sync_dma_fence.o \
++	kernel/drivers/staging/imgtec/pvr_counting_timeline.o \
++	kernel/drivers/staging/imgtec/pvr_sw_fence.o \
++	kernel/drivers/staging/imgtec/pvr_fence.o \
+ 	kernel/drivers/staging/imgtec/pvr_drm.o \
+ 	generated/mm_bridge/client_mm_direct_bridge.o \
+ 	generated/mm_bridge/server_mm_bridge.o \
+@@ -162,10 +166,8 @@
+ 	generated/devicememhistory_bridge/server_devicememhistory_bridge.o \
+ 	generated/devicememhistory_bridge/client_devicememhistory_direct_bridge.o \
+ 	generated/rgxsignals_bridge/server_rgxsignals_bridge.o \
+-	services/system/rgx_mtk/ion_support.o \
+-	services/system/rgx_mtk/mtk_pp.o \
+ 	services/system/rgx_mtk/sysconfig.o \
+-	services/system/rgx_mtk/$(MTK_PLATFORM)/mtk_mfgsys.o
++	services/system/rgx_mtk/mfw-ddk-power.o
+ 
+ pvrsrvkm-$(CONFIG_ARM) += services/server/env/linux/osfunc_arm.o
+ pvrsrvkm-$(CONFIG_ARM64) += services/server/env/linux/osfunc_arm64.o
+@@ -211,7 +213,6 @@
+ 	-I$(RGX_TOP)/generated/regconfig_bridge \
+ 	-I$(RGX_TOP)/generated/rgxcmp_bridge \
+ 	-I$(RGX_TOP)/generated/rgxhwperf_bridge \
+-	-I$(RGX_TOP)/generated/rgxinit_bridge \
+ 	-I$(RGX_TOP)/generated/rgxkicksync_bridge \
+ 	-I$(RGX_TOP)/generated/rgxray_bridge \
+ 	-I$(RGX_TOP)/generated/rgxta3d_bridge \
+@@ -232,22 +233,10 @@
+ 	-I$(RGX_TOP)/services/shared/common \
+ 	-I$(RGX_TOP)/services/shared/devices/rgx \
+ 	-I$(RGX_TOP)/services/shared/include \
+-	-I$(RGX_TOP)/services/srvinit/devices/rgx \
+-	-I$(RGX_TOP)/services/srvinit/include \
+ 	-I$(RGX_TOP)/services/system/include \
+ 	-I$(RGX_TOP)/services/system/rgx_mtk \
+ 	-I$(RGX_TOP)/services/system/rgx_mtk/$(MTK_PLATFORM)
+ 
+-ccflags-y += \
+-	-I$(srctree)/drivers/staging/android/ion \
+-	-I$(srctree)/drivers/staging/android/ion/mtk \
+-	-I$(srctree)/drivers/misc/mediatek/gpu/ged/include \
+-	-I$(srctree)/drivers/misc/mediatek/include/mt-plat \
+-	-I$(srctree)/drivers/misc/mediatek/base/power/$(MTK_PLATFORM)
+-
+-ifeq ($(MTK_PLATFORM),mt6799)
+-	ccflags-y += \
+-		-I$(srctree)/drivers/misc/mediatek/pmic/include/mt6335
+-endif
+-
+ obj-y += pvrsrvkm.o
++
++ccflags-y += -include $(RGX_TOP)/include/mfw-linux-compat.h
+--- a/generated/breakpoint_bridge/server_breakpoint_bridge.c
++++ b/generated/breakpoint_bridge/server_breakpoint_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/cache_bridge/server_cache_bridge.c
++++ b/generated/cache_bridge/server_cache_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/cmm_bridge/server_cmm_bridge.c
++++ b/generated/cmm_bridge/server_cmm_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/debugmisc_bridge/server_debugmisc_bridge.c
++++ b/generated/debugmisc_bridge/server_debugmisc_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/devicememhistory_bridge/server_devicememhistory_bridge.c
++++ b/generated/devicememhistory_bridge/server_devicememhistory_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/dmabuf_bridge/server_dmabuf_bridge.c
++++ b/generated/dmabuf_bridge/server_dmabuf_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/htbuffer_bridge/server_htbuffer_bridge.c
++++ b/generated/htbuffer_bridge/server_htbuffer_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/mm_bridge/server_mm_bridge.c
++++ b/generated/mm_bridge/server_mm_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/pdump_bridge/server_pdump_bridge.c
++++ b/generated/pdump_bridge/server_pdump_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/pdumpctrl_bridge/server_pdumpctrl_bridge.c
++++ b/generated/pdumpctrl_bridge/server_pdumpctrl_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/pdumpmm_bridge/server_pdumpmm_bridge.c
++++ b/generated/pdumpmm_bridge/server_pdumpmm_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/pvrtl_bridge/server_pvrtl_bridge.c
++++ b/generated/pvrtl_bridge/server_pvrtl_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/regconfig_bridge/server_regconfig_bridge.c
++++ b/generated/regconfig_bridge/server_regconfig_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxcmp_bridge/server_rgxcmp_bridge.c
++++ b/generated/rgxcmp_bridge/server_rgxcmp_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxhwperf_bridge/server_rgxhwperf_bridge.c
++++ b/generated/rgxhwperf_bridge/server_rgxhwperf_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxkicksync_bridge/server_rgxkicksync_bridge.c
++++ b/generated/rgxkicksync_bridge/server_rgxkicksync_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxpdump_bridge/server_rgxpdump_bridge.c
++++ b/generated/rgxpdump_bridge/server_rgxpdump_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxray_bridge/server_rgxray_bridge.c
++++ b/generated/rgxray_bridge/server_rgxray_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxsignals_bridge/server_rgxsignals_bridge.c
++++ b/generated/rgxsignals_bridge/server_rgxsignals_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxta3d_bridge/server_rgxta3d_bridge.c
++++ b/generated/rgxta3d_bridge/server_rgxta3d_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxtq2_bridge/server_rgxtq2_bridge.c
++++ b/generated/rgxtq2_bridge/server_rgxtq2_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/rgxtq_bridge/server_rgxtq_bridge.c
++++ b/generated/rgxtq_bridge/server_rgxtq_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/ri_bridge/server_ri_bridge.c
++++ b/generated/ri_bridge/server_ri_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/srvcore_bridge/server_srvcore_bridge.c
++++ b/generated/srvcore_bridge/server_srvcore_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/sync_bridge/server_sync_bridge.c
++++ b/generated/sync_bridge/server_sync_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/synctracking_bridge/server_synctracking_bridge.c
++++ b/generated/synctracking_bridge/server_synctracking_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/generated/timerquery_bridge/server_timerquery_bridge.c
++++ b/generated/timerquery_bridge/server_timerquery_bridge.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include <asm/uaccess.h>
+ 
+ #include "img_defs.h"
+--- a/include/config_kernel_user_mt6739.h
++++ b/include/config_kernel_user_mt6739.h
+@@ -9,7 +9,7 @@
+ #define RGX_FW_HEAP_SHIFT  25
+ #define RGX_FW_FILENAME "rgx.fw.signed"
+ #define LINUX
+-#define PVR_BUILD_DIR "mt6739_android"
++#define PVR_BUILD_DIR "mt6739_microfw"
+ #define PVR_BUILD_TYPE "release"
+ #define PVRSRV_MODNAME "pvrsrvkm"
+ #define SUPPORT_RGX 1
+@@ -20,7 +20,6 @@
+ #define PDUMP_STREAMBUF_MAX_SIZE_MB 16
+ #define PVRSRV_NEED_PVR_DPF
+ #define PVRSRV_NEED_PVR_STACKTRACE_NATIVE
+-#define SUPPORT_GPUTRACE_EVENTS
+ #define PVRSRV_VZ_NUM_OSID
+ #define PVRSRV_APPHINT_DRIVERMODE 0x7FFFFFFF
+ #define PVR_POWER_ACTOR
+@@ -110,13 +109,6 @@
+ #define PVRSRV_RGX_LOG2_CLIENT_CCB_SIZE_3D 16
+ #define PVRSRV_RGX_LOG2_CLIENT_CCB_SIZE_KICKSYNC 13
+ #define PVRSRV_RGX_LOG2_CLIENT_CCB_SIZE_RTU 15
+-#define ANDROID
+-#define SUPPORT_ION
+-#define PVR_ANDROID_ION_HEADER "../drivers/staging/android/ion/ion.h"
+-#define PVR_ANDROID_ION_PRIV_HEADER "../drivers/staging/android/ion/ion_priv.h"
+-#define PVR_ANDROID_ION_USE_SG_LENGTH
+-#define PVR_ANDROID_SYNC_HEADER "../drivers/staging/android/sync.h"
+-#define MTK_USE_HW_APM
+-#define MTK_DEBUG_PROC_PRINT
+ #define MTK_CONFIG_OF
+-#define ENABLE_COMMON_DVFS
++
++#define SUPPORT_DMA_FENCE
+--- a/include/img_defs.h
++++ b/include/img_defs.h
+@@ -45,7 +45,11 @@
+ #if !defined (__IMG_DEFS_H__)
+ #define __IMG_DEFS_H__
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_types.h"
+ 
+@@ -288,10 +292,14 @@
+ /* Other attributes, following the same style */
+ #if defined(__GNUC__) || defined(HAS_GNUC_ATTRIBUTES)
+ 	#define __param_nonnull(...)  __attribute__((nonnull(__VA_ARGS__)))
++	#ifndef __returns_nonnull
+ 	#define __returns_nonnull     __attribute__((returns_nonnull))
++	#endif
+ #else
+ 	#define __param_nonnull(...)
++	#ifndef __returns_nonnull
+ 	#define __returns_nonnull
++	#endif
+ #endif
+ 
+ 
+--- a/include/img_types.h
++++ b/include/img_types.h
+@@ -67,11 +67,19 @@
+ 	#include <linux/types.h>
+ 	#include "kernel_types.h"
+ #elif defined(LINUX) || defined(__METAG) || defined(__QNXNTO__) || defined(INTEGRITY_OS)
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ 	#include <stddef.h>			/* NULL */
++#endif
+ 	#include <inttypes.h>		/* intX_t/uintX_t, format specifiers */
+ 	#include <limits.h>			/* INT_MIN, etc */
+ #elif defined(__mips)
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ 	#include <stddef.h>			/* NULL */
++#endif
+ 	#include <inttypes.h>		/* intX_t/uintX_t, format specifiers */
+ #else
+ 	#error C99 support not set up for this build
+--- a/kernel/drivers/staging/imgtec/adf_common.c
++++ b/kernel/drivers/staging/imgtec/adf_common.c
+@@ -89,7 +89,7 @@
+ 	post_ext_size = sizeof(struct adf_post_ext) +
+ 		data.n_bufs * sizeof(struct adf_buffer_config_ext);
+ 	
+-	if (!access_ok(VERIFY_READ, data.bufs,
++	if (!access_ok(data.bufs,
+ 	               sizeof(*data.bufs) * data.n_bufs)) {
+ 		err = -EFAULT;
+ 		goto err_out;
+@@ -101,7 +101,7 @@
+ 		goto err_out;
+ 	}
+ 
+-	if (!access_ok(VERIFY_READ, data.post_ext, post_ext_size)) {
++	if (!access_ok(data.post_ext, post_ext_size)) {
+ 		err = -EFAULT;
+ 		goto err_out;
+ 	}
+@@ -112,7 +112,7 @@
+ 	}
+ 
+ 	if (data.n_interfaces) {
+-		if (!access_ok(VERIFY_READ, data.interfaces,
++		if (!access_ok(data.interfaces,
+ 		     sizeof(*data.interfaces) *data.n_interfaces)) {
+ 			err = -EFAULT;
+ 			goto err_out;
+@@ -225,7 +225,7 @@
+ {
+ 	int err;
+ 
+-	if (!access_ok(VERIFY_READ, arg, sizeof(*arg))) {
++	if (!access_ok(arg, sizeof(*arg))) {
+ 		err = -EFAULT;
+ 		goto err_out;
+ 	}
+@@ -265,7 +265,7 @@
+ 	BUILD_BUG_ON_MSG(sizeof(struct adf_validate_config_ext) != 32,
+ 		"adf_validate_config_ext has unexpected size");
+ 
+-	if (!access_ok(VERIFY_READ, arg_compat, sizeof(*arg_compat))) {
++	if (!access_ok(arg_compat, sizeof(*arg_compat))) {
+ 		err = -EFAULT;
+ 		goto err_out;
+ 	}
+--- a/kernel/drivers/staging/imgtec/pvr_counting_timeline.c
++++ b/kernel/drivers/staging/imgtec/pvr_counting_timeline.c
+@@ -76,7 +76,7 @@
+ 	if (!timeline)
+ 		goto err_out;
+ 
+-	strlcpy(timeline->name, name, sizeof(timeline->name));
++	strscpy(timeline->name, name, sizeof(timeline->name));
+ 
+ 	timeline->context = pvr_sw_fence_context_create(timeline->name,
+ 		"pvr_sw_sync");
+--- a/kernel/drivers/staging/imgtec/pvr_drm.c
++++ b/kernel/drivers/staging/imgtec/pvr_drm.c
+@@ -44,7 +44,11 @@
+ */ /**************************************************************************/
+ 
+ #include <drm/drm.h>
+-#include <drm/drmP.h> /* include before drm_crtc.h for kernels older than 3.9 */
++#include <drm/drm_device.h>
++#include <drm/drm_drv.h>
++#include <drm/drm_file.h>
++#include <drm/drm_ioctl.h>
++#include <drm/drm_print.h>
+ #include <drm/drm_crtc.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+@@ -93,7 +97,7 @@
+ };
+ 
+ 
+-static int pvr_drm_load(struct drm_device *ddev, unsigned long flags)
++int pvr_drm_device_init(struct drm_device *ddev)
+ {
+ 	struct _PVRSRV_DEVICE_NODE_ *dev_node;
+ 	enum PVRSRV_ERROR srv_err;
+@@ -105,8 +109,7 @@
+ 	 * The equivalent is done for PCI modesetting drivers by
+ 	 * drm_get_pci_dev()
+ 	 */
+-	if (ddev->platformdev)
+-		platform_set_drvdata(ddev->platformdev, ddev);
++	dev_set_drvdata(ddev->dev, ddev);
+ 
+ #if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 12, 0))
+ 	/* older kernels do not have render drm_minor member in drm_device,
+@@ -137,7 +140,6 @@
+ 		goto err_device_destroy;
+ 	}
+ 
+-	drm_mode_config_init(ddev);
+ 	ddev->dev_private = dev_node;
+ 
+ 	return 0;
+@@ -148,15 +150,10 @@
+ 	return err;
+ }
+ 
+-#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 11, 0))
+-static int pvr_drm_unload(struct drm_device *ddev)
+-#else
+-static void pvr_drm_unload(struct drm_device *ddev)
+-#endif
++void pvr_drm_device_fini(struct drm_device *ddev)
+ {
+ 	DRM_DEBUG_DRIVER("device %p\n", ddev->dev);
+ 
+-	drm_mode_config_cleanup(ddev);
+ 
+ 	PVRSRVCommonDeviceDeinit(ddev->dev_private);
+ 
+@@ -198,7 +195,7 @@
+  * taken.
+  */
+ static struct drm_ioctl_desc pvr_drm_ioctls[] = {
+-	DRM_IOCTL_DEF_DRV(PVR_SRVKM_CMD, PVRSRV_BridgeDispatchKM, DRM_RENDER_ALLOW | DRM_UNLOCKED),
++	DRM_IOCTL_DEF_DRV(PVR_SRVKM_CMD, PVRSRV_BridgeDispatchKM, DRM_RENDER_ALLOW),
+ #if defined(PDUMP)
+ 	DRM_IOCTL_DEF_DRV(PVR_DBGDRV_CMD, dbgdrv_ioctl, DRM_RENDER_ALLOW | DRM_AUTH | DRM_UNLOCKED),
+ #endif
+@@ -234,6 +231,7 @@
+ #endif /* defined(CONFIG_COMPAT) */
+ 
+ static const struct file_operations pvr_drm_fops = {
++	.fop_flags              = FOP_UNSIGNED_OFFSET,
+ 	.owner			= THIS_MODULE,
+ 	.open			= drm_open,
+ 	.release		= drm_release,
+@@ -256,11 +254,7 @@
+ };
+ 
+ const struct drm_driver pvr_drm_generic_driver = {
+-	.driver_features	= DRIVER_MODESET | DRIVER_RENDER,
+-
+-	.dev_priv_size		= 0,
+-	.load			= pvr_drm_load,
+-	.unload			= pvr_drm_unload,
++	.driver_features	= DRIVER_RENDER,
+ 	.open			= pvr_drm_open,
+ 	.postclose		= pvr_drm_release,
+ 
+@@ -270,7 +264,6 @@
+ 
+ 	.name			= PVR_DRM_DRIVER_NAME,
+ 	.desc			= PVR_DRM_DRIVER_DESC,
+-	.date			= PVR_DRM_DRIVER_DATE,
+ 	.major			= PVRVERSION_MAJ,
+ 	.minor			= PVRVERSION_MIN,
+ 	.patchlevel		= PVRVERSION_BUILD,
+--- a/kernel/drivers/staging/imgtec/pvr_drv.h
++++ b/kernel/drivers/staging/imgtec/pvr_drv.h
+@@ -46,11 +46,14 @@
+ #if !defined(__PVR_DRV_H__)
+ #define __PVR_DRV_H__
+ 
+-#include <drm/drmP.h>
++#include <drm/drm_drv.h>
++#include <drm/drm_device.h>
+ #include <linux/pm.h>
+ 
+ struct file;
+ struct vm_area_struct;
++int pvr_drm_device_init(struct drm_device *ddev);
++void pvr_drm_device_fini(struct drm_device *ddev);
+ 
+ extern const struct dev_pm_ops pvr_pm_ops;
+ extern const struct drm_driver pvr_drm_generic_driver;
+--- a/kernel/drivers/staging/imgtec/pvr_fence.c
++++ b/kernel/drivers/staging/imgtec/pvr_fence.c
+@@ -45,6 +45,7 @@
+ 
+ #include <linux/kernel.h>
+ #include <linux/jiffies.h>
++#include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ 
+@@ -52,6 +53,26 @@
+ #include "services_kernel_client.h"
+ 
+ #include "kernel_compatibility.h"
++
++static struct workqueue_struct *pvr_release_wq;
++int pvr_fence_global_init(void)
++{
++	pvr_release_wq = alloc_workqueue("mfw-pvr-release", WQ_UNBOUND | WQ_MEM_RECLAIM, 1);
++	return pvr_release_wq ? 0 : -ENOMEM;
++}
++void pvr_fence_cleanup(void)
++{
++	/* Retry work is queued with zero delay, so drain sees the entire chain. */
++	if (pvr_release_wq)
++		drain_workqueue(pvr_release_wq);
++}
++void pvr_fence_global_fini(void)
++{
++	if (pvr_release_wq) {
++		destroy_workqueue(pvr_release_wq);
++		pvr_release_wq = NULL;
++	}
++}
+ 
+ #if defined(PVRSRV_USE_SYNC_CHECKPOINTS)
+ #define	PVR_FENCE_CONTEXT_DESTROY_INITAL_WAIT_MS	100
+@@ -137,7 +158,7 @@
+ 		(void)SyncPrimGetFirmwareAddr(pvr_fence->sync, &sync_addr);
+ 		PVR_DUMPDEBUG_LOG(
+ 			pfnDumpDebugPrintf, pvDumpDebugFile,
+-			"f %llu#%u: (%s%s) Refs = %u, FWAddr = %#08x, Current = %#08x, Next = %#08x, %s %s",
++			"f %llu#%llu: (%s%s) Refs = %u, FWAddr = %#08x, Current = %#08x, Next = %#08x, %s %s",
+ 			(u64) pvr_fence->fence->context,
+ 			pvr_fence->fence->seqno,
+ 			test_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT,
+@@ -152,7 +173,7 @@
+ 			(&pvr_fence->base != pvr_fence->fence) ? "(foreign)" : "");
+ #else
+ 		PVR_DUMPDEBUG_LOG(pfnDumpDebugPrintf, pvDumpDebugFile,
+-				  "f %llu#%u: (%s%s) Refs = %u, FWAddr = %#08x, Current = %#08x, Next = %#08x, %s %s",
++				  "f %llu#%llu: (%s%s) Refs = %u, FWAddr = %#08x, Current = %#08x, Next = %#08x, %s %s",
+ 				  (u64) pvr_fence->fence->context,
+ 				  pvr_fence->fence->seqno,
+ 				  test_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT, &pvr_fence->fence->flags) ? "+" : "-",
+@@ -290,8 +311,8 @@
+ 			fctx->destroy_retries_left--;
+ 			fctx->destroy_delay_ms *= 2;
+ 
+-			schedule_delayed_work(&fctx->destroy_work,
+-						destroy_delay_jiffies);
++			msleep(jiffies_to_msecs(destroy_delay_jiffies));
++			queue_delayed_work(pvr_release_wq, &fctx->destroy_work, 0);
+ 			return;
+ 		}
+ 	}
+@@ -457,7 +478,7 @@
+ 		
+ 	PVR_FENCE_CTX_TRACE(fctx, "scheduling destruction of fence context (%s)\n", fctx->name);
+ 
+-	schedule_delayed_work(&fctx->destroy_work, 0);
++	queue_delayed_work(pvr_release_wq, &fctx->destroy_work, 0);
+ }
+ 
+ /**
+--- a/kernel/drivers/staging/imgtec/pvr_fence.h
++++ b/kernel/drivers/staging/imgtec/pvr_fence.h
+@@ -195,16 +195,9 @@
+ PSYNC_CHECKPOINT pvr_fence_get_checkpoint(struct pvr_fence *update_fence);
+ #endif
+ 
+-static inline void pvr_fence_cleanup(void)
+-{
+-	/*
+-	 * Ensure all PVR fence contexts have been destroyed, by flushing
+-	 * the global workqueue.
+-	 * For those versions of the DDK that don't use PVR fences, this
+-	 * isn't necessary, but should be harmless.
+-	 */
+-	flush_scheduled_work();
+-}
++int pvr_fence_global_init(void);
++void pvr_fence_global_fini(void);
++void pvr_fence_cleanup(void);
+ 
+ #if defined(PVR_FENCE_DEBUG)
+ #define PVR_FENCE_CTX_TRACE(c, fmt, ...)                                   \
+--- a/kernel/drivers/staging/imgtec/pvr_platform_drv.c
++++ b/kernel/drivers/staging/imgtec/pvr_platform_drv.c
+@@ -43,219 +43,89 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
+-#include <drm/drmP.h>
++#include <drm/drm_device.h>
++#include <drm/drm_drv.h>
++#include <drm/drm_print.h>
+ #include <linux/module.h>
++#include <linux/of.h>
+ #include <linux/platform_device.h>
+-#include <linux/version.h>
+-
+ #include "module_common.h"
+ #include "pvr_drv.h"
+-#include "pvrmodule.h"
+-#include "sysinfo.h"
+-#include "mtk_mfgsys.h"
++#include "pvr_fence.h"
+ 
+-static struct drm_driver pvr_drm_platform_driver;
++#ifdef MODULE
++#error "MICROFW DDK bringup currently supports built-in only"
++#endif
+ 
+-#if 0 /*defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED)*/
+-/*
+- * This is an arbitrary value. If it's changed then the 'num_devices' module
+- * parameter description should also be updated to match.
+- */
+-#define MAX_DEVICES 16
+-
+-static unsigned int pvr_num_devices = 1;
+-static struct platform_device **pvr_devices;
+-
+-#if defined(NO_HARDWARE)
+-static int pvr_num_devices_set(const char *val,
+-			       const struct kernel_param *param)
+-{
+-	int err;
+-
+-	err = param_set_uint(val, param);
+-	if (err)
+-		return err;
+-
+-	if (pvr_num_devices == 0 || pvr_num_devices > MAX_DEVICES)
+-		return -EINVAL;
+-
+-	return 0;
+-}
+-
+-static const struct kernel_param_ops pvr_num_devices_ops = {
+-	.set = pvr_num_devices_set,
+-	.get = param_get_uint,
+-};
+-
+-module_param_cb(num_devices, &pvr_num_devices_ops, &pvr_num_devices,
+-		S_IRUSR | S_IRGRP | S_IROTH);
+-MODULE_PARM_DESC(num_devices,
+-		 "Number of platform devices to register (default: 1 - max: 16)");
+-#endif /* defined(NO_HARDWARE) */
+-#endif /* defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED) */
+-
+-static int pvr_devices_register(void)
+-{
+-#if 0 /*defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED)*/
+-	struct platform_device_info pvr_dev_info = {
+-		.name = SYS_RGX_DEV_NAME,
+-		.id = -2,
+-#if defined(NO_HARDWARE)
+-		/* Not all cores have 40 bit physical support, but this
+-		 * will work unless > 32 bit address is returned on those cores.
+-		 * In the future this will be fixed more correctly.
+-		 */
+-		.dma_mask = DMA_BIT_MASK(40),
+-#else
+-		.dma_mask = DMA_BIT_MASK(32),
+-#endif
+-	};
+-	unsigned int i;
+-
+-	BUG_ON(pvr_num_devices == 0 || pvr_num_devices > MAX_DEVICES);
+-
+-	pvr_devices = kmalloc_array(pvr_num_devices, sizeof(*pvr_devices),
+-				    GFP_KERNEL);
+-	if (!pvr_devices)
+-		return -ENOMEM;
+-
+-	for (i = 0; i < pvr_num_devices; i++) {
+-		pvr_devices[i] = platform_device_register_full(&pvr_dev_info);
+-		if (IS_ERR(pvr_devices[i])) {
+-			DRM_ERROR("unable to register device %u (err=%ld)\n",
+-				  i, PTR_ERR(pvr_devices[i]));
+-			pvr_devices[i] = NULL;
+-			return -ENODEV;
+-		}
+-	}
+-#endif /* defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED) */
+-
+-	return 0;
+-}
+-
+-static void pvr_devices_unregister(void)
+-{
+-#if 0 /*defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED)*/
+-	unsigned int i;
+-
+-	BUG_ON(!pvr_devices);
+-
+-	for (i = 0; i < pvr_num_devices && pvr_devices[i]; i++)
+-		platform_device_unregister(pvr_devices[i]);
+-
+-	kfree(pvr_devices);
+-	pvr_devices = NULL;
+-#endif /* defined(MODULE) && !defined(PVR_LDM_PLATFORM_PRE_REGISTERED) */
+-}
++/* Future explicit bringup only; no GPU activation on a default boot. */
++static bool enable;
++module_param(enable, bool, 0600);
++MODULE_PARM_DESC(enable, "Explicitly permit native MICROFW GPU initialization");
+ 
+ static int pvr_probe(struct platform_device *pdev)
+ {
+-	DRM_DEBUG_DRIVER("device %p\n", &pdev->dev);
+-
+-	return drm_platform_init(&pvr_drm_platform_driver, pdev);
++	struct drm_device *ddev;
++	int ret;
++	if (!enable)
++		return dev_err_probe(&pdev->dev, -ENODEV, "Native GPU binding disabled\n");
++	ddev = drm_dev_alloc(&pvr_drm_generic_driver, &pdev->dev);
++	if (IS_ERR(ddev))
++		return PTR_ERR(ddev);
++	ret = pvr_drm_device_init(ddev);
++	if (ret)
++		goto put;
++	ret = drm_dev_register(ddev, 0);
++	if (!ret)
++		return 0;
++	pvr_drm_device_fini(ddev);
++put:
++	dev_set_drvdata(&pdev->dev, NULL);
++	drm_dev_put(ddev);
++	return ret;
+ }
+ 
+-static int pvr_remove(struct platform_device *pdev)
++static void pvr_remove(struct platform_device *pdev)
+ {
+ 	struct drm_device *ddev = platform_get_drvdata(pdev);
+-
+-	DRM_DEBUG_DRIVER("device %p\n", &pdev->dev);
+-
+-	drm_put_dev(ddev);
+-
+-	return 0;
++	drm_dev_unplug(ddev);
++	pvr_drm_device_fini(ddev);
++	platform_set_drvdata(pdev, NULL);
++	drm_dev_put(ddev);
+ }
+-
+ static void pvr_shutdown(struct platform_device *pdev)
+ {
+ 	struct drm_device *ddev = platform_get_drvdata(pdev);
+-
+-	DRM_DEBUG_DRIVER("device %p\n", &pdev->dev);
+-
+-	PVRSRVCommonDeviceShutdown(ddev->dev_private);
++	if (ddev)
++		PVRSRVCommonDeviceShutdown(ddev->dev_private);
+ }
+-
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 9, 0))
+-static struct of_device_id pvr_of_ids[] = {
+-#if defined(SYS_RGX_OF_COMPATIBLE)
+-	{ .compatible = SYS_RGX_OF_COMPATIBLE, },
+-#endif
+-	{},
++static const struct of_device_id pvr_of_ids[] = {
++	{ .compatible = "microfw,mt6739-rogue-ddk19" }, { }
+ };
+-
+ MODULE_DEVICE_TABLE(of, pvr_of_ids);
+-#endif
+-
+-static struct platform_device_id pvr_platform_ids[] = {
+-#if defined(SYS_RGX_DEV_NAME)
+-	{ SYS_RGX_DEV_NAME, 0 },
+-#endif
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(platform, pvr_platform_ids);
+-
+ static struct platform_driver pvr_platform_driver = {
+ 	.driver = {
+-		.name		= DRVNAME,
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 9, 0))
+-		.of_match_table	= of_match_ptr(pvr_of_ids),
+-#endif
+-		.pm		= &pvr_pm_ops,
++		.name = "microfw-pvrsrvkm",
++		.of_match_table = pvr_of_ids,
++		.pm = &pvr_pm_ops,
++		.suppress_bind_attrs = true,
+ 	},
+-	.id_table		= pvr_platform_ids,
+-	.probe			= pvr_probe,
+-	.remove			= pvr_remove,
+-	.shutdown		= pvr_shutdown,
++	.probe = pvr_probe, .remove = pvr_remove, .shutdown = pvr_shutdown,
+ };
+-
+ static int __init pvr_init(void)
+ {
+-	int err;
+-
+-	DRM_DEBUG_DRIVER("\n");
+-
+-#if defined(MODULE)
+-	err = mtk_mfg_async_init();
+-	if (err)
+-		return err;
+-
+-	err = mtk_mfg_2d_init();
+-	if (err)
+-		return err;
+-#endif
+-
+-	pvr_drm_platform_driver = pvr_drm_generic_driver;
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 18, 0)) && \
+-	(LINUX_VERSION_CODE < KERNEL_VERSION(4, 5, 0))
+-	pvr_drm_platform_driver.set_busid = drm_platform_set_busid;
+-#endif
+-
+-	err = PVRSRVCommonDriverInit();
+-	if (err)
+-		return err;
+-
+-	err = platform_driver_register(&pvr_platform_driver);
+-	if (err)
+-		return err;
+-	err = pvr_devices_register();
+-
+-#if defined(CONFIG_MACH_MT8167)
+-	MTKCommonDisablePowerDomain();
+-#endif
+-
+-	return err;
++	int ret = pvr_fence_global_init();
++	if (ret)
++		return ret;
++	ret = PVRSRVCommonDriverInit();
++	if (ret) {
++		pvr_fence_global_fini();
++		return ret;
++	}
++	ret = platform_driver_register(&pvr_platform_driver);
++	if (ret) {
++		PVRSRVCommonDriverDeinit();
++		pvr_fence_global_fini();
++	}
++	return ret;
+ }
+-
+-static void __exit pvr_exit(void)
+-{
+-	DRM_DEBUG_DRIVER("\n");
+-
+-	pvr_devices_unregister();
+-	platform_driver_unregister(&pvr_platform_driver);
+-	PVRSRVCommonDriverDeinit();
+-
+-	DRM_DEBUG_DRIVER("done\n");
+-}
+-
+ late_initcall(pvr_init);
+-module_exit(pvr_exit);
+--- a/kernel/drivers/staging/imgtec/pvr_sync2.c
++++ b/kernel/drivers/staging/imgtec/pvr_sync2.c
+@@ -1962,7 +1962,7 @@
+ 	int err = 0;
+ 	struct pvr_sync_rename_ioctl_data data;
+ 
+-	if (!access_ok(VERIFY_READ, user_data, sizeof(data))) {
++	if (!access_ok(user_data, sizeof(data))) {
+ 		err = -EFAULT;
+ 		goto err;
+ 	}
+--- a/kernel/drivers/staging/imgtec/pvr_sync_dma_fence.c
++++ b/kernel/drivers/staging/imgtec/pvr_sync_dma_fence.c
+@@ -140,7 +140,7 @@
+ 	if (!timeline)
+ 		goto err_out;
+ 
+-	strlcpy(timeline->name, task_comm, sizeof(timeline->name));
++	strscpy(timeline->name, task_comm, sizeof(timeline->name));
+ 
+ 	fence_context =  pvr_fence_context_create(pvr_sync_data.dev_cookie,
+ 		timeline->name);
+@@ -390,7 +390,7 @@
+ 	int err = 0;
+ 	struct pvr_sync_rename_ioctl_data data;
+ 
+-	if (!access_ok(VERIFY_READ, user_data, sizeof(data))) {
++	if (!access_ok(user_data, sizeof(data))) {
+ 		err = -EFAULT;
+ 		goto err;
+ 	}
+@@ -401,7 +401,7 @@
+ 	}
+ 
+ 	data.szName[sizeof(data.szName) - 1] = '\0';
+-	strlcpy(timeline->name, data.szName, sizeof(timeline->name));
++	strscpy(timeline->name, data.szName, sizeof(timeline->name));
+ 
+ err:
+ 	return err;
+--- a/kernel/drivers/staging/imgtec/tc/adf_pdp.c
++++ b/kernel/drivers/staging/imgtec/tc/adf_pdp.c
+@@ -1195,7 +1195,7 @@
+ 				IORESOURCE_MEM,
+ 				"pll-regs");
+ 		pdp->pll_regs =
+-		    ioremap_nocache(registers->start,
++		    ioremap(registers->start,
+ 				    resource_size(registers));
+ 		if (!pdp->pll_regs) {
+ 			err = -ENOMEM;
+@@ -1210,7 +1210,7 @@
+ 				IORESOURCE_MEM,
+ 				"odn-core");
+ 
+-		pdp->odin_core_regs = ioremap_nocache(registers->start,
++		pdp->odin_core_regs = ioremap(registers->start,
+ 					resource_size(registers));
+ 		if (!pdp->odin_core_regs) {
+ 			err = -ENOMEM;
+--- a/kernel/drivers/staging/imgtec/tc/drm_pdp_crtc.c
++++ b/kernel/drivers/staging/imgtec/tc/drm_pdp_crtc.c
+@@ -1111,7 +1111,7 @@
+ 			pdp_crtc->pll_reg_size = resource_size(regs);
+ 
+ 			pdp_crtc->pll_reg =
+-				ioremap_nocache(pdp_crtc->pll_reg_phys_base,
++				ioremap(pdp_crtc->pll_reg_phys_base,
+ 						pdp_crtc->pll_reg_size);
+ 			if (!pdp_crtc->pll_reg) {
+ 				DRM_ERROR("failed to map pll registers\n");
+@@ -1140,7 +1140,7 @@
+ 			}
+ 
+ 			pdp_crtc->pdp_bif_reg =
+-				ioremap_nocache(pdp_crtc->pdp_bif_reg_phys_base,
++				ioremap(pdp_crtc->pdp_bif_reg_phys_base,
+ 						pdp_crtc->pdp_bif_reg_size);
+ 			if (!pdp_crtc->pdp_bif_reg) {
+ 				DRM_ERROR("failed to map pdp-bif registers\n");
+@@ -1163,7 +1163,7 @@
+ 			pdp_crtc->odn_core_size = resource_size(regs);
+ 
+ 			pdp_crtc->odn_core_reg
+-				= ioremap_nocache(pdp_crtc->odn_core_phys_base,
++				= ioremap(pdp_crtc->odn_core_phys_base,
+ 						  pdp_crtc->odn_core_size);
+ 			if (!pdp_crtc->odn_core_reg) {
+ 				DRM_ERROR("failed to map pdp reset register\n");
+@@ -1189,7 +1189,7 @@
+ 		goto err_crtc_free;
+ 	}
+ 
+-	pdp_crtc->pdp_reg = ioremap_nocache(pdp_crtc->pdp_reg_phys_base,
++	pdp_crtc->pdp_reg = ioremap(pdp_crtc->pdp_reg_phys_base,
+ 					    pdp_crtc->pdp_reg_size);
+ 	if (!pdp_crtc->pdp_reg) {
+ 		DRM_ERROR("failed to map pdp registers\n");
+--- a/kernel/drivers/staging/imgtec/tc/tc_apollo.c
++++ b/kernel/drivers/staging/imgtec/tc/tc_apollo.c
+@@ -1152,7 +1152,7 @@
+ 		pci_resource_start(tc->pdev, SYS_APOLLO_REG_PCI_BASENUM)
+ 				+ 0x40F0;
+ 
+-	host_fpga_registers = ioremap_nocache(host_fpga_base, 0x04);
++	host_fpga_registers = ioremap(host_fpga_base, 0x04);
+ 	if (!host_fpga_registers) {
+ 		dev_err(&tc->pdev->dev,
+ 			"Failed to map host fpga registers\n");
+--- a/kernel/drivers/staging/imgtec/tc/tc_drv.c
++++ b/kernel/drivers/staging/imgtec/tc/tc_drv.c
+@@ -349,7 +349,7 @@
+ 	region->region.size = size;
+ 
+ 	region->registers
+-		= ioremap_nocache(region->region.base, region->region.size);
++		= ioremap(region->region.base, region->region.size);
+ 
+ 	if (!region->registers) {
+ 		dev_err(&pdev->dev, "Failed to map tc registers\n");
+--- a/services/include/rgx_fwif_alignchecks.h
++++ b/services/include/rgx_fwif_alignchecks.h
+@@ -46,7 +46,11 @@
+ #define __RGX_FWIF_ALIGNCHECKS_H__
+ 
+ /* for the offsetof macro */
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h> 
++#endif
+ 
+ /*!
+  ******************************************************************************
+--- a/services/server/common/cache_km.c
++++ b/services/server/common/cache_km.c
+@@ -1227,9 +1227,9 @@
+ #else
+ 	/* Offset VA, validate UM/VA, skip all KM/VA as it's pre-validated */
+ 	pvAddress = (void*)(uintptr_t)((uintptr_t)pvAddress + uiOffset);
+-	if (access_ok(VERIFY_READ, pvAddress, uiSize))
+-	{
+-		down_read(&mm->mmap_sem);
++	if (access_ok(pvAddress, uiSize))
++	{
++		down_read(&mm->mmap_lock);
+ 		vma = find_vma(mm, (unsigned long)(uintptr_t)pvAddress);
+ 		if (!vma ||
+ 			vma->vm_start > (unsigned long)(uintptr_t)pvAddress ||
+@@ -1247,7 +1247,7 @@
+ 			*/
+ 			pvAddress = NULL;
+ 		}
+-		up_read(&mm->mmap_sem);
++		up_read(&mm->mmap_lock);
+ 	}
+ 	/* Fail if access is not OK and the supplied address is a client user space VA */
+ 	else if ((IMG_UINT64)(uintptr_t)pvAddress <= OSGetCurrentProcessVASpaceSize())
+--- a/services/server/common/handle.c
++++ b/services/server/common/handle.c
+@@ -51,7 +51,11 @@
+  * pointers to the structures themselves.
+  */
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "handle.h"
+ #include "handle_impl.h"
+--- a/services/server/common/mmu_common.c
++++ b/services/server/common/mmu_common.c
+@@ -1846,6 +1846,7 @@
+ 						/* Check we haven't wrapped around */
+ 						PVR_ASSERT(psLevel->ui32RefCount <= psLevel->ui32NumOfEntries);
+ 					}
++				fallthrough;
+ 			case 2:
+ 					if (psLevel->apsNextLevel[i] != NULL  &&
+ 					    psLevel->apsNextLevel[i]->ui32RefCount == 0)
+@@ -1853,6 +1854,7 @@
+ 						_PxMemFree(psMMUContext, &psLevel->sMemDesc,
+ 									aeMMULevel[uiThisLevel]);
+ 					}
++				fallthrough;
+ 			case 1:
+ 					if (psLevel->apsNextLevel[i] != NULL  &&
+ 					    psLevel->apsNextLevel[i]->ui32RefCount == 0)
+@@ -1860,6 +1862,7 @@
+ 						OSFreeMem(psLevel->apsNextLevel[i]);
+ 						psLevel->apsNextLevel[i] = NULL;
+ 					}
++				fallthrough;
+ 			case 0:
+ 					uiAllocState = 3;
+ 					break;
+@@ -2166,6 +2169,7 @@
+ 			uiPCEIndex = _CalcPCEIdx(sDevVAddr, psDevVAddrConfig, IMG_FALSE);
+ 			psLocalLevel = psMMUContext->sBaseLevelInfo.apsNextLevel[uiPCEIndex];
+ 
++			fallthrough;
+ 		case MMU_LEVEL_2:
+ 			/* find the page table containing the PDE */
+ 			uiPDEIndex = _CalcPDEIdx(sDevVAddr, psDevVAddrConfig, IMG_FALSE);
+@@ -2178,6 +2182,7 @@
+ 				psLocalLevel = psMMUContext->sBaseLevelInfo.apsNextLevel[uiPDEIndex];
+ 			}
+ 
++			fallthrough;
+ 		case MMU_LEVEL_1:
+ 			/* find PTE index into page table */
+ 			*pui32PTEIndex = _CalcPTEIdx(sDevVAddr, psDevVAddrConfig, IMG_FALSE);
+@@ -3899,6 +3904,7 @@
+ 			psConfig = psMMUPDEConfig;
+ 			/* Fall through */
+ 
++			fallthrough;
+ 		case MMU_LEVEL_2:
+ 			/* Determine the PD index */
+ 			uiIndex = psDevVAddr->uiAddr & psDevAttrs->psTopLevelDevVAddrConfig->uiPDIndexMask;
+@@ -3972,6 +3978,7 @@
+ 			psConfig = psMMUPTEConfig;
+ 			/* Fall through */
+ 
++			fallthrough;
+ 		case MMU_LEVEL_1:
+ 			/* Determine the PT index */
+ 			uiIndex = psDevVAddr->uiAddr & psMMUDevVAddrConfig->uiPTIndexMask;
+@@ -4036,6 +4043,7 @@
+             if (psLevel == NULL)
+                 break;
+             /* fall through */
++        	fallthrough;
+         case MMU_LEVEL_2:
+             uiIndex = _CalcPDEIdx(sDevVAddr, psDevVAddrConfig, IMG_FALSE);
+ 
+@@ -4047,6 +4055,7 @@
+             if (psLevel == NULL)
+                 break;
+             /* fall through */
++        	fallthrough;
+         case MMU_LEVEL_1:
+             uiIndex = _CalcPTEIdx(sDevVAddr, psDevVAddrConfig, IMG_FALSE);
+ 
+--- a/services/server/common/pdump_common.c
++++ b/services/server/common/pdump_common.c
+@@ -43,7 +43,11 @@
+ 
+    
+ #if defined(PDUMP)
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ 
+ #include "pvrversion.h"
+ #include "allocmem.h"
+--- a/services/server/common/pmr.c
++++ b/services/server/common/pmr.c
+@@ -3403,7 +3403,7 @@
+ }
+ 
+ PVRSRV_ERROR
+-PMRInit()
++PMRInit(void)
+ {
+ 	PVRSRV_ERROR eError;
+ 
+@@ -3435,7 +3435,7 @@
+ }
+ 
+ PVRSRV_ERROR
+-PMRDeInit()
++PMRDeInit(void)
+ {
+ 	PVRSRV_DATA *psPVRSRVData = PVRSRVGetPVRSRVData();
+ 	PVRSRV_ERROR eError = PVRSRV_OK;
+--- a/services/server/common/process_stats.c
++++ b/services/server/common/process_stats.c
+@@ -42,7 +42,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_defs.h"
+ #include "img_types.h"
+@@ -1097,8 +1101,6 @@
+ 
+ 		bProcessStatsInitialised = IMG_TRUE;
+ 	}
+-	mtk_get_gpu_memory_usage_fp = MTKGetMemStat;
+-	mtk_dump_gpu_memory_usage_fp = MTKGetMemStatDump;
+ 	return error;
+ e1:
+ 	OSLockDestroy(gpsSizeTrackingHashTableLock);
+--- a/services/server/common/pvr_notifier.c
++++ b/services/server/common/pvr_notifier.c
+@@ -407,10 +407,14 @@
+ MTK_PVRSRVDebugRequestSetSilence(IMG_BOOL bEnable)
+ {
+ 	bQuiet = bEnable;
++#if defined(MTK_DEBUG_PROC_PRINT)
++#if defined(MTK_DEBUG_PROC_PRINT)
+ 	if (bQuiet == IMG_TRUE)
+ 		g_use_id = MTKPP_ID_SHOT_FW;
+ 	else
+ 		g_use_id = MTKPP_ID_FW;
++#endif
++#endif
+ }
+ 
+ void
+--- a/services/server/common/pvrsrv.c
++++ b/services/server/common/pvrsrv.c
+@@ -546,7 +546,7 @@
+ }
+ 
+ 
+-PVRSRV_DATA *PVRSRVGetPVRSRVData()
++PVRSRV_DATA *PVRSRVGetPVRSRVData(void)
+ {
+ 	return gpsPVRSRVData;
+ }
+--- a/services/server/common/ri_server.c
++++ b/services/server/common/ri_server.c
+@@ -42,7 +42,11 @@
+ */ /**************************************************************************/
+ 
+ 
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #include "allocmem.h"
+ #include "pvr_debug.h"
+ #include "pvrsrv_error.h"
+--- a/services/server/common/srvcore.c
++++ b/services/server/common/srvcore.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_defs.h"
+ #include "pvr_debug.h"
+--- a/services/server/common/tlserver.c
++++ b/services/server/common/tlserver.c
+@@ -40,7 +40,11 @@
+ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_defs.h"
+ 
+--- a/services/server/devices/rgx/rgxdebug.c
++++ b/services/server/devices/rgx/rgxdebug.c
+@@ -982,11 +982,13 @@
+ 						{
+ 							pszGroupEnc = "UPUC_USC"; break;
+ 						}
++						fallthrough;
+ 					case 0x6:
+ 						if(6 == psDevInfo->sDevFeatureCfg.ui32NumClusters)
+ 						{
+ 							pszGroupEnc = "TPUC_USC"; break;
+ 						}
++						fallthrough;
+ 					case 0x7:
+ 						if(6 == psDevInfo->sDevFeatureCfg.ui32NumClusters)
+ 						{
+--- a/services/server/devices/rgx/rgxfwutils.c
++++ b/services/server/devices/rgx/rgxfwutils.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "lists.h"
+ 
+@@ -377,7 +381,7 @@
+ {
+ 	IMG_CHAR szHeapName[32];
+ 	IMG_DEV_VIRTADDR sTmpDevVAddr;
+-	PVRSRV_ERROR eError = IMG_FALSE;
++	PVRSRV_ERROR eError = PVRSRV_OK;
+ 	IMG_UINT32 ui32CacheLineSize = 0;
+ 	IMG_BOOL bFwLocalIsUMA = IMG_FALSE;
+ 	PVRSRV_RGXDEV_INFO *psDevInfo = psDeviceNode->pvDevice;
+--- a/services/server/devices/rgx/rgxinit.c
++++ b/services/server/devices/rgx/rgxinit.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_defs.h"
+ #include "pvr_notifier.h"
+--- a/services/server/devices/rgx/rgxlayer_impl.c
++++ b/services/server/devices/rgx/rgxlayer_impl.c
+@@ -50,7 +50,11 @@
+ #include "pmr.h"
+ 
+ #if defined (PDUMP)
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #endif
+ 
+ void RGXMemCopy(const void *hPrivate,
+--- a/services/server/devices/rgx/rgxpower.c
++++ b/services/server/devices/rgx/rgxpower.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #include "rgxpower.h"
+ #include "rgxinit.h"
+ #include "rgx_fwif_km.h"
+--- a/services/server/devices/rgx/rgxray.c
++++ b/services/server/devices/rgx/rgxray.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ /* for the offsetof macro */
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ #if defined(INTEGRITY_OS)
+ #include <string.h>
+ #endif
+--- a/services/server/devices/rgx/rgxsrvinit.c
++++ b/services/server/devices/rgx/rgxsrvinit.c
+@@ -1240,15 +1240,15 @@
+ 		IMG_CHAR *pszFWFilename = NULL;
+ 		IMG_CHAR *pszFWpFilename = NULL;
+ 
+-		IMG_CHAR aszFWFilenameStr[OSStringLength(RGX_FW_FILENAME)+MAX_BVNC_STRING_LEN+2];
+-		IMG_CHAR aszFWpFilenameStr[OSStringLength(RGX_FW_FILENAME)+MAX_BVNC_STRING_LEN+3];
++		IMG_CHAR aszFWFilenameStr[sizeof(RGX_FW_FILENAME)-1+MAX_BVNC_STRING_LEN+2];
++		IMG_CHAR aszFWpFilenameStr[sizeof(RGX_FW_FILENAME)-1+MAX_BVNC_STRING_LEN+3];
+ 
+ 		pszFWFilename = &aszFWFilenameStr[0];
+-		OSSNPrintf(pszFWFilename, OSStringLength(RGX_FW_FILENAME)+MAX_BVNC_STRING_LEN+2, "%s.%d.%d.%d.%d%s", RGX_FW_FILENAME,
++		OSSNPrintf(pszFWFilename, sizeof(RGX_FW_FILENAME)-1+MAX_BVNC_STRING_LEN+2, "%s.%d.%d.%d.%d%s", RGX_FW_FILENAME,
+ 		           psDevInfo->sDevFeatureCfg.ui32B, psDevInfo->sDevFeatureCfg.ui32V,
+ 		           psDevInfo->sDevFeatureCfg.ui32N, psDevInfo->sDevFeatureCfg.ui32C, PVRSRV_VZ_MODE_IS(DRIVER_MODE_NATIVE) ? "" : ".vz");
+ 		pszFWpFilename = &aszFWpFilenameStr[0];
+-		OSSNPrintf(pszFWpFilename, OSStringLength(RGX_FW_FILENAME)+MAX_BVNC_STRING_LEN+3, "%s.%d.%dp.%d.%d%s", RGX_FW_FILENAME,
++		OSSNPrintf(pszFWpFilename, sizeof(RGX_FW_FILENAME)-1+MAX_BVNC_STRING_LEN+3, "%s.%d.%dp.%d.%d%s", RGX_FW_FILENAME,
+ 		           psDevInfo->sDevFeatureCfg.ui32B, psDevInfo->sDevFeatureCfg.ui32V,
+ 		           psDevInfo->sDevFeatureCfg.ui32N, psDevInfo->sDevFeatureCfg.ui32C, PVRSRV_VZ_MODE_IS(DRIVER_MODE_NATIVE) ? "" : ".vz");
+ 
+--- a/services/server/devices/rgx/rgxta3d.c
++++ b/services/server/devices/rgx/rgxta3d.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ /* for the offsetof macro */
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "pdump_km.h"
+ #include "pvr_debug.h"
+--- a/services/server/devices/rgx/rgxutils.c
++++ b/services/server/devices/rgx/rgxutils.c
+@@ -41,7 +41,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "rgx_fwif_km.h"
+ #include "pdump_km.h"
+--- a/services/server/env/linux/km_apphint.c
++++ b/services/server/env/linux/km_apphint.c
+@@ -46,7 +46,11 @@
+ #include <linux/moduleparam.h>
+ #include <linux/workqueue.h>
+ #include <linux/string.h>
++#ifdef __KERNEL__
++#include <linux/types.h>
++#else
+ #include <stdbool.h>
++#endif
+ 
+ /* for action device access */
+ #include "pvrsrv.h"
+@@ -71,7 +75,11 @@
+ #include "km_apphint.h"
+ 
+ #if defined(PDUMP)
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #include "pdump_km.h"
+ #endif
+ 
+@@ -226,7 +234,9 @@
+  * This will return an undefined size for a NULL ptr - so should only be
+  * used here.
+  */
+-#define APPHINT_HELP_ARRAY_SIZE(a) (sizeof((a))/(sizeof((a[0]))))
++#define APPHINT_HELP_ARRAY_SIZE(a) __builtin_choose_expr(\
++	__builtin_types_compatible_p(typeof(a), void *), 0, \
++	sizeof(a) / (sizeof((a)[0]) + 0))
+ 
+ static const struct apphint_param param_lookup[] = {
+ #define X(a, b, c, d, e) \
+--- a/services/server/env/linux/module_common.c
++++ b/services/server/env/linux/module_common.c
+@@ -55,6 +55,7 @@
+ #include "rgxdevice.h"
+ #include "pvrsrv_error.h"
+ #include "pvr_drv.h"
++#include <drm/drm_file.h>
+ #include <linux/moduleparam.h>
+ 
+ #include <pvr_fence.h>
+@@ -140,7 +141,7 @@
+ EXPORT_SYMBOL(OSRemoveTimer);
+ #endif
+ 
+-#include "mtk_mfgsys.h"
++
+ 
+ CONNECTION_DATA *LinuxConnectionFromFile(struct file *pFile)
+ {
+@@ -223,7 +224,7 @@
+ 		return -ENODEV;
+ 	}
+ 
+-	MTKMFGSystemInit();
++	/* Device-scoped native MFG setup happens in SysDevInit. */
+ 
+ #if defined(MTK_DEBUG_PROC_PRINT)
+ 	MTKPP_Init();
+@@ -244,7 +245,7 @@
+ #endif
+ 
+ 	/* MTK MFG system cleanup */
+-	MTKMFGSystemDeInit();
++	/* SysDevDeInit owns native MFG teardown. */
+ 
+ 	PVRSRVDriverDeInit();
+ 
+--- a/services/server/env/linux/osfunc.c
++++ b/services/server/env/linux/osfunc.c
+@@ -70,10 +70,7 @@
+ #endif
+ #include <linux/kthread.h>
+ #include <asm/atomic.h>
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-#include <linux/pfn_t.h>
+-#include <linux/pfn.h>
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ #if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 11, 0))
+ #include <linux/sched/clock.h>
+ #include <linux/sched/signal.h>
+@@ -110,7 +107,7 @@
+ #endif /* EMULATOR */
+ #endif
+ 
+-#include "ged_log.h"
++
+ 
+ #if defined(PVRSRV_USE_BRIDGE_LOCK)
+ /*
+@@ -126,7 +123,7 @@
+ IMG_BOOL BridgeLockIsLocked(void);
+ #endif
+ 
+-unsigned int _ged_log_owner;
++
+ 
+ PVRSRV_ERROR OSPhyContigPagesAlloc(PVRSRV_DEVICE_NODE *psDevNode, size_t uiSize,
+ 							PG_HANDLE *psMemHandle, IMG_DEV_PHYADDR *psDevPAddr)
+@@ -195,10 +192,8 @@
+ void OSPhyContigPagesFree(PVRSRV_DEVICE_NODE *psDevNode, PG_HANDLE *psMemHandle)
+ {
+ 	struct page *psPage = (struct page*) psMemHandle->u.pvHandle;
+-	IMG_UINT32	uiSize, uiPageCount=0;
+-
+-	uiPageCount = (1 << psMemHandle->ui32Order);
+-	uiSize = (uiPageCount * PAGE_SIZE);
++	
++
+ 
+ #if defined(PVRSRV_ENABLE_PROCESS_STATS)
+ #if !defined(PVRSRV_ENABLE_MEMORY_STATS)
+@@ -333,7 +328,7 @@
+ 	return uiSize;
+ }
+ 
+-IMG_UINT32 OSVSScanf(IMG_CHAR *pStr, const IMG_CHAR *pszFormat, ...)
++IMG_UINT32 __scanf(2, 3) OSVSScanf(IMG_CHAR *pStr, const IMG_CHAR *pszFormat, ...)
+ {
+ 	va_list argList;
+ 	IMG_INT32 iCount = 0;
+@@ -352,7 +347,11 @@
+ 
+ IMG_CHAR *OSStringNCopy(IMG_CHAR *pszDest, const IMG_CHAR *pszSrc, size_t uSize)
+ {
+-	return strncpy(pszDest, pszSrc, uSize);
++	size_t copied = strnlen(pszSrc, uSize);
++	memcpy(pszDest, pszSrc, copied);
++	if (copied < uSize)
++		memset(pszDest + copied, 0, uSize - copied);
++	return pszDest;
+ }
+ 
+ IMG_INT32 OSSNPrintf(IMG_CHAR *pStr, size_t ui32Size, const IMG_CHAR *pszFormat, ...)
+@@ -408,9 +407,14 @@
+ 	}
+ #endif
+ 
+-	LinuxInitPhysmem();
+-
+-	_ged_log_owner = ged_log_buf_alloc(128, 128 * 32, GED_LOG_BUF_TYPE_RINGBUFFER, "OwnerLog", "oL");
++	if (LinuxInitPhysmem()) {
++#if defined(PVRSRV_USE_BRIDGE_LOCK)
++		OSFreeMem(g_pvBridgeBuffers);
++		g_pvBridgeBuffers = NULL;
++#endif
++		return PVRSRV_ERROR_OUT_OF_MEMORY;
++	}
++
+ 
+ 	return PVRSRV_OK;
+ }
+@@ -525,10 +529,7 @@
+ 
+ IMG_UINT64 OSClockMonotonicRawns64(void)
+ {
+-	struct timespec ts;
+-
+-	getrawmonotonic(&ts);
+-	return (IMG_UINT64) ts.tv_sec * 1000000000 + ts.tv_nsec;
++	return ktime_get_raw_ns();
+ }
+ 
+ IMG_UINT64 OSClockMonotonicRawus64(void)
+@@ -1069,13 +1070,13 @@
+ 	switch (ui32MappingFlags)
+ 	{
+ 		case PVRSRV_MEMALLOCFLAG_CPU_UNCACHED:
+-			pvLinAddr = (void *)ioremap_nocache(BasePAddr.uiAddr, ui32Bytes);
++			pvLinAddr = (void *)ioremap(BasePAddr.uiAddr, ui32Bytes);
+ 			break;
+ 		case PVRSRV_MEMALLOCFLAG_CPU_WRITE_COMBINE:
+ #if defined(CONFIG_X86) || defined(CONFIG_ARM) || defined(CONFIG_ARM64)
+ 			pvLinAddr = (void *)ioremap_wc(BasePAddr.uiAddr, ui32Bytes);
+ #else
+-			pvLinAddr = (void *)ioremap_nocache(BasePAddr.uiAddr, ui32Bytes);
++			pvLinAddr = (void *)ioremap(BasePAddr.uiAddr, ui32Bytes);
+ #endif
+ 			break;
+ 		case PVRSRV_MEMALLOCFLAG_CPU_CACHED:
+@@ -1171,9 +1172,9 @@
+ @Description    OS specific timer callback wrapper function
+ @Input          uData    Timer callback data
+ */ /**************************************************************************/
+-static void OSTimerCallbackWrapper(uintptr_t uData)
+-{
+-	TIMER_CALLBACK_DATA	*psTimerCBData = (TIMER_CALLBACK_DATA*)uData;
++static void OSTimerCallbackWrapper(struct timer_list *timer)
++{
++	TIMER_CALLBACK_DATA *psTimerCBData = container_of(timer, TIMER_CALLBACK_DATA, sTimer);
+ 
+ #if defined(PVR_LINUX_TIMERS_USING_WORKQUEUES) || defined(PVR_LINUX_TIMERS_USING_SHARED_WORKQUEUE)
+ 	int res;
+@@ -1256,11 +1257,9 @@
+ 								?	1
+ 								:	((HZ * ui32MsTimeout) / 1000);
+ 	/* initialise object */
+-	init_timer(&psTimerCBData->sTimer);
++	timer_setup(&psTimerCBData->sTimer, OSTimerCallbackWrapper, 0);
+ 
+ 	/* setup timer object */
+-	psTimerCBData->sTimer.function = (void *)OSTimerCallbackWrapper;
+-	psTimerCBData->sTimer.data = (uintptr_t)psTimerCBData;
+ 
+ 	return (IMG_HANDLE)(uintptr_t)(ui32i + 1);
+ }
+@@ -1327,7 +1326,7 @@
+ #endif
+ 
+ 	/* remove timer */
+-	del_timer_sync(&psTimerCBData->sTimer);
++	timer_delete_sync(&psTimerCBData->sTimer);
+ 
+ #if defined(PVR_LINUX_TIMERS_USING_WORKQUEUES)
+ 	/*
+@@ -1595,12 +1594,12 @@
+ 
+ 	g_pid[0] = gsOwner->pid;
+ 	g_pid[1] = gsOwner->tgid;
+-	ged_log_buf_print2(_ged_log_owner, GED_LOG_ATTR_TIME, "%d / %d [+]", gsOwner->pid, gsOwner->tgid);
++	pr_debug("pvr bridge owner %d/%d acquired\n", gsOwner->pid, gsOwner->tgid);
+ }
+ 
+ void OSReleaseBridgeLock(void)
+ {
+-	ged_log_buf_print2(_ged_log_owner, GED_LOG_ATTR_TIME, "%d / %d [-]", gsOwner->pid, gsOwner->tgid);
++	pr_debug("pvr bridge owner %d/%d released\n", gsOwner->pid, gsOwner->tgid);
+ 	gsOwner = NULL;
+ 	g_pid[0] = -1;
+ 	g_pid[1] = -1;
+@@ -1723,11 +1722,8 @@
+                                          IMG_UINT32 *pai32FreeIndices,
+                                          IMG_BOOL bIsLMA)
+ {
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-	pfn_t sPFN;
+-#else
+ 	IMG_UINT64 uiPFN;
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ 
+ 	PVRSRV_ERROR eError;
+ 
+@@ -1750,16 +1746,17 @@
+ 	 * to be acquired in conjunction with this to disable page swapping.
+ 	 */
+ 
+-	/* Find the Virtual Memory Area associated with the user base address */
++	mmap_write_lock(psMM);
++	/* Find the VMA while protected against concurrent munmap. */
+ 	psVMA = find_vma(psMM, (uintptr_t)sCpuVAddrBase);
+-	if (NULL == psVMA)
+-	{
++	if (!psVMA || sCpuVAddrBase < psVMA->vm_start || !psVMA->vm_file)
++	{
++		mmap_write_unlock(psMM);
+ 		eError = PVRSRV_ERROR_PMR_NO_CPU_MAP_FOUND;
+ 		return eError;
+ 	}
+ 
+-	/* Acquire the memory sem */
+-	down_write(&psMM->mmap_sem);
++	/* mmap write lock remains held through all page-table changes. */
+ 
+ 	psMapping = psVMA->vm_file->f_mapping;
+ 	
+@@ -1787,7 +1784,7 @@
+ 
+ 	if ((psVMA->vm_flags & VM_MIXEDMAP) || bIsLMA)
+ 	{
+-		psVMA->vm_flags |=  VM_MIXEDMAP;
++		vm_flags_set(psVMA, VM_MIXEDMAP);
+ 		bMixedMap = IMG_TRUE;
+ 	}
+ 	else
+@@ -1798,18 +1795,13 @@
+ 			{
+ 
+ 				psPage = (struct page *)psPageArray[pai32AllocIndices[ui32Loop]];
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-				sPFN = page_to_pfn_t(psPage);
+-
+-				if (!pfn_t_valid(sPFN) || page_count(pfn_t_to_page(sPFN)) == 0)
+-#else
+ 				uiPFN = page_to_pfn(psPage);
+ 
+ 				if (!pfn_valid(uiPFN) || (page_count(pfn_to_page(uiPFN)) == 0))
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ 				{
+ 					bMixedMap = IMG_TRUE;
+-					psVMA->vm_flags |= VM_MIXEDMAP;
++					vm_flags_set(psVMA, VM_MIXEDMAP);
+ 					break;
+ 				}
+ 			}
+@@ -1830,31 +1822,22 @@
+ 			{
+ 				phys_addr_t uiAddr = sCpuPAHeapBase.uiAddr +
+ 				                     ((IMG_DEV_PHYADDR *)psPageArray)[pai32AllocIndices[ui32Loop]].uiAddr;
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-				sPFN = phys_to_pfn_t(uiAddr, 0);
+-				psPage = pfn_t_to_page(sPFN);
+-#else
+ 				uiPFN = uiAddr >> PAGE_SHIFT;
+ 				psPage = pfn_to_page(uiPFN);
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ 			}
+ 			else
+ 			{
+ 				psPage = (struct page *)psPageArray[pai32AllocIndices[ui32Loop]];
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-				sPFN = page_to_pfn_t(psPage);
+-#else
+ 				uiPFN = page_to_pfn(psPage);
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ 			}
+ 
+ 			if (bMixedMap)
+ 			{
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-				err = vm_insert_mixed(psVMA, uiCPUVirtAddr, sPFN);
+-#else
+-				err = vm_insert_mixed(psVMA, uiCPUVirtAddr, uiPFN);
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++				vm_fault_t fault = vmf_insert_mixed(psVMA, uiCPUVirtAddr, uiPFN);
++				err = (fault & VM_FAULT_ERROR) ? -EFAULT : 0;
++
+ 			}
+ 			else
+ 			{
+@@ -1872,7 +1855,7 @@
+ 
+ 	eError = PVRSRV_OK;
+ 	eFailed:
+-	up_write(&psMM->mmap_sem);
++	mmap_write_unlock(psMM);
+ 
+ 	return eError;
+ }
+--- a/services/server/env/linux/osfunc_arm64.c
++++ b/services/server/env/linux/osfunc_arm64.c
+@@ -44,6 +44,7 @@
+ #include <linux/cpumask.h>
+ #include <linux/dma-mapping.h>
+ #include <asm/cacheflush.h>
++#include <linux/dma-map-ops.h>
+ 
+ #include "pvrsrv_error.h"
+ #include "img_types.h"
+@@ -226,7 +227,6 @@
+ 							IMG_CPU_PHYADDR sCPUPhysStart,
+ 							IMG_CPU_PHYADDR sCPUPhysEnd)
+ {
+-	const struct dma_map_ops *dma_ops;
+ 
+ 	if (pvVirtStart)
+ 	{
+@@ -234,9 +234,11 @@
+ 		return;
+ 	}
+ 
+-	dma_ops = get_dma_ops(psDevNode->psDevConfig->pvOSDevice);
+-	dma_ops->sync_single_for_device(NULL, sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_TO_DEVICE);
+-	dma_ops->sync_single_for_cpu(NULL, sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_FROM_DEVICE);
++	/* This interface receives CPU physical addresses, never DMA/IOVA handles. */
++	if (WARN_ON(sCPUPhysEnd.uiAddr < sCPUPhysStart.uiAddr))
++		return;
++	arch_sync_dma_for_device( sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_TO_DEVICE);
++	arch_sync_dma_for_cpu( sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_FROM_DEVICE);
+ }
+ 
+ void OSCPUCacheCleanRangeKM(PVRSRV_DEVICE_NODE *psDevNode,
+@@ -245,7 +247,6 @@
+ 							IMG_CPU_PHYADDR sCPUPhysStart,
+ 							IMG_CPU_PHYADDR sCPUPhysEnd)
+ {
+-	const struct dma_map_ops *dma_ops;
+ 
+ 	if (pvVirtStart)
+ 	{
+@@ -253,8 +254,10 @@
+ 		return;
+ 	}
+ 
+-	dma_ops = get_dma_ops(psDevNode->psDevConfig->pvOSDevice);
+-	dma_ops->sync_single_for_device(NULL, sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_TO_DEVICE);
++	/* This interface receives CPU physical addresses, never DMA/IOVA handles. */
++	if (WARN_ON(sCPUPhysEnd.uiAddr < sCPUPhysStart.uiAddr))
++		return;
++	arch_sync_dma_for_device( sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_TO_DEVICE);
+ }
+ 
+ void OSCPUCacheInvalidateRangeKM(PVRSRV_DEVICE_NODE *psDevNode,
+@@ -263,7 +266,6 @@
+ 								 IMG_CPU_PHYADDR sCPUPhysStart,
+ 								 IMG_CPU_PHYADDR sCPUPhysEnd)
+ {
+-	const struct dma_map_ops *dma_ops;
+ 
+ 	if (pvVirtStart)
+ 	{
+@@ -271,8 +273,10 @@
+ 		return;
+ 	}
+ 
+-	dma_ops = get_dma_ops(psDevNode->psDevConfig->pvOSDevice);
+-	dma_ops->sync_single_for_cpu(NULL, sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_FROM_DEVICE);
++	/* This interface receives CPU physical addresses, never DMA/IOVA handles. */
++	if (WARN_ON(sCPUPhysEnd.uiAddr < sCPUPhysStart.uiAddr))
++		return;
++	arch_sync_dma_for_cpu( sCPUPhysStart.uiAddr, sCPUPhysEnd.uiAddr - sCPUPhysStart.uiAddr, DMA_FROM_DEVICE);
+ }
+ 
+ PVRSRV_CACHE_OP_ADDR_TYPE OSCPUCacheOpAddressType(void)
+--- a/services/server/env/linux/pdump.c
++++ b/services/server/env/linux/pdump.c
+@@ -42,7 +42,11 @@
+ #if defined (PDUMP)
+ 
+ #include <asm/atomic.h>
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ 
+ #include "pvrversion.h"
+ #include "pvr_debug.h"
+--- a/services/server/env/linux/physmem_dmabuf.c
++++ b/services/server/env/linux/physmem_dmabuf.c
+@@ -53,6 +53,7 @@
+ #include <linux/err.h>
+ #include <linux/slab.h>
+ #include <linux/dma-buf.h>
++#include <linux/iosys-map.h>
+ #include <linux/scatterlist.h>
+ 
+ #include "img_types.h"
+@@ -74,6 +75,7 @@
+ #endif
+ 
+ #include "kernel_compatibility.h"
++#include "mfw-dmabuf-fill.h"
+ 
+ /*
+  * dma_buf_ops
+@@ -83,7 +85,7 @@
+  * and using our dmabuf.
+  */
+ 
+-static int PVRDmaBufOpsAttach(struct dma_buf *psDmaBuf, struct device *psDev,
++static int PVRDmaBufOpsAttach(struct dma_buf *psDmaBuf,
+                            struct dma_buf_attachment *psAttachment)
+ {
+ 	return -ENOSYS;
+@@ -107,11 +109,6 @@
+ 	PMR *psPMR = (PMR *) psDmaBuf->priv;
+ 
+ 	PMRUnrefPMR(psPMR);
+-}
+-
+-static void *PVRDmaBufOpsKMap(struct dma_buf *psDmaBuf, unsigned long uiPageNum)
+-{
+-	return ERR_PTR(-ENOSYS);
+ }
+ 
+ static int PVRDmaBufOpsMMap(struct dma_buf *psDmaBuf, struct vm_area_struct *psVMA)
+@@ -125,8 +122,6 @@
+ 	.map_dma_buf   = PVRDmaBufOpsMap,
+ 	.unmap_dma_buf = PVRDmaBufOpsUnmap,
+ 	.release       = PVRDmaBufOpsRelease,
+-	.kmap_atomic   = PVRDmaBufOpsKMap,
+-	.kmap          = PVRDmaBufOpsKMap,
+ 	.mmap          = PVRDmaBufOpsMMap,
+ };
+ 
+@@ -159,37 +154,13 @@
+ static IMG_UINT32 g_ui32HashRefCount = 0;
+ #endif
+ 
+-#if defined(PVR_ANDROID_ION_USE_SG_LENGTH)
+-#define pvr_sg_length(sg) ((sg)->length)
+-#else
++/* Modern attachment maps expose DMA segment lengths, including coalescing. */
+ #define pvr_sg_length(sg) sg_dma_len(sg)
+-#endif
+ 
+ static const IMG_CHAR _AllocPoison[] = "^PoIsOn";
+ static const IMG_UINT32 _AllocPoisonSize = 7;
+ static const IMG_CHAR _FreePoison[] = "<DEAD-BEEF>";
+ static const IMG_UINT32 _FreePoisonSize = 11;
+-
+-static void _Poison(void *pvKernAddr,
+-		    IMG_DEVMEM_SIZE_T uiBufferSize,
+-		    const IMG_CHAR *pacPoisonData,
+-		    size_t uiPoisonSize)
+-{
+-	IMG_DEVMEM_SIZE_T uiDestByteIndex;
+-	IMG_CHAR *pcDest = pvKernAddr;
+-	IMG_UINT32 uiSrcByteIndex = 0;
+-
+-	for (uiDestByteIndex = 0; uiDestByteIndex < uiBufferSize; uiDestByteIndex++)
+-	{
+-		pcDest[uiDestByteIndex] = pacPoisonData[uiSrcByteIndex];
+-		uiSrcByteIndex++;
+-		if (uiSrcByteIndex == uiPoisonSize)
+-		{
+-			uiSrcByteIndex = 0;
+-		}
+-	}
+-}
+-
+ 
+ /*****************************************************************************
+  *                       PMR callback functions                              *
+@@ -210,45 +181,14 @@
+ 	if (!psSgTable)
+ 		goto exit;
+ 
+-	dma_buf_unmap_attachment(psAttachment, psSgTable, DMA_BIDIRECTIONAL);
++	dma_buf_unmap_attachment_unlocked(psAttachment, psSgTable, DMA_BIDIRECTIONAL);
+ 
+ 
+ 	if (psPrivData->bPoisonOnFree)
+ 	{
+-		void *pvKernAddr;
+-		int i, err;
+-
+-		err = dma_buf_begin_cpu_access(psDmaBuf, DMA_FROM_DEVICE);
++		int err = mfw_fill_dmabuf(psDmaBuf, _FreePoison, _FreePoisonSize);
+ 		if (err)
+-		{
+-			PVR_DPF((PVR_DBG_ERROR,
+-					 "%s: Failed to begin cpu access for free poisoning (err=%d)",
+-					 __func__, err));
+-			PVR_ASSERT(IMG_FALSE);
+-			goto exit;
+-		}
+-
+-		for (i = 0; i < psDmaBuf->size / PAGE_SIZE; i++)
+-		{
+-			pvKernAddr = dma_buf_kmap(psDmaBuf, i);
+-			if (IS_ERR_OR_NULL(pvKernAddr))
+-			{
+-				PVR_DPF((PVR_DBG_ERROR,
+-						 "%s: Failed to poison allocation before free (err=%ld)",
+-						 __func__, pvKernAddr ? PTR_ERR(pvKernAddr) : -ENOMEM));
+-				PVR_ASSERT(IMG_FALSE);
+-				goto exit_end_access;
+-			}
+-
+-			_Poison(pvKernAddr, PAGE_SIZE, _FreePoison, _FreePoisonSize);
+-
+-			dma_buf_kunmap(psDmaBuf, i, pvKernAddr);
+-		}
+-
+-exit_end_access:
+-		do {
+-			err = dma_buf_end_cpu_access(psDmaBuf, DMA_TO_DEVICE);
+-		} while (err == -EAGAIN || err == -EINTR);
++			PVR_DPF((PVR_DBG_ERROR, "%s: free poison failed (%d)", __func__, err));
+ 	}
+ 
+ exit:
+@@ -315,68 +255,57 @@
+ 
+ static PVRSRV_ERROR
+ PMRAcquireKernelMappingDataDmaBuf(PMR_IMPL_PRIVDATA pvPriv,
+-				  size_t uiOffset,
+-				  size_t uiSize,
+-				  void **ppvKernelAddressOut,
+-				  IMG_HANDLE *phHandleOut,
+-				  PMR_FLAGS_T ulFlags)
++		size_t uiOffset, size_t uiSize, void **ppvKernelAddressOut,
++		IMG_HANDLE *phHandleOut, PMR_FLAGS_T ulFlags)
+ {
+ 	PMR_DMA_BUF_DATA *psPrivData = pvPriv;
+-	struct dma_buf *psDmaBuf = psPrivData->psAttachment->dmabuf;
+-	void *pvKernAddr;
+-	PVRSRV_ERROR eError;
++	struct dma_buf *buf = psPrivData->psAttachment->dmabuf;
++	struct iosys_map *map;
+ 	int err;
+ 
+-	if (psPrivData->ui32PhysPageCount != psPrivData->ui32VirtPageCount)
+-	{
+-		PVR_DPF((PVR_DBG_ERROR, "%s: Kernel mappings for sparse DMABufs "
+-				"are not allowed!", __func__));
+-		eError = PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+-		goto fail;
+-	}
+-
+-	err = dma_buf_begin_cpu_access(psDmaBuf, DMA_BIDIRECTIONAL);
++	if (psPrivData->ui32PhysPageCount != psPrivData->ui32VirtPageCount ||
++	    uiOffset > buf->size || uiSize > buf->size - uiOffset)
++		return PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
++	map = kzalloc(sizeof(*map), GFP_KERNEL);
++	if (!map)
++		return PVRSRV_ERROR_OUT_OF_MEMORY;
++	err = dma_buf_begin_cpu_access(buf, DMA_BIDIRECTIONAL);
+ 	if (err)
+-	{
+-		eError = PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+-		goto fail;
+-	}
+-
+-	pvKernAddr = dma_buf_vmap(psDmaBuf);
+-	if (IS_ERR_OR_NULL(pvKernAddr))
+-	{
+-		eError = PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+-		goto fail_kmap;
+-	}
+-
+-	*ppvKernelAddressOut = pvKernAddr + uiOffset;
+-	*phHandleOut = pvKernAddr;
+-
++		goto fail_free;
++	err = dma_buf_vmap_unlocked(buf, map);
++	if (err)
++		goto fail_access;
++	/* PMR callers require an ordinary pointer, not an __iomem mapping. */
++	if (map->is_iomem || iosys_map_is_null(map))
++	{
++		dma_buf_vunmap_unlocked(buf, map);
++		goto fail_access;
++	}
++	*ppvKernelAddressOut = (char *)map->vaddr + uiOffset;
++	*phHandleOut = map;
+ 	return PVRSRV_OK;
+-
+-fail_kmap:
+-	do {
+-		err = dma_buf_end_cpu_access(psDmaBuf, DMA_BIDIRECTIONAL);
+-	} while (err == -EAGAIN || err == -EINTR);
+-
+-fail:
+-	PVR_ASSERT(eError != PVRSRV_OK);
+-	return eError;
++fail_access:
++	err = dma_buf_end_cpu_access(buf, DMA_BIDIRECTIONAL);
++	if (err)
++		PVR_DPF((PVR_DBG_ERROR, "%s: end CPU access failed (%d)", __func__, err));
++fail_free:
++	kfree(map);
++	return PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+ }
+ 
+ static void PMRReleaseKernelMappingDataDmaBuf(PMR_IMPL_PRIVDATA pvPriv,
+-					      IMG_HANDLE hHandle)
++		IMG_HANDLE hHandle)
+ {
+ 	PMR_DMA_BUF_DATA *psPrivData = pvPriv;
+-	struct dma_buf *psDmaBuf = psPrivData->psAttachment->dmabuf;
+-	void *pvKernAddr = hHandle;
++	struct dma_buf *buf = psPrivData->psAttachment->dmabuf;
++	struct iosys_map *map = hHandle;
+ 	int err;
+ 
+-	dma_buf_vunmap(psDmaBuf, pvKernAddr);
+-
+-	do {
+-		err = dma_buf_end_cpu_access(psDmaBuf, DMA_BIDIRECTIONAL);
+-	} while (err == -EAGAIN || err == -EINTR);
++	dma_buf_vunmap_unlocked(buf, map);
++	err = dma_buf_end_cpu_access(buf, DMA_BIDIRECTIONAL);
++	if (err)
++		PVR_DPF((PVR_DBG_ERROR, "%s: end CPU access failed (%d)", __func__, err));
++	kfree(map);
+ }
+ 
+ static PVRSRV_ERROR PMRMMapDmaBuf(PMR_IMPL_PRIVDATA pvPriv,
+@@ -485,56 +414,34 @@
+ 
+ 	if (bZeroOnAlloc || bPoisonOnAlloc)
+ 	{
+-		void *pvKernAddr;
+-		int i, err;
+-
+-		err = dma_buf_begin_cpu_access(psDmaBuf, DMA_FROM_DEVICE);
++		int err = mfw_fill_dmabuf(psDmaBuf,
++			bZeroOnAlloc ? NULL : _AllocPoison,
++			bZeroOnAlloc ? 0 : _AllocPoisonSize);
+ 		if (err)
+ 		{
+ 			eError = PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+ 			goto errFreePhysAddr;
+ 		}
+-
+-		for (i = 0; i < psDmaBuf->size / PAGE_SIZE; i++)
+-		{
+-			pvKernAddr = dma_buf_kmap(psDmaBuf, i);
+-			if (IS_ERR_OR_NULL(pvKernAddr))
+-			{
+-				PVR_DPF((PVR_DBG_ERROR,
+-						 "%s: Failed to map page for %s (err=%ld)",
+-						 __func__, bZeroOnAlloc ? "zeroing" : "poisoning",
+-						 pvKernAddr ? PTR_ERR(pvKernAddr) : -ENOMEM));
+-				eError = PVRSRV_ERROR_PMR_NO_KERNEL_MAPPING;
+-
+-				do {
+-					err = dma_buf_end_cpu_access(psDmaBuf, DMA_TO_DEVICE);
+-				} while (err == -EAGAIN || err == -EINTR);
+-
+-				goto errFreePhysAddr;
+-			}
+-
+-			if (bZeroOnAlloc)
+-			{
+-				memset(pvKernAddr, 0, PAGE_SIZE);
+-			}
+-			else
+-			{
+-				_Poison(pvKernAddr, PAGE_SIZE, _AllocPoison, _AllocPoisonSize);
+-			}
+-
+-			dma_buf_kunmap(psDmaBuf, i, pvKernAddr);
+-		}
+-
+-		do {
+-			err = dma_buf_end_cpu_access(psDmaBuf, DMA_TO_DEVICE);
+-		} while (err == -EAGAIN || err == -EINTR);
+-	}
+-
+-	table = dma_buf_map_attachment(psAttachment, DMA_BIDIRECTIONAL);
++	}
++
++	table = dma_buf_map_attachment_unlocked(psAttachment, DMA_BIDIRECTIONAL);
+ 	if (IS_ERR_OR_NULL(table))
+ 	{
+ 		eError = PVRSRV_ERROR_INVALID_PARAMS;
+ 		goto errFreePhysAddr;
++	}
++
++	/* Vendor secure-buffer zero-SG convention is unsupported on this port. */
++	if (!table->sgl || !table->nents) {
++		eError = PVRSRV_ERROR_INVALID_PARAMS;
++		goto errUnmap;
++	}
++	for_each_sg(table->sgl, sg, table->nents, i) {
++		if (!sg_dma_len(sg) || !IS_ALIGNED(sg_dma_len(sg), PAGE_SIZE) ||
++		    !IS_ALIGNED(sg_dma_address(sg), PAGE_SIZE)) {
++			eError = PVRSRV_ERROR_INVALID_PARAMS;
++			goto errUnmap;
++		}
+ 	}
+ 
+ 	/*
+@@ -648,13 +555,13 @@
+ 	{
+ 		PVR_DPF((PVR_DBG_ERROR, "%s: Failed to create PMR (%s)",
+ 				 __func__, PVRSRVGetErrorStringKM(eError)));
+-		goto errFreePhysAddr;
++		goto errUnmap;
+ 	}
+ 
+ 	return PVRSRV_OK;
+ 
+ errUnmap:
+-	dma_buf_unmap_attachment(psAttachment, table, DMA_BIDIRECTIONAL);
++	dma_buf_unmap_attachment_unlocked(psAttachment, table, DMA_BIDIRECTIONAL);
+ errFreePhysAddr:
+ 	OSFreeMem(psPrivData->pasDevPhysAddr);
+ errFreePrivData:
+--- a/services/server/env/linux/physmem_osmem_linux.c
++++ b/services/server/env/linux/physmem_osmem_linux.c
+@@ -429,7 +429,7 @@
+ 	return IMG_TRUE;
+ }
+ 
+-static struct shrinker g_sShrinker;
++static struct shrinker *g_psShrinker;
+ 
+ /* Returning the number of pages that still reside in the page pool. */
+ static unsigned long
+@@ -445,7 +445,7 @@
+ {
+ 	int remain;
+ 
+-	PVR_ASSERT(psShrinker == &g_sShrinker);
++	PVR_ASSERT(psShrinker == g_psShrinker);
+ 	(void)psShrinker;
+ 	(void)psShrinkControl;
+ 
+@@ -467,7 +467,7 @@
+ 	LinuxUnpinEntry *psUnpinEntry, *psTempUnpinEntry;
+ 	IMG_UINT32 uiPagesFreed;
+ 
+-	PVR_ASSERT(psShrinker == &g_sShrinker);
++	PVR_ASSERT(psShrinker == g_psShrinker);
+ 	(void)psShrinker;
+ 
+ 	/* In order to avoid possible deadlock use mutex_trylock in place of mutex_lock */
+@@ -552,50 +552,32 @@
+ #endif
+ }
+ 
+-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,12,0))
+-static int
+-_ShrinkPagePool(struct shrinker *psShrinker, struct shrink_control *psShrinkControl)
+-{
+-	if (psShrinkControl->nr_to_scan != 0)
+-	{
+-		return _ScanObjectsInPagePool(psShrinker, psShrinkControl);
+-	}
+-	else
+-	{
+-		/* No pages are being reclaimed so just return the page count */
+-		return _CountObjectsInPagePool(psShrinker, psShrinkControl);
+-	}
+-}
+-
+-static struct shrinker g_sShrinker =
+-{
+-	.shrink = _ShrinkPagePool,
+-	.seeks = DEFAULT_SEEKS
+-};
+-#else
+-static struct shrinker g_sShrinker =
+-{
+-	.count_objects = _CountObjectsInPagePool,
+-	.scan_objects = _ScanObjectsInPagePool,
+-	.seeks = DEFAULT_SEEKS
+-};
+-#endif
+-
+-/* Register the shrinker so Linux can reclaim cached pages */
+-void LinuxInitPhysmem(void)
++/* Register reclaim only after both caches are valid. Fail initialization
++ * cleanly rather than creating a page pool which cannot be reclaimed. */
++int LinuxInitPhysmem(void)
+ {
+ 	g_psLinuxPageArray = kmem_cache_create("pvr-pa", sizeof(PMR_OSPAGEARRAY_DATA), 0, 0, NULL);
+-
+-	_PagePoolLock();
++	if (!g_psLinuxPageArray)
++		return -ENOMEM;
+ 	g_psLinuxPagePoolCache = kmem_cache_create("pvr-pp", sizeof(LinuxPagePoolEntry), 0, 0, NULL);
+-	if (g_psLinuxPagePoolCache)
+-	{
+-		/* Only create the shrinker if we created the cache OK */
+-		register_shrinker(&g_sShrinker);
+-	}
+-	_PagePoolUnlock();
+-
++	if (!g_psLinuxPagePoolCache)
++		goto fail_array;
++	g_psShrinker = shrinker_alloc(0, "pvr-page-pool");
++	if (!g_psShrinker)
++		goto fail_pool;
++	g_psShrinker->count_objects = _CountObjectsInPagePool;
++	g_psShrinker->scan_objects = _ScanObjectsInPagePool;
++	g_psShrinker->seeks = DEFAULT_SEEKS;
+ 	OSAtomicWrite(&g_iPoolCleanTasks, 0);
++	shrinker_register(g_psShrinker);
++	return 0;
++fail_pool:
++	kmem_cache_destroy(g_psLinuxPagePoolCache);
++	g_psLinuxPagePoolCache = NULL;
++fail_array:
++	kmem_cache_destroy(g_psLinuxPageArray);
++	g_psLinuxPageArray = NULL;
++	return -ENOMEM;
+ }
+ 
+ /* Unregister the shrinker and remove all pages from the pool that are still left */
+@@ -603,6 +585,8 @@
+ {
+ 	IMG_UINT32 uiPagesFreed;
+ 
++	shrinker_free(g_psShrinker);
++	g_psShrinker = NULL;
+ 	if (OSAtomicRead(&g_iPoolCleanTasks) > 0)
+ 	{
+ 		PVR_DPF((PVR_DBG_WARNING, "Still deferred cleanup tasks running "
+@@ -622,7 +606,6 @@
+ 	/* Free the page cache */
+ 	kmem_cache_destroy(g_psLinuxPagePoolCache);
+ 
+-	unregister_shrinker(&g_sShrinker);
+ 	_PagePoolUnlock();
+ 
+ 	kmem_cache_destroy(g_psLinuxPageArray);
+@@ -949,7 +932,7 @@
+ 		                        uiMaxPagesToMap :
+ 		                        uiNumToClean;
+ 
+-		pvAddr = vm_map_ram(ppsCleanArray, uiToClean, -1, pgprot);
++		pvAddr = vmap(ppsCleanArray, uiToClean, VM_MAP, pgprot);
+ 		if (!pvAddr)
+ 		{
+ 			if (uiMaxPagesToMap <= 1)
+@@ -969,7 +952,7 @@
+ 		}
+ 
+ 		OSDeviceMemSet(pvAddr, 0, PAGE_SIZE * uiToClean);
+-		vm_unmap_ram(pvAddr, uiToClean);
++		vunmap(pvAddr);
+ 
+ 		ppsCleanArray = &(ppsCleanArray[uiToClean]);
+ 		uiNumToClean -= uiToClean;
+@@ -1474,7 +1457,7 @@
+ 											uiNumToClean;
+ 				IMG_CPU_PHYADDR sUnused = {(uintptr_t)0xCAFEF00DDEADBEEF};
+ 
+-				pvAddr = vm_map_ram(ppsCleanArray, uiToClean, -1, pgprot);
++				pvAddr = vmap(ppsCleanArray, uiToClean, VM_MAP, pgprot);
+ 				if (!pvAddr)
+ 				{
+ 					PVR_DPF((PVR_DBG_ERROR,
+@@ -1489,7 +1472,7 @@
+ 							  sUnused,
+ 							  PVRSRV_CACHE_OP_FLUSH);
+ 
+-				vm_unmap_ram(pvAddr, uiToClean);
++				vunmap(pvAddr);
+ 
+ 				ppsCleanArray = &(ppsCleanArray[uiToClean]);
+ 				uiNumToClean -= uiToClean;
+@@ -3070,11 +3053,11 @@
+ 		goto e1;
+ 	}
+ 
+-#if !defined(CONFIG_64BIT) || defined(PVRSRV_FORCE_SLOWER_VMAP_ON_64BIT_BUILDS)
++#if 1 /* Linux 7.3 vmap preserves requested cache protection. */
+ 
+ 	pvAddress = vmap(pagearray,
+ 						uiMapPageCount,
+-					 VM_READ | VM_WRITE,
++					 VM_MAP,
+ 					 prot);
+ #else
+ 
+@@ -3122,7 +3105,7 @@
+     PMR_OSPAGEARRAY_KERNMAP_DATA *psData = hHandle;
+ 	PVR_UNREFERENCED_PARAMETER(pvPriv);
+ 
+-#if !defined(CONFIG_64BIT) || defined(PVRSRV_FORCE_SLOWER_VMAP_ON_64BIT_BUILDS)
++#if 1 /* Linux 7.3 vmap preserves requested cache protection. */
+ 	vunmap(psData->pvBase);
+ #else
+ 	vm_unmap_ram(psData->pvBase, psData->ui32PageCount);
+--- a/services/server/env/linux/physmem_osmem_linux.h
++++ b/services/server/env/linux/physmem_osmem_linux.h
+@@ -43,7 +43,7 @@
+ #ifndef __PHYSMEM_OSMEM_LINUX_H__
+ #define __PHYSMEM_OSMEM_LINUX_H__
+ 
+-void LinuxInitPhysmem(void);
++int LinuxInitPhysmem(void);
+ void LinuxDeinitPhysmem(void);
+ 
+ #endif /* __PHYSMEM_OSMEM_LINUX_H__ */
+--- a/services/server/env/linux/pmr_os.c
++++ b/services/server/env/linux/pmr_os.c
+@@ -48,10 +48,7 @@
+ #include <asm/api-l4env/api.h>
+ #endif
+ #include <linux/version.h>
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-#include <linux/pfn_t.h>
+-#include <linux/pfn.h>
+-#endif
++
+ 
+ #include "img_defs.h"
+ #include "pvr_debug.h"
+@@ -204,11 +201,8 @@
+ 							IMG_BOOL bUseMixedMap)
+ {
+ 	IMG_INT32 iStatus;
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-	pfn_t sPFN;
+-#else
+ 	unsigned long uiPFN;
+-#endif
++
+ 
+ #if defined(CONFIG_L4)
+ 	IMG_CPU_VIRTADDR pvCpuVAddr;
+@@ -220,18 +214,12 @@
+ 		return -1;
+ 	}
+ 
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-	sPFN = phys_to_pfn_t((uintptr_t)pvCpuVAddr, 0);
+-#else
+ 	uiPFN = ((uintptr_t) pvCpuVAddr) >> PAGE_SHIFT;
+-#endif
++
+ #else /* defined(CONFIG_L4) */
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-	sPFN = phys_to_pfn_t(psCpuPAddr->uiAddr, 0);
+-#else
+ 	uiPFN = psCpuPAddr->uiAddr >> PAGE_SHIFT;
+ 	PVR_ASSERT(((IMG_UINT64)uiPFN << PAGE_SHIFT) == psCpuPAddr->uiAddr);
+-#endif
++
+ #endif
+ 
+ 	/*
+@@ -246,24 +234,19 @@
+ 			 * This path is just for debugging. It should be
+ 			 * equivalent to the remap_pfn_range() path.
+ 			 */
+-			iStatus = vm_insert_mixed(ps_vma,
++			vm_fault_t fault = vmf_insert_mixed(ps_vma,
+ 									  ps_vma->vm_start + uiOffset,
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-									  sPFN);
+-#else
+ 									  uiPFN);
+-#endif
++			iStatus = (fault & VM_FAULT_ERROR) ? -EFAULT : 0;
++
+ 		}
+ 		else
+ 		{
+ 			/* Since kernel 3.7 this sets VM_MIXEDMAP internally */
+ 			iStatus = vm_insert_page(ps_vma,
+ 									 ps_vma->vm_start + uiOffset,
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-									 pfn_t_to_page(sPFN));
+-#else
+ 									 pfn_to_page(uiPFN));
+-#endif
++
+ 		}
+ 	}
+ 	else
+@@ -308,11 +291,8 @@
+ 
+ 		iStatus = remap_pfn_range(ps_vma,
+ 								  ps_vma->vm_start + uiOffset,
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-								  pfn_t_to_pfn(sPFN),
+-#else
+ 								  uiPFN,
+-#endif
++
+ 								  uiNumContiguousBytes,
+ 								  ps_vma->vm_page_prot);
+ 	}
+@@ -392,19 +372,19 @@
+ 	}
+ 	ps_vma->vm_page_prot = sPageProt;
+ 
+-	ps_vma->vm_flags |= VM_IO;
++	vm_flags_set(ps_vma, VM_IO);
+ 
+ 	/* Don't include the mapping in core dumps */
+-	ps_vma->vm_flags |= VM_DONTDUMP;
++	vm_flags_set(ps_vma, VM_DONTDUMP);
+ 
+ 	/*
+ 	 * Disable mremap because our nopage handler assumes all
+ 	 * page requests have already been validated.
+ 	 */
+-	ps_vma->vm_flags |= VM_DONTEXPAND;
++	vm_flags_set(ps_vma, VM_DONTEXPAND);
+ 
+ 	/* Don't allow mapping to be inherited across a process fork */
+-	ps_vma->vm_flags |= VM_DONTCOPY;
++	vm_flags_set(ps_vma, VM_DONTCOPY);
+ 
+ 	uiLength = ps_vma->vm_end - ps_vma->vm_start;
+ 
+@@ -461,26 +441,18 @@
+ 	 */
+ 	if (bUseVMInsertPage)
+ 	{
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-		pfn_t sPFN;
+-#else
+ 		unsigned long uiPFN;
+-#endif
++
+ 
+ 		for (uiOffsetIdx = 0; uiOffsetIdx < uiNumOfPFNs; ++uiOffsetIdx)
+ 		{
+ 			if (pbValid[uiOffsetIdx])
+ 			{
+-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0))
+-				sPFN = phys_to_pfn_t(psCpuPAddr[uiOffsetIdx].uiAddr, 0);
+-
+-				if (!pfn_t_valid(sPFN) || page_count(pfn_t_to_page(sPFN)) == 0)
+-#else
+ 				uiPFN = psCpuPAddr[uiOffsetIdx].uiAddr >> PAGE_SHIFT;
+ 				PVR_ASSERT(((IMG_UINT64)uiPFN << PAGE_SHIFT) == psCpuPAddr[uiOffsetIdx].uiAddr);
+ 
+ 				if (!pfn_valid(uiPFN) || page_count(pfn_to_page(uiPFN)) == 0)
+-#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 5, 0)) */
++
+ 				{
+ 					bUseMixedMap = IMG_TRUE;
+ 					break;
+@@ -490,12 +462,12 @@
+ 
+ 		if (bUseMixedMap)
+ 		{
+-			ps_vma->vm_flags |= VM_MIXEDMAP;
++			vm_flags_set(ps_vma, VM_MIXEDMAP);
+ 		}
+ 	}
+ 	else
+ 	{
+-		ps_vma->vm_flags |= VM_PFNMAP;
++		vm_flags_set(ps_vma, VM_PFNMAP);
+ 	}
+ 
+ 	/* For each PMR page-size contiguous bytes, map page(s) into user VMA */
+--- a/services/server/env/linux/pvr_bridge_k.c
++++ b/services/server/env/linux/pvr_bridge_k.c
+@@ -55,7 +55,9 @@
+ #include "pmr.h"
+ #include "rgx_bvnc_defs_km.h"
+ 
+-#include <drm/drmP.h>
++#include <drm/drm_device.h>
++#include <drm/drm_file.h>
++#include <drm/drm_print.h>
+ #include "pvr_drm.h"
+ #include "pvr_drv.h"
+ 
+@@ -90,9 +92,9 @@
+ /* WARNING!
+  * The mmap code has its own mutex, to prevent a possible deadlock,
+  * when using gPVRSRVLock.
+- * The Linux kernel takes the mm->mmap_sem before calling the mmap
++ * The Linux kernel takes the mm->mmap_lock before calling the mmap
+  * entry points (PVRMMap, MMapVOpen, MMapVClose), but the ioctl
+- * entry point may take mm->mmap_sem during fault handling, or 
++ * entry point may take mm->mmap_lock during fault handling, or 
+  * before calling get_user_pages.  If gPVRSRVLock was used in the
+  * mmap entry points, a deadlock could result, due to the ioctl
+  * and mmap code taking the two locks in different orders.
+--- a/services/server/env/linux/pvr_debug.c
++++ b/services/server/env/linux/pvr_debug.c
+@@ -49,7 +49,11 @@
+ #include <linux/spinlock.h>
+ #include <linux/string.h>
+ #include <linux/slab.h>
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ 
+ #include "allocmem.h"
+ #include "pvrversion.h"
+@@ -832,7 +836,7 @@
+ 	return 0;
+ }
+ 
+-static IMG_INT DebugStatusSet(const char __user *pcBuffer,
++static ssize_t DebugStatusSet(const char __user *pcBuffer,
+ 							  size_t uiCount,
+ 							  loff_t *puiPosition,
+ 							  void *pvData)
+@@ -1117,7 +1121,7 @@
+ };
+ 
+ 
+-static IMG_INT DebugLevelSet(const char __user *pcBuffer,
++static ssize_t DebugLevelSet(const char __user *pcBuffer,
+ 							 size_t uiCount,
+ 							 loff_t *puiPosition,
+ 							 void *pvData)
+@@ -1209,7 +1213,7 @@
+ 	iResult = PVRDebugFSCreateEntry("status",
+ 									NULL,
+ 									&gsDebugStatusReadOps,
+-									(PVRSRV_ENTRY_WRITE_FUNC *)DebugStatusSet,
++									DebugStatusSet,
+ 									NULL,
+ 									NULL,
+ 									psPVRSRVData,
+@@ -1252,7 +1256,7 @@
+ 	iResult = PVRDebugFSCreateEntry("debug_level",
+ 									NULL,
+ 									&gsDebugLevelReadOps,
+-									(PVRSRV_ENTRY_WRITE_FUNC *)DebugLevelSet,
++									DebugLevelSet,
+ 									NULL,
+ 									NULL,
+ 									&gPVRDebugLevel,
+--- a/services/server/env/linux/pvr_uaccess.h
++++ b/services/server/env/linux/pvr_uaccess.h
+@@ -46,7 +46,7 @@
+ 
+ static inline unsigned long pvr_copy_to_user(void __user *pvTo, const void *pvFrom, unsigned long ulBytes)
+ {
+-    if (access_ok(VERIFY_WRITE, pvTo, ulBytes))
++    if (access_ok(pvTo, ulBytes))
+     {
+ 		return __copy_to_user(pvTo, pvFrom, ulBytes);
+     }
+@@ -78,7 +78,7 @@
+      * The compile time correctness checking introduced for copy_from_user in
+      * Linux 2.6.33 isn't fully compatible with our usage of the function.
+      */
+-    if (access_ok(VERIFY_READ, pvFrom, ulBytes))
++    if (access_ok(pvFrom, ulBytes))
+     {
+ 		return __copy_from_user(pvTo, pvFrom, ulBytes);
+     }
+--- a/services/server/include/lists.h
++++ b/services/server/include/lists.h
+@@ -46,7 +46,11 @@
+ 
+ /* instruct QAC to ignore warnings about the following custom formatted macros */
+ /* PRQA S 0881,3410 ++ */
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #include "img_types.h"
+ #include "device.h"
+ #include "power.h"
+--- a/services/server/include/osfunc.h
++++ b/services/server/include/osfunc.h
+@@ -56,7 +56,11 @@
+ 
+ #if defined(__QNXNTO__)
+ #include <stdio.h>
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #include <string.h>
+ #endif
+ 
+--- a/services/server/include/pdump_km.h
++++ b/services/server/include/pdump_km.h
+@@ -45,7 +45,11 @@
+ #define _PDUMP_KM_H_
+ 
+ #if defined(PDUMP)
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #endif
+ 
+ /* services/srvkm/include/ */
+--- a/services/server/include/pdump_osfunc.h
++++ b/services/server/include/pdump_osfunc.h
+@@ -40,7 +40,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ 
+ #include "img_types.h"
+ #include "pvrsrv_error.h"
+--- a/services/server/include/process_stats.h
++++ b/services/server/include/process_stats.h
+@@ -204,8 +204,6 @@
+ PVRSRV_ERROR PVRSRVFindProcessMemStats(IMG_PID pid, IMG_UINT32 ui32ArrSize,
+                                        IMG_BOOL bAllProcessStats, IMG_UINT32 *ui32MemoryStats);
+ 
+-extern unsigned int (*mtk_get_gpu_memory_usage_fp)(void);
+-extern bool (*mtk_dump_gpu_memory_usage_fp)(void);
+ IMG_UINT32 MTKGetMemStat(void);
+ bool MTKGetMemStatDump(void);
+ 
+--- a/services/server/include/tlserver.h
++++ b/services/server/include/tlserver.h
+@@ -44,7 +44,11 @@
+ #ifndef __TLSERVER_H_
+ #define __TLSERVER_H_
+ 
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ #include "img_defs.h"
+ #include "pvr_debug.h"
+--- a/services/shared/common/htbuffer.c
++++ b/services/shared/common/htbuffer.c
+@@ -45,7 +45,11 @@
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */ /**************************************************************************/
+ 
++#ifdef __KERNEL__
++#include <linux/stdarg.h>
++#else
+ #include <stdarg.h>
++#endif
+ #include "htbuffer.h"
+ //#include "allocmem.h"
+ #include "osfunc.h"
+--- a/services/shared/common/mem_utils.c
++++ b/services/shared/common/mem_utils.c
+@@ -52,7 +52,11 @@
+  *       by the compiler to stdlib functions, and it must only use the below
+  *       headers. Do not include any IMG or services headers in this file.
+  */
++#ifdef __KERNEL__
++#include <linux/stddef.h>
++#else
+ #include <stddef.h>
++#endif
+ 
+ /* Prototypes to suppress warnings in -ffreestanding mode */
+ void DeviceMemCopy(void *pvDst, const void *pvSrc, size_t uSize);
+--- a/services/system/rgx_mtk/sysconfig.c
++++ b/services/system/rgx_mtk/sysconfig.c
+@@ -49,7 +49,8 @@
+ #if defined(SUPPORT_ION)
+ #include "ion_support.h"
+ #endif
+-#include "mtk_mfgsys.h"
++#include "mfw-ddk-power.h"
++#include <linux/err.h>
+ 
+ #if defined(MTK_CONFIG_OF) && defined(CONFIG_OF)
+ #include <linux/of.h>
+@@ -147,6 +148,7 @@
+ PVRSRV_ERROR SysDevInit(void *pvOSDevice, PVRSRV_DEVICE_CONFIG **ppsDevConfig)
+ {
+ 	PVRSRV_ERROR err = PVRSRV_OK;
++	struct mfw_ddk_power *power;
+ 
+ 	gsPhysHeapFuncs.pfnCpuPAddrToDevPAddr = UMAPhysHeapCpuPAddrToDevPAddr;
+ 	gsPhysHeapFuncs.pfnDevPAddrToCpuPAddr = UMAPhysHeapDevPAddrToCpuPAddr;
+@@ -168,21 +170,10 @@
+ 	gsDevices[0].ui32BIFTilingHeapCount = IMG_ARR_NUM_ELEMS(gauiBIFTilingHeapXStrides);
+ 
+ 	/* Setup RGX specific timing data */
+-	gsRGXTimingInfo.ui32CoreClockSpeed = RGX_HW_CORE_CLOCK_SPEED;
+-
+-#if MTK_PM_SUPPORT
+-	gsRGXTimingInfo.bEnableActivePM = true;
+-	gsRGXTimingInfo.ui32ActivePMLatencyms = SYS_RGX_ACTIVE_POWER_LATENCY_MS,
+-#else
+-	gsRGXTimingInfo.bEnableActivePM = false;
+-#endif
+-
+-	/* define HW APM */
+-#if defined(MTK_USE_HW_APM)
+-	gsRGXTimingInfo.bEnableRDPowIsland = true;
+-#else
+-	gsRGXTimingInfo.bEnableRDPowIsland = false;
+-#endif
++	gsRGXTimingInfo.ui32CoreClockSpeed = 26000000;
++
++	gsRGXTimingInfo.bEnableActivePM = IMG_FALSE;
++	gsRGXTimingInfo.bEnableRDPowIsland = IMG_FALSE;
+ 
+ 	/* Setup RGX specific data */
+ 	gsRGXData.psRGXTimingInfo = &gsRGXTimingInfo;
+@@ -195,17 +186,17 @@
+ #if defined(MTK_CONFIG_OF) && defined(CONFIG_OF)
+ 	/* MTK: using device tree */
+ 	{
+-		struct resource *irq_res;
++		int irq;
+ 		struct resource *reg_res;
+ 
+ 		gpsPVRCfgDev = to_platform_device((struct device *)pvOSDevice);
+-		irq_res = platform_get_resource(gpsPVRCfgDev, IORESOURCE_IRQ, 0);
+-
+-		if (irq_res) {
+-			gsDevices[0].ui32IRQ = irq_res->start;
+-			g32SysIrq = irq_res->start;
+-
+-			PVR_LOG(("irq_res = 0x%x", (int)irq_res->start));
++		irq = platform_get_irq(gpsPVRCfgDev, 0);
++
++		if (irq >= 0) {
++			gsDevices[0].ui32IRQ = irq;
++			g32SysIrq = irq;
++
++			PVR_LOG(("irq_res = 0x%x", (int)irq));
+ 		} else {
+ 			PVR_DPF((PVR_DBG_ERROR, "irq_res = NULL!"));
+ 			return PVRSRV_ERROR_INIT_FAILURE;
+@@ -231,8 +222,8 @@
+ #endif
+ 
+ 	/* Power management on HW system */
+-	gsDevices[0].pfnPrePowerState = MTKDevPrePowerState;
+-	gsDevices[0].pfnPostPowerState = MTKDevPostPowerState;
++	gsDevices[0].pfnPrePowerState = mfw_ddk_pre_power;
++	gsDevices[0].pfnPostPowerState = mfw_ddk_post_power;
+ 
+ 	/* Clock frequency */
+ 	gsDevices[0].pfnClockFreqGet = NULL;
+@@ -258,7 +249,12 @@
+ 	gsDevices[0].pvOSDevice = pvOSDevice;
+ 	*ppsDevConfig = &gsDevices[0];
+ 
+-	MTKRGXDeviceInit(gsDevices);
++	power = mfw_ddk_power_create(pvOSDevice);
++	if (IS_ERR(power)) {
++		gsDevices[0].pvOSDevice = NULL;
++		return PTR_ERR(power) == -EPROBE_DEFER ? PVRSRV_ERROR_PROBE_DEFER : PVRSRV_ERROR_INIT_FAILURE;
++	}
++	gsDevices[0].hSysData = power;
+ 	return err;
+ }
+ 
+@@ -268,7 +264,8 @@
+ 	IonDeinit();
+ #endif
+ 
+-	MTKRGXDeviceDeInit(gsDevices);
++	mfw_ddk_power_destroy(psDevConfig->hSysData);
++	psDevConfig->hSysData = NULL;
+ 	psDevConfig->pvOSDevice = NULL;
+ }
+ 
+--- /dev/null
++++ b/services/server/env/linux/mfw-dmabuf-fill.h
+@@ -0,0 +1,60 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef MFW_DMABUF_FILL_H
++#define MFW_DMABUF_FILL_H
++
++#ifndef MFW_DMABUF_FILL_TEST
++#include <linux/dma-buf.h>
++#include <linux/iosys-map.h>
++#include <linux/slab.h>
++#endif
++
++/* Called without a reservation lock. CPU writes use the same DMA direction
++ * at begin/end; unlocked vmap helpers acquire the reservation lock internally.
++ * Preserve stock poison restart at every page, including a short final page.
++ */
++static int mfw_fill_dmabuf(struct dma_buf *buf, const unsigned char *pattern,
++			 size_t pattern_size)
++{
++	struct iosys_map map = { 0 };
++	unsigned char *page = NULL;
++	size_t offset, i, bytes;
++	int err, end_err;
++
++	if (pattern && !pattern_size)
++		return -EINVAL;
++	if (pattern) {
++		page = kmalloc(PAGE_SIZE, GFP_KERNEL);
++		if (!page)
++			return -ENOMEM;
++		for (i = 0; i < PAGE_SIZE; i++)
++			page[i] = pattern[i % pattern_size];
++	}
++	err = dma_buf_begin_cpu_access(buf, DMA_TO_DEVICE);
++	if (err)
++		goto out_free;
++	err = dma_buf_vmap_unlocked(buf, &map);
++	if (err)
++		goto out_access;
++	if (iosys_map_is_null(&map)) {
++		err = -ENOMEM;
++		goto out_unmap;
++	}
++	if (!pattern) {
++		iosys_map_memset(&map, 0, 0, buf->size);
++	} else {
++		for (offset = 0; offset < buf->size; offset += bytes) {
++			bytes = min_t(size_t, PAGE_SIZE, buf->size - offset);
++			iosys_map_memcpy_to(&map, offset, page, bytes);
++		}
++	}
++out_unmap:
++	dma_buf_vunmap_unlocked(buf, &map);
++out_access:
++	end_err = dma_buf_end_cpu_access(buf, DMA_TO_DEVICE);
++	if (!err)
++		err = end_err;
++out_free:
++	kfree(page);
++	return err;
++}
++#endif
+--- /dev/null
++++ b/include/mfw-linux-compat.h
+@@ -0,0 +1,35 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef MFW_LINUX_COMPAT_H
++#define MFW_LINUX_COMPAT_H
++#ifdef MFW_LINUX_COMPAT_TEST
++#include <stddef.h>
++#include <string.h>
++#else
++#include <linux/types.h>
++#include <linux/string.h>
++#endif
++
++/* Keep old DDK fixed-width fields unchanged: strncpy is not strscpy. */
++static inline char *mfw_ddk_strncpy(char *dst, const char *src, size_t size)
++{
++	size_t copied = strnlen(src, size);
++	memcpy(dst, src, copied);
++	if (copied < size)
++		memset(dst + copied, 0, size - copied);
++	return dst;
++}
++
++/* Some DDK callers require strlcpy's source-length return on truncation. */
++static inline size_t mfw_ddk_strlcpy(char *dst, const char *src, size_t size)
++{
++	size_t length = strlen(src);
++	if (size) {
++		size_t copied = length < size - 1 ? length : size - 1;
++		memcpy(dst, src, copied);
++		dst[copied] = '\0';
++	}
++	return length;
++}
++#define strncpy mfw_ddk_strncpy
++#define strlcpy mfw_ddk_strlcpy
++#endif
+--- /dev/null
++++ b/include/mfw-ddk-power.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef MFW_DDK_POWER_H
++#define MFW_DDK_POWER_H
++#include <linux/device.h>
++#include "power.h"
++struct mfw_ddk_power;
++struct mfw_ddk_power *mfw_ddk_power_create(struct device *dev);
++void mfw_ddk_power_destroy(struct mfw_ddk_power *power);
++PVRSRV_ERROR mfw_ddk_pre_power(IMG_HANDLE handle, PVRSRV_DEV_POWER_STATE next,
++	PVRSRV_DEV_POWER_STATE current_state, IMG_BOOL forced);
++PVRSRV_ERROR mfw_ddk_post_power(IMG_HANDLE handle, PVRSRV_DEV_POWER_STATE next,
++	PVRSRV_DEV_POWER_STATE current_state, IMG_BOOL forced);
++#endif
+--- /dev/null
++++ b/include/mfw-mfg-power-sequence.h
+@@ -0,0 +1,74 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef MFW_MFG_POWER_SEQUENCE_H
++#define MFW_MFG_POWER_SEQUENCE_H
++/* MT6739 stock-matched sequencing. Caller provides a prepared26MHz clock,
++ * verified read-only VCORE voltage, exclusive operation lock and bounded polls.
++ * No firmware, voltage, PLL, HWAPM or GPU MMIO here. On failure caller MUST
++ * retain the clock if either domain may still be powered; never blind rollback.
++ */
++#ifdef __KERNEL__
++#include <linux/types.h>
++#else
++#include <stdint.h>
++typedef uint32_t u32;
++#endif
++enum mfw_mfg_block { MFW_MFG_SPM, MFW_MFG_INFRA_AO, MFW_MFG_INFRA };
++struct mfw_mfg_io {
++ void *ctx;
++ u32 (*read)(void *,enum mfw_mfg_block,u32);
++ void (*write)(void *,enum mfw_mfg_block,u32,u32);
++ int (*poll)(void *,enum mfw_mfg_block,u32,u32,u32);
++ int (*idle)(void *);
++ unsigned stage;
++};
++static inline void mfw_mfg_update(struct mfw_mfg_io *io,enum mfw_mfg_block b,u32 off,u32 mask,u32 value){
++ io->write(io->ctx,b,off,(io->read(io->ctx,b,off)&~mask)|(value&mask));
++}
++static inline int mfw_mfg_status(struct mfw_mfg_io *io,u32 mask,u32 value){
++ int ret=io->poll(io->ctx,MFW_MFG_SPM,0x180,mask,value);
++ return ret?ret:io->poll(io->ctx,MFW_MFG_SPM,0x184,mask,value);
++}
++static inline int mfw_mfg_domain_on(struct mfw_mfg_io *io,u32 off,u32 mask){
++ int ret;
++ mfw_mfg_update(io,MFW_MFG_SPM,off,4,4);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,8,8);
++ ret=mfw_mfg_status(io,mask,mask);if(ret)return ret;
++ mfw_mfg_update(io,MFW_MFG_SPM,off,16,0);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,2,0);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,1,1);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,32,0);
++ return io->poll(io->ctx,MFW_MFG_SPM,off,64,0);
++}
++static inline int mfw_mfg_domain_off(struct mfw_mfg_io *io,u32 off,u32 mask){
++ int ret;
++ mfw_mfg_update(io,MFW_MFG_SPM,off,32,32);
++ ret=io->poll(io->ctx,MFW_MFG_SPM,off,64,64);if(ret)return ret;
++ mfw_mfg_update(io,MFW_MFG_SPM,off,2,2);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,16,16);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,1,0);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,4,0);
++ mfw_mfg_update(io,MFW_MFG_SPM,off,8,0);
++ return mfw_mfg_status(io,mask,0);
++}
++static inline int mfw_mfg_power_up(struct mfw_mfg_io *io){
++ int ret;io->stage=1;
++ ret=mfw_mfg_domain_on(io,0x338,1U<<4);if(ret)return ret;
++ io->stage=2;io->write(io->ctx,MFW_MFG_INFRA_AO,0x2a4,0x600000);
++ mfw_mfg_update(io,MFW_MFG_INFRA_AO,0x200,2,0);
++ mfw_mfg_update(io,MFW_MFG_INFRA_AO,0x200,128,128);
++ ret=io->idle(io->ctx);if(ret)return ret;
++ io->stage=3;ret=mfw_mfg_domain_on(io,0x33c,1U<<31);if(ret)return ret;
++ io->stage=4;return 0;
++}
++static inline int mfw_mfg_power_down(struct mfw_mfg_io *io){
++ int ret;io->stage=5;
++ ret=mfw_mfg_domain_off(io,0x33c,1U<<31);if(ret)return ret;
++ io->stage=6;mfw_mfg_update(io,MFW_MFG_INFRA_AO,0x200,128,0);
++ ret=io->idle(io->ctx);if(ret)return ret;
++ mfw_mfg_update(io,MFW_MFG_INFRA_AO,0x200,2,2);
++ io->write(io->ctx,MFW_MFG_INFRA_AO,0x2a0,0x600000);
++ ret=io->poll(io->ctx,MFW_MFG_INFRA_AO,0x228,0x600000,0x600000);if(ret)return ret;
++ io->stage=7;ret=mfw_mfg_domain_off(io,0x338,1U<<4);if(ret)return ret;
++ io->stage=8;return 0;
++}
++#endif
+--- /dev/null
++++ b/services/system/rgx_mtk/mfw-ddk-power.c
+@@ -0,0 +1,166 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Native MT6739 power integration. Reuses v59's bounded, HW-verified sequence.
++ * Fixed 26 MHz, read-only VCORE. No vendor DVFS/HWAPM/voltage/PLL writes.
++ * Only explicit future DDK binding can invoke this; not installed on the phone.
++ */
++#include <linux/clk.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/iopoll.h>
++#include <linux/mutex.h>
++#include <linux/of.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
++#include <linux/regulator/consumer.h>
++#include <linux/slab.h>
++#include "mfw-ddk-power.h"
++#include "mfw-mfg-power-sequence.h"
++
++struct mfw_ddk_power {
++	struct device *dev;
++	struct platform_device *pmic;
++	struct clk *clock;
++	void __iomem *blocks[3];
++	struct mutex lock;
++	bool on, clock_held, faulted;
++};
++static u32 mfw_read(void *ctx, enum mfw_mfg_block block, u32 offset)
++{ return readl(((struct mfw_ddk_power *)ctx)->blocks[block] + offset); }
++static void mfw_write(void *ctx, enum mfw_mfg_block block, u32 offset, u32 value)
++{ writel(value, ((struct mfw_ddk_power *)ctx)->blocks[block] + offset); }
++static int mfw_poll(void *ctx, enum mfw_mfg_block block, u32 offset, u32 mask, u32 wanted)
++{
++	u32 value;
++	return readl_poll_timeout(((struct mfw_ddk_power *)ctx)->blocks[block] + offset,
++		value, (value & mask) == wanted, 10, 100000);
++}
++static int mfw_idle(void *ctx)
++{
++	u32 value;
++	return readl_poll_timeout(((struct mfw_ddk_power *)ctx)->blocks[MFW_MFG_INFRA],
++		value, (value & BIT(24)) || !(value & GENMASK(15, 14)), 10, 100000);
++}
++static bool mfw_off(struct mfw_ddk_power *p)
++{ return !((mfw_read(p, 0, 0x180) | mfw_read(p, 0, 0x184)) & 0x80000010); }
++static int mfw_vcore_check(struct mfw_ddk_power *p)
++{
++	struct regulator *vcore;
++	int ret;
++	device_lock(&p->pmic->dev);
++	if (!p->pmic->dev.driver) { ret = -ENODEV; goto unlock; }
++	vcore = regulator_get(p->dev, "vcore");
++	if (IS_ERR(vcore)) { ret = PTR_ERR(vcore); goto unlock; }
++	ret = regulator_get_voltage(vcore);
++	if (ret >= 0 && (ret < 1050000 || ret > 1312500)) ret = -ERANGE;
++	if (ret > 0) {
++		ret = regulator_is_enabled(vcore);
++		if (!ret) ret = -EHOSTDOWN;
++		else if (ret > 0) ret = 0;
++	}
++	regulator_put(vcore);
++unlock:
++	device_unlock(&p->pmic->dev);
++	return ret;
++}
++static int mfw_set_power(struct mfw_ddk_power *p, bool on)
++{
++	struct mfw_mfg_io io = { p, mfw_read, mfw_write, mfw_poll, mfw_idle, 0 };
++	int ret = 0;
++	mutex_lock(&p->lock);
++	if (p->faulted) { ret = -EIO; goto out; }
++	if (p->on == on) goto out;
++	if (on) {
++		ret = mfw_vcore_check(p);
++		if (ret) goto out;
++		if (!mfw_off(p) || (mfw_read(p, 0, 0x338) & 127) != 0x72 ||
++		    (mfw_read(p, 0, 0x33c) & 127) != 0x72) { ret = -EBUSY; goto out; }
++		ret = clk_set_rate(p->clock, 26000000);
++		if (ret) goto out;
++		ret = clk_prepare_enable(p->clock);
++		if (ret) goto out;
++		p->clock_held = true;
++		if (clk_get_rate(p->clock) != 26000000) {
++			clk_disable_unprepare(p->clock); p->clock_held = false;
++			ret = -ERANGE; goto out;
++		}
++		ret = mfw_mfg_power_up(&io);
++		if (!ret) p->on = true;
++	} else {
++		ret = mfw_mfg_power_down(&io);
++		if (!ret && !mfw_off(p)) ret = -EIO;
++		if (!ret) {
++			p->on = false;
++			clk_disable_unprepare(p->clock); p->clock_held = false;
++		}
++	}
++	if (ret) {
++		p->faulted = true;
++		dev_err(p->dev, "GPU power failed stage %u (%d); clock retained, reboot required\n", io.stage, ret);
++	}
++out:
++	mutex_unlock(&p->lock);
++	return ret;
++}
++struct mfw_ddk_power *mfw_ddk_power_create(struct device *dev)
++{
++	const resource_size_t bases[] = { 0x10006000, 0x10001000, 0x1020e000 };
++	struct platform_device *pdev = to_platform_device(dev);
++	struct device_node *node;
++	struct mfw_ddk_power *p;
++	unsigned int i;
++	int ret;
++	if (!of_property_present(dev->of_node, "vcore-supply")) return ERR_PTR(-EINVAL);
++	p = kzalloc(sizeof(*p), GFP_KERNEL);
++	if (!p) return ERR_PTR(-ENOMEM);
++	p->dev = dev; mutex_init(&p->lock);
++	node = of_parse_phandle(dev->of_node, "microfw,pmic-provider", 0);
++	if (!node) { ret = -EINVAL; goto fail; }
++	p->pmic = of_find_device_by_node(node); of_node_put(node);
++	if (!p->pmic) { ret = -EPROBE_DEFER; goto fail; }
++	for (i = 0; i < ARRAY_SIZE(bases); i++) {
++		struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, i + 1);
++		if (!res || res->start != bases[i] || resource_size(res) != 4096) {
++			ret = -EINVAL; goto fail;
++		}
++		p->blocks[i] = ioremap(res->start, 4096);
++		if (!p->blocks[i]) { ret = -ENOMEM; goto fail; }
++	}
++	p->clock = clk_get(dev, NULL);
++	if (IS_ERR(p->clock)) { ret = PTR_ERR(p->clock); p->clock = NULL; goto fail; }
++	if (!mfw_off(p)) { ret = -EBUSY; goto fail; }
++	return p;
++fail:
++	if (p->clock) clk_put(p->clock);
++	for (i = 0; i < ARRAY_SIZE(bases); i++) if (p->blocks[i]) iounmap(p->blocks[i]);
++	if (p->pmic) put_device(&p->pmic->dev);
++	kfree(p);
++	return ERR_PTR(ret);
++}
++void mfw_ddk_power_destroy(struct mfw_ddk_power *p)
++{
++	unsigned int i;
++	if (mfw_set_power(p, false) || p->clock_held) {
++		/* Keep the prepared clock and backing context alive until reboot. */
++		get_device(p->dev);
++		dev_err(p->dev, "GPU fault: power context pinned until reboot\n");
++		return;
++	}
++	clk_put(p->clock);
++	for (i = 0; i < ARRAY_SIZE(p->blocks); i++) iounmap(p->blocks[i]);
++	put_device(&p->pmic->dev);
++	kfree(p);
++}
++PVRSRV_ERROR mfw_ddk_pre_power(IMG_HANDLE handle, PVRSRV_DEV_POWER_STATE next,
++	PVRSRV_DEV_POWER_STATE current_state, IMG_BOOL forced)
++{
++	if (next == PVRSRV_DEV_POWER_STATE_OFF && current_state == PVRSRV_DEV_POWER_STATE_ON)
++		return mfw_set_power(handle, false) ? PVRSRV_ERROR_INIT_FAILURE : PVRSRV_OK;
++	return PVRSRV_OK;
++}
++PVRSRV_ERROR mfw_ddk_post_power(IMG_HANDLE handle, PVRSRV_DEV_POWER_STATE next,
++	PVRSRV_DEV_POWER_STATE current_state, IMG_BOOL forced)
++{
++	if (next == PVRSRV_DEV_POWER_STATE_ON && current_state == PVRSRV_DEV_POWER_STATE_OFF)
++		return mfw_set_power(handle, true) ? PVRSRV_ERROR_INIT_FAILURE : PVRSRV_OK;
++	return PVRSRV_OK;
++}

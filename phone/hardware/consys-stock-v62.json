@@ -1,0 +1,62 @@
+{
+  "source": "exact stock4.4 wmt_drv.ko (GPL modinfo); Ghidra read-only and objdump; live DT/MMIO read-only",
+  "soc_callback": "returns0x6739",
+  "consys_resources": [
+    {
+      "slot": 0,
+      "base": "0x18070000",
+      "size": "0x200"
+    },
+    {
+      "slot": 1,
+      "base": "0x10007000",
+      "size": "0x100"
+    },
+    {
+      "slot": 2,
+      "base": "0x10000000",
+      "size": "0x2000"
+    },
+    {
+      "slot": 3,
+      "base": "0x10006000",
+      "size": "0x1000"
+    }
+  ],
+  "clock": "conn, stock phandle0x1a index3",
+  "irqs_spi": [
+    233,
+    235
+  ],
+  "irq_dt_flags": [
+    8,
+    2
+  ],
+  "emi_remap": {
+    "address": "0x10001380",
+    "formula": "old | ((gConEmiPhyBase >>21)&0x1fff) |0x2000",
+    "instruction_verified": true,
+    "live_value": "0x00000000",
+    "live_enabled": false,
+    "reserved_base_v61_v62": "0xbfe00000",
+    "expected_encoded_with_old_zero": "0x25ff; calculated only, never written"
+  },
+  "mpu_caller": {
+    "start": "base+0x80000",
+    "end": "base+size-1",
+    "region": "0x16",
+    "permission_raw": "0x4b6da28",
+    "meaning": "not yet decoded/validated; no MPU writes"
+  },
+  "regulators": [
+    "vcn18",
+    "vcn28",
+    "vcn33_bt",
+    "vcn33_wifi"
+  ],
+  "pmic_selectors": "phone/hardware/consys-pmic-fields.json; enum IDs not addresses",
+  "transport": "mtk_wcn_consys_stp_btif_open/tx call real BTIF APIs, not a UART serdev substitution",
+  "radio_activation": "NONE",
+  "nvram_access": "NONE",
+  "caution": "decompiler has inferred signatures/indirect callbacks; verify assembly and actual fields before port"
+}

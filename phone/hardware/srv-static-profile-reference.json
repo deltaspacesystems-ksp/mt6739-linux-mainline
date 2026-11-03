@@ -1,0 +1,10 @@
+{
+  "file": "libsrv_um.so",
+  "bytes": 1493008,
+  "sha256": "da56783b4293f1ad7345f0ac6e53229a3e3a6c7447f8963da9739ef752316803",
+  "source": "vendor p41 lib64/libsrv_um.so, ext4 ro,noload, unmounted afterward",
+  "scope": "generic GPU services library, static-only private analysis, no execution",
+  "executed": false,
+  "mount_verified_absent_after_transfer": true,
+  "transfer_completion_marker": "shell completion unrecognized; full size/SHA256/ELF/endmarker independently verified"
+}

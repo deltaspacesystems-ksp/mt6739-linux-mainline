@@ -1,0 +1,22 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -13,14 +13,17 @@
+ /* Conservative subset: ordinary non-sparse 4K buffers. Never truncate flags. */
+ static bool mfw19_memory_flags(uint64_t flags, bool mapping, uint32_t *old)
+ {
+- uint64_t mask=mapping?UINT64_C(0x70f):UINT64_C(0x80007fff);
+- /* bit15/sparse/SVM/device/heap hints and other unverified modes rejected. */
++ uint64_t mask=mapping?UINT64_C(0x0400070f):UINT64_C(0x84007fff);
++ /* Only audited PM/FW protect device flag(bit26) is allowed; other hints rejected. */
+  if(flags&~mask)return false;
++ bool protect=(flags&UINT64_C(0x04000000))!=0;
++ if(protect&&!mapping&&(flags&0x30))return false; /* No userspace CPU access to PM tables. */
+  unsigned gpu=(flags>>8)&7,cpu=(flags>>11)&7;
+  if(gpu!=1&&gpu!=3)return false;
+  if(!mapping&&cpu!=0&&cpu!=3)return false;
+  *old=(uint32_t)(flags & (mapping?0xf:UINT64_C(0x800040ff)));
+  if(gpu==3)*old|=3u<<8; /* modern uncached1 -> old uncached0 */
++ if(protect)*old|=UINT32_C(0x01000000); /* old DEVICE_FLAGS_OFFSET24, PMMETA_PROTECT0 */
+  if(!mapping)*old|=(cpu==0?1u:3u)<<11; /* modern WC0 -> old WC1 */
+  return true;
+ }

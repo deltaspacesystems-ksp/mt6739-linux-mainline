@@ -1,0 +1,324 @@
+INFO  Using log config file: jar:file:/D:/y5_linux_work/ghidra/ghidra_12.1.4_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1372 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (3229 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    D:\y5_linux_work\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessAnalyzer)  
+INFO  Opening project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessProject)  
+INFO  REPORT: Processing project file: /wmt_loader_bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompMain.java  (HeadlessAnalyzer)  
+INFO  SCRIPT: D:\y5_linux_work\ghidra_scripts\DecompMain.java (HeadlessAnalyzer)  
+INFO  DecompMain.java> ===MAIN_START=== (GhidraScript)  
+INFO  DecompMain.java> 
+int main(void)
+
+{
+  long lVar1;
+  bool bVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  uint uVar7;
+  ulong uVar8;
+  undefined4 *puVar9;
+  undefined8 uVar10;
+  int *piVar11;
+  char *pcVar12;
+  char *extraout_x1;
+  char *extraout_x1_00;
+  char *extraout_x1_01;
+  ulong uVar13;
+  long lVar14;
+  char acStack_17c [92];
+  char acStack_120 [92];
+  char acStack_c4 [100];
+  
+  lVar1 = tpidr_el0;
+  lVar14 = *(long *)(lVar1 + 0x28);
+  memset(acStack_120,0,0x5c);
+  memset(acStack_17c,0,0x5c);
+  iVar3 = property_get("service.wcn.driver.ready",acStack_17c,0);
+  iVar4 = strcmp(acStack_17c,"yes");
+  if (iVar4 == 0) {
+    __android_log_print(6,"wmt_loader","WMT driver has been ready.\n");
+    goto LAB_001012b8;
+  }
+  DAT_00103008 = __open_2("/dev/wmtdetect",0x102);
+  if (DAT_00103008 < 0) {
+    iVar4 = 1;
+    do {
+      __android_log_print(4,"wmt_loader","Can\'t open device node(%s) count(%d)\n","/dev/wmtdetect",
+                          iVar4);
+      usleep(300000);
+      DAT_00103008 = __open_2("/dev/wmtdetect",0x102);
+      iVar4 = iVar4 + 1;
+    } while (DAT_00103008 < 0);
+  }
+  uVar7 = 0x80047700;
+  iVar3 = property_get("persist.mtk.wcn.combo.chipid",acStack_120,0);
+  uVar8 = strtoul(acStack_120,(char **)0x0,0x10);
+  __android_log_print(4,"wmt_loader","chip id from property:%d\n",uVar8 & 0xffffffff);
+  iVar4 = DAT_00103008;
+  if (iVar3 != 0) {
+    uVar13 = 0;
+    do {
+      if ((&DAT_00101848)[uVar13] == (uint)uVar8) {
+        __android_log_print(4,"wmt_loader","chipid vaild check: %d :0x%x!\n",uVar13,
+                            uVar8 & 0xffffffff);
+        __android_log_print(4,"wmt_loader","key:(%s)-value:(%s),chipId:0x%04x,ret(%d)\n",
+                            "persist.mtk.wcn.combo.chipid",acStack_120,uVar8 & 0xffffffff,iVar3);
+        iVar4 = DAT_00103008;
+        if (((uint)uVar8 | 2) != 0x6632) goto LAB_00100fd4;
+        iVar3 = 0xb;
+        goto LAB_00100d2c;
+      }
+      uVar13 = uVar13 + 1;
+    } while (uVar13 < 0x20);
+  }
+  memset(acStack_c4,0,0x5c);
+  iVar3 = ioctl(iVar4,0x80047706);
+  if (iVar3 == 0) {
+    iVar3 = ioctl(iVar4,0x80047702,0);
+    if (iVar3 != 0) goto LAB_00100e60;
+    __android_log_print(4,"wmt_loader","external combo chip detected\n");
+    bVar2 = true;
+  }
+  else {
+    __android_log_print(6,"wmt_loader","external combo chip power on failed\n");
+LAB_00100e60:
+    __android_log_print(4,"wmt_loader","no external combo chip detected, get current soc chipid\n");
+    bVar2 = false;
+    uVar7 = 0x80047703;
+  }
+  uVar7 = ioctl(iVar4,(ulong)uVar7,0);
+  uVar8 = (ulong)uVar7;
+  __android_log_print(4,"wmt_loader","chipid (0x%x) detected\n",uVar8);
+  sprintf(acStack_c4,extraout_x1,"0x%04x",uVar8);
+  iVar3 = property_set("persist.mtk.wcn.combo.chipid",acStack_c4);
+  if (iVar3 == 0) {
+    __android_log_print(4,"wmt_loader","set property(%s) to %s succeed.\n",
+                        "persist.mtk.wcn.combo.chipid",acStack_c4);
+  }
+  else {
+    puVar9 = (undefined4 *)__errno();
+    __android_log_print(6,"wmt_loader","set property(%s) to %s failed,ret:%d, errno:%d\n",
+                        "persist.mtk.wcn.combo.chipid",acStack_c4,iVar3,*puVar9);
+  }
+  if (bVar2) {
+    iVar3 = ioctl(iVar4,0x80047708,uVar8);
+    pcVar12 = "fail";
+    if (iVar3 == 0) {
+      pcVar12 = "succeed";
+    }
+    __android_log_print(4,"wmt_loader","do SDIO3.0 autok %s\n",pcVar12);
+    iVar4 = ioctl(iVar4,0x80047707);
+    pcVar12 = "fail";
+    if (iVar4 == 0) {
+      pcVar12 = "succeed";
+    }
+    __android_log_print(4,"wmt_loader","external combo chip power off %s\n",pcVar12);
+    if (uVar7 == 0xffffffff) {
+      usleep(500000);
+      __android_log_print(6,"wmt_loader","chipId detect failed, retrying, left retryCounter:%d\n",0)
+      ;
+    }
+  }
+  goto LAB_00100fd4;
+  while( true ) {
+    __android_log_print(6,"wmt_loader","chipId detect failed, retrying, left retryCounter:%d\n",
+                        iVar3 + -2);
+    usleep(500000);
+    iVar3 = iVar3 + -1;
+    if (iVar3 < 2) break;
+LAB_00100d2c:
+    iVar5 = ioctl(iVar4,0x80047706);
+    if (iVar5 == 0) {
+      iVar5 = ioctl(iVar4,0x80047702,0);
+    }
+    else {
+      __android_log_print(6,"wmt_loader","external combo chip power on failed\n");
+      iVar5 = 1;
+    }
+    __android_log_print(4,"wmt_loader","external combo chip detected\n");
+    uVar7 = ioctl(iVar4,0x80047700,0);
+    __android_log_print(4,"wmt_loader","chipid (0x%x) detected\n",(ulong)uVar7);
+    if (iVar5 == 0) {
+      iVar6 = ioctl(iVar4,0x80047708,(ulong)uVar7);
+      pcVar12 = "fail";
+      if (iVar6 == 0) {
+        pcVar12 = "succeed";
+      }
+      __android_log_print(6,"wmt_loader","do SDIO3.0 autok %s\n",pcVar12);
+    }
+    iVar6 = ioctl(iVar4,0x80047707);
+    pcVar12 = "fail";
+    if (iVar6 == 0) {
+      pcVar12 = "succeed";
+    }
+    __android_log_print(4,"wmt_loader","external combo chip power off %s\n",pcVar12);
+    if ((iVar5 != 0) || (uVar7 != 0xffffffff)) break;
+  }
+LAB_00100fd4:
+  iVar3 = ioctl(DAT_00103008,0x40047701,uVar8 & 0xffffffff);
+  iVar4 = DAT_00103008;
+  if (iVar3 != 0) {
+    __android_log_print(6,"wmt_loader","ioctl failed !!(0x%x)\n",uVar8 & 0xffffffff);
+    iVar3 = -1;
+    goto LAB_001012b8;
+  }
+  iVar3 = (int)uVar8;
+  if (iVar3 < 0x507) {
+    uVar13 = 0x6735;
+    switch(iVar3) {
+    case 0x321:
+    case 0x335:
+    case 0x337:
+      break;
+    case 0x322:
+    case 0x323:
+    case 0x324:
+    case 0x325:
+    case 0x327:
+    case 0x328:
+    case 0x329:
+    case 0x32a:
+    case 0x32b:
+    case 0x32c:
+    case 0x32d:
+    case 0x32e:
+    case 0x32f:
+    case 0x330:
+    case 0x331:
+    case 0x332:
+    case 0x333:
+    case 0x334:
+    case 0x336:
+switchD_00101038_caseD_322:
+      uVar13 = uVar8 & 0xffffffff;
+      break;
+    case 0x326:
+      uVar13 = 0x6755;
+      break;
+    default:
+      if (iVar3 == -1) {
+        iVar3 = -1;
+        __android_log_print(6,"wmt_loader","chip id error !!(0x%x)\n",0xffffffff);
+        goto LAB_001012b8;
+      }
+      if (iVar3 != 0x279) goto switchD_00101038_caseD_322;
+      uVar13 = 0x6797;
+    }
+  }
+  else if (iVar3 < 0x690) {
+    if (iVar3 == 0x507) {
+      uVar13 = 0x6759;
+    }
+    else {
+      if (iVar3 != 0x551) goto switchD_00101038_caseD_322;
+      uVar13 = 0x6757;
+    }
+  }
+  else if (iVar3 == 0x690) {
+    uVar13 = 0x6763;
+  }
+  else if (iVar3 == 0x713) {
+    uVar13 = 0x6775;
+  }
+  else {
+    if (iVar3 != 0x788) goto switchD_00101038_caseD_322;
+    uVar13 = 0x6771;
+  }
+  if (DAT_00103008 < 0) {
+    pcVar12 = "invalid loaderfd: %d\n";
+    uVar10 = 6;
+    iVar3 = DAT_00103008;
+  }
+  else {
+    iVar3 = ioctl(DAT_00103008,0x80047705,uVar13);
+    if (iVar3 == 0) {
+      iVar3 = ioctl(iVar4,0x80047704,uVar13);
+      if (iVar3 == 0) {
+        pcVar12 = "do kernel module init succeed: %d\n";
+        uVar10 = 4;
+        iVar3 = 0;
+        goto LAB_0010115c;
+      }
+      pcVar12 = "do kernel module init failed: %d\n";
+    }
+    else {
+      pcVar12 = "do WMT-DETECT module cleanup failed: %d\n";
+    }
+    uVar10 = 6;
+  }
+LAB_0010115c:
+  __android_log_print(uVar10,"wmt_loader",pcVar12,iVar3);
+  if (-1 < DAT_00103008) {
+    close(DAT_00103008);
+    DAT_00103008 = -1;
+  }
+  iVar4 = chown("/proc/driver/wmt_dbg",2000,1000);
+  if ((iVar4 == -1) || (iVar4 = chown("/proc/driver/wmt_aee",2000,1000), iVar4 == -1)) {
+    piVar11 = (int *)__errno();
+    pcVar12 = strerror(*piVar11);
+    __android_log_print(6,"wmt_loader","chown wmt_dbg or wmt_aee fail:%s\n",pcVar12);
+  }
+  memset(acStack_c4,0,0x5c);
+  iVar4 = property_get("service.wcn.driver.ready",acStack_c4,0);
+  if ((iVar4 < 1) || (iVar3 = strcmp(acStack_c4,"yes"), pcVar12 = extraout_x1_00, iVar3 == 0)) {
+    __android_log_print(6,"wmt_loader","get property(%s) failed iRet:%d or property is %s\n",
+                        "service.wcn.driver.ready",iVar4,acStack_c4);
+    pcVar12 = extraout_x1_01;
+  }
+  sprintf(acStack_c4,pcVar12,&DAT_001017fe,&DAT_00101485);
+  iVar3 = property_set("service.wcn.driver.ready",acStack_c4);
+  if (iVar3 == 0) {
+    __android_log_print(4,"wmt_loader","set property(%s) to %s succeed\n","service.wcn.driver.ready"
+                        ,acStack_c4);
+  }
+  else {
+    __android_log_print(6,"wmt_loader","set property(%s) to %s failed ret:%d\n",
+                        "service.wcn.driver.ready",acStack_c4,iVar3);
+  }
+LAB_001012b8:
+  if (*(long *)(lVar1 + 0x28) != lVar14) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return iVar3;
+}
+
+ (GhidraScript)  
+INFO  DecompMain.java> ===MAIN_END=== (GhidraScript)  
+INFO  REPORT: Save succeeded for processed file: /wmt_loader_bin (HeadlessAnalyzer)  

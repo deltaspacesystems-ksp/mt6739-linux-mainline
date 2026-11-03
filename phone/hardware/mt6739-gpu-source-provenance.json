@@ -1,0 +1,30 @@
+{
+  "repository": "https://github.com/Power535/android_kernel_common_MT6763",
+  "commit": "47f925eac07c660002cb85939c94cd8a191e1c53",
+  "files": [
+    {
+      "path": "drivers/clk/mediatek/clk-mt6739.c",
+      "url": "https://raw.githubusercontent.com/Power535/android_kernel_common_MT6763/47f925eac07c660002cb85939c94cd8a191e1c53/drivers/clk/mediatek/clk-mt6739.c",
+      "sha256": "7f1562ca73f8282b996e7bff111bcea08f088be6fbc31a4e789e279c2d3d2d76",
+      "bytes": 53975
+    },
+    {
+      "path": "drivers/clk/mediatek/clk-mt6739-pg.c",
+      "url": "https://raw.githubusercontent.com/Power535/android_kernel_common_MT6763/47f925eac07c660002cb85939c94cd8a191e1c53/drivers/clk/mediatek/clk-mt6739-pg.c",
+      "sha256": "0387398b457704ee1e3fd37062958dec2746e99bdfc7f5e54eae8a381e0a74c2",
+      "bytes": 54865
+    },
+    {
+      "path": "drivers/misc/mediatek/base/power/mt6739/mtk_gpufreq.c",
+      "url": "https://raw.githubusercontent.com/Power535/android_kernel_common_MT6763/47f925eac07c660002cb85939c94cd8a191e1c53/drivers/misc/mediatek/base/power/mt6739/mtk_gpufreq.c",
+      "sha256": "704d50f388fa48572be7ea2fae410d7e1211531456f4a10be2e8d49c1357e9e8",
+      "bytes": 104411
+    },
+    {
+      "path": "drivers/misc/mediatek/base/power/mt6739/mtk_gpufreq.h",
+      "url": "https://raw.githubusercontent.com/Power535/android_kernel_common_MT6763/47f925eac07c660002cb85939c94cd8a191e1c53/drivers/misc/mediatek/base/power/mt6739/mtk_gpufreq.h",
+      "sha256": "77c7849d732b471b7eb09fc8662d8e2a114d0e2c66b259fdd19ce8d60106c19d",
+      "bytes": 5107
+    }
+  ]
+}

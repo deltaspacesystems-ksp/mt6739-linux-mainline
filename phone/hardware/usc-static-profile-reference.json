@@ -1,0 +1,13 @@
+{
+  "file": "libusc.so",
+  "bytes": 1775544,
+  "sha256": "7add2476595549ec8059b1ef799b2d139d3db3ce842161af8658e759f68eae6b",
+  "source": "vendor p41 lib64/libusc.so, ext4 ro,noload, unmounted afterward",
+  "scope": "generic compiler binary copied only to private PC analysis folder, never repository or executed; no Bionic runtime",
+  "executed": false,
+  "tile_buffer_constant_bytes": 12288,
+  "constant_evidence": "PVRUniFlexGetTileBufferSize at ELF VA0xe45b8: ORR w0,wzr,#0x3000; RET; static instructions only",
+  "profile_complete": false,
+  "measurement_scope": "Compiled stock compiler constant, not measured hardware capacity or USC common-store size",
+  "exact_bvnc_patterns_found": false
+}

@@ -1,0 +1,25 @@
+{
+  "status": "LIVE native render-context CREATE/DESTROY PASS, not rendering",
+  "bridge": 130,
+  "create": 12,
+  "destroy": 13,
+  "input_bytes": 32,
+  "output_bytes": 12,
+  "framework": "disabled16zero bytes",
+  "VDMstack": "owned mapped4K Generalpage",
+  "observed": [
+    "RENDER_CONTEXT_CREATE_PASS",
+    "RENDER_CONTEXT_DESTROY_PASS",
+    "RENDER_CONTEXT_LIFECYCLE_RC=0 pages10"
+  ],
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 1,
+    "HWR_change": 0,
+    "CRR": 0,
+    "GPUutil": "0%"
+  },
+  "limits": "No TA/3D job, freelist or HWRT creation yet.4Kstack lifecycle only, not validated maximum-call-stack semantics.",
+  "next_guard": "PMRWritePMPageList explicitly rejects CPU-readable/writeable freelist-table PMRs; use separate GPU-only backing, never ordinary CPU-mapped test page."
+}

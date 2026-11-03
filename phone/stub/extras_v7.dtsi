@@ -1,0 +1,90 @@
+/* Dodatki v1 do stockowego DTB: tylko zwykle wezly, BEZ reserved-memory i BEZ chosen (LK sam nimi zarzadza). */
+/ {
+	y5_fb0: framebuffer@771e0000 {
+		compatible = "simple-framebuffer";
+		reg = <0 0x771e0000 0 0xe20000>;
+		width = <720>;
+		height = <1440>;
+		stride = <2944>;
+		format = "a8b8g8r8";
+	};
+
+	y5_wdt: watchdog@10007000 {
+		compatible = "mediatek,mt6589-wdt";
+		reg = <0 0x10007000 0 0x100>;
+		timeout-sec = <30>;
+	};
+
+	y5_mmc0: mmc@11230000 {
+		compatible = "mediatek,mt8183-mmc";
+		reg = <0 0x11230000 0 0x1000>, <0 0x11cd0000 0 0x1000>;
+		interrupts = <0 79 8>;
+		pinctrl-names = "default", "state_uhs";
+		pinctrl-0 = <>;
+		pinctrl-1 = <>;
+		clocks = <&y5_clk_msdc_src>, <&y5_clk_msdc_hclk>;
+		clock-names = "source", "hclk";
+		bus-width = <8>;
+		max-frequency = <200000000>;
+		non-removable;
+		cap-mmc-highspeed;
+		mmc-ddr-1_8v;
+		mmc-hs200-1_8v;
+		vmmc-supply = <&y5_reg_3v3>;
+		vqmmc-supply = <&y5_reg_1v8>;
+	};
+
+	y5_usb0: usb@11200000 {
+		compatible = "mediatek,mt2701-musb", "mediatek,mtk-musb";
+		reg = <0 0x11200000 0 0x1000>;
+		interrupts = <0 73 8>;
+		interrupt-names = "mc";
+		dr_mode = "peripheral";
+		phys = <&y5_u2port 3>;
+		clocks = <&y5_clk_usb>, <&y5_clk_usb>, <&y5_clk_usb>;
+		clock-names = "main", "mcu", "univpll";
+	};
+
+	y5_tphy: t-phy@11cc0000 {
+		compatible = "mediatek,generic-tphy-v1";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		y5_u2port: usb-phy@11cc0800 {
+			reg = <0 0x11cc0800 0 0x100>;
+			clocks = <&y5_clk_usb>;
+			clock-names = "ref";
+			#phy-cells = <1>;
+		};
+	};
+
+	y5_clk_msdc_src: y5-msdc-src-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+	};
+	y5_clk_msdc_hclk: y5-msdc-hclk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <66000000>;
+	};
+	y5_clk_usb: y5-usb-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+	y5_reg_3v3: y5-regulator-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+	y5_reg_1v8: y5-regulator-1v8 {
+		compatible = "regulator-fixed";
+		regulator-name = "1v8";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-always-on;
+	};
+};

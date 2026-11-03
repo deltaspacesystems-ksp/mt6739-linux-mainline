@@ -1,0 +1,4 @@
+ddp_get_module_pa
+ddp_get_module_va
+ddp_get_module_irq
+ddp_get_module_name

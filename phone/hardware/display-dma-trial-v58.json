@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-25",
+  "image": "mfw_v58.img",
+  "kernel_build": 43,
+  "boot_sha256": "9869148977f087d7d0b0c06114e9b0aea8f2e52462699868a7c0e25f2cb2d562",
+  "boot_write_readback_verified": true,
+  "owner_confirmed_boot_after_lk_power": true,
+  "dma_buffers": [
+    "0x44800000",
+    "0x44c00000"
+  ],
+  "framebuffer_bytes": 4147200,
+  "original_address": "0x775eb000",
+  "test_result": 0,
+  "restore_result": 0,
+  "original_address_readback": "0x775eb000",
+  "owner_visual_result": "Both colors and correct return",
+  "underflow_before": 0,
+  "underflow_after": 0,
+  "abnormal_before": 0,
+  "abnormal_after": 0,
+  "manual_dsi_kick": false,
+  "gpu_acceleration": false,
+  "kms_registered": false,
+  "limitations": [
+    "Two additional EOFs are a conservative test hold, not proven KMS timestamp/fence semantics",
+    "Both coherent DMA allocations remain pinned until reboot",
+    "One positive physical trial does not establish all-load reliability"
+  ]
+}

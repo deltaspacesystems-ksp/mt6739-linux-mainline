@@ -1,0 +1,4 @@
+mt_dfs_armpll
+_mt_cpufreq_init
+hal_btif_clk_get_and_prepare
+mtk_clk_register_mux_clr_set_upd

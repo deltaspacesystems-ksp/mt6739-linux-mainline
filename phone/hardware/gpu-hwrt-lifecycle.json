@@ -1,0 +1,24 @@
+{
+  "status": "LIVE HWRT CREATE/DESTROY lifecycle PASS",
+  "abi": {
+    "bridge": 130,
+    "create": 0,
+    "destroy": 1,
+    "input_bytes": 98,
+    "output_bytes": 32,
+    "tail_offset": 40,
+    "max_rts_offset": 96
+  },
+  "freelists": "LOCAL0/GLOBAL1; protected GPU-only tables,32pages each",
+  "lifecycle_inputs": "max_rts1, owned zeroed4K VHeap/MList/Tail pointers; register geometry fields zero; NOT render-ready configuration",
+  "result": "Valid cleanup/RTA/data handles and firmware address; reverse cleanup all resources RC0,12 PMRs",
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 1,
+    "HWR_increment": 0,
+    "CRR": 0,
+    "GPU": "idle0%"
+  },
+  "limits": "No TA/3D submission. No triangle. Buffer sizes, geometry registers and hardware permissions for actual rendering still need derivation."
+}

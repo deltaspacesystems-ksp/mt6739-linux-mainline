@@ -1,0 +1,179 @@
+{
+  "status": "LIVE graphics32page5heap memory preflight PASS; no TA/3D job",
+  "plan": {
+    "pages": 32,
+    "entries": [
+      {
+        "arena": 0,
+        "offset": "0x0",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x1000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x2000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x3000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x4000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x5000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x6000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x7000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x8000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0x9000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0xa000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0xb000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0xc000",
+        "protected_table": false
+      },
+      {
+        "arena": 0,
+        "offset": "0xd000",
+        "protected_table": true
+      },
+      {
+        "arena": 0,
+        "offset": "0xe000",
+        "protected_table": true
+      },
+      {
+        "arena": 1,
+        "offset": "0x10000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x12000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x20000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x30000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x31000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x32000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x33000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x34000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x35000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x36000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x37000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x38000",
+        "protected_table": false
+      },
+      {
+        "arena": 1,
+        "offset": "0x39000",
+        "protected_table": false
+      },
+      {
+        "arena": 2,
+        "offset": "0x10000",
+        "protected_table": false
+      },
+      {
+        "arena": 2,
+        "offset": "0x11000",
+        "protected_table": false
+      },
+      {
+        "arena": 3,
+        "offset": "0x0",
+        "protected_table": false
+      },
+      {
+        "arena": 4,
+        "offset": "0x0",
+        "protected_table": false
+      }
+    ]
+  },
+  "scope": "Owned contiguousGPUVA output16KiB,VDM/PPP/TPC/VHeap/region/context/MList/callstack/dummyStencil,2protected GPUonlyfreelisttables,PDSprograms/PT/SR2banks,USCprograms,BRN65273MMUinit",
+  "validation": "Native AlpineARM64 strictcompile; zero-init thenuniqueCPUwrite/read checks on30CPUaccessiblepages;2protectedtablesnotCPU-mapped. Complete32page/5heapcleanupRC0.",
+  "after": {
+    "Driver": "OK",
+    "Firmware": "OK",
+    "HWR": 1,
+    "HWR_increment": 0,
+    "CRR": 0,
+    "GPU": "idle0%"
+  },
+  "limits": "Memory was freed; no shaderupload/job or currentpersistentmapping. No guarantee of render packet correctness."
+}

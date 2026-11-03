@@ -1,0 +1,55 @@
+diff --git a/src/compiler/clc/clc_helpers.cpp b/src/compiler/clc/clc_helpers.cpp
+index 9912f9b..570dc6c 100644
+--- a/src/compiler/clc/clc_helpers.cpp
++++ b/src/compiler/clc/clc_helpers.cpp
+@@ -47,6 +47,9 @@
+ 
+ #include <clang/Config/config.h>
+ #include <clang/Driver/Driver.h>
++#if __has_include(<clang/Options/OptionUtils.h>)
++#include <clang/Options/OptionUtils.h>
++#endif
+ #include <clang/CodeGen/CodeGenAction.h>
+ #include <clang/Lex/PreprocessorOptions.h>
+ #include <clang/Frontend/CompilerInstance.h>
+@@ -915,7 +918,9 @@ clc_compile_to_llvm_module(LLVMContext &llvm_ctx,
+    // GetResourcePath is a way to retrieve the actual libclang resource dir based on a given binary
+    // or library.
+    auto tmp_res_path =
+-#if LLVM_VERSION_MAJOR >= 20
++#if LLVM_VERSION_MAJOR >= 23
++      clang::GetResourcesPath(std::string(clang_path));
++#elif LLVM_VERSION_MAJOR >= 20
+       Driver::GetResourcesPath(std::string(clang_path));
+ #else
+       Driver::GetResourcesPath(std::string(clang_path), CLANG_RESOURCE_DIR);
+@@ -1170,7 +1175,13 @@ llvm_mod_to_spirv(std::unique_ptr<::llvm::Module> mod,
+    if (args->use_llvm_spirv_target) {
+       const char *triple = args->address_bits == 32 ? "spirv-unknown-unknown" : "spirv64-unknown-unknown";
+       std::string error_msg("");
+-      auto target = TargetRegistry::lookupTarget(triple, error_msg);
++      auto target = TargetRegistry::lookupTarget(
++#if LLVM_VERSION_MAJOR >= 23
++         llvm::Triple(triple),
++#else
++         triple,
++#endif
++         error_msg);
+       if (target) {
+          auto TM = target->createTargetMachine(
+ #if LLVM_VERSION_MAJOR >= 21
+diff --git a/src/compiler/nir/nir_fixup_is_exported.c b/src/compiler/nir/nir_fixup_is_exported.c
+index ed21b88..a4c762e 100644
+--- a/src/compiler/nir/nir_fixup_is_exported.c
++++ b/src/compiler/nir/nir_fixup_is_exported.c
+@@ -46,7 +46,9 @@ nir_fixup_is_exported(nir_shader *nir)
+    }
+ 
+    nir_foreach_function(func, nir) {
+-      if (_mesa_set_search(shadowed, func->name)) {
++      /* Newer Clang names the inner function __clang_ocl_kern_imp_*,
++       * so entrypoint wrappers need not have a shadowed name. */
++      if (func->is_entrypoint || _mesa_set_search(shadowed, func->name)) {
+          func->is_exported = func->is_entrypoint;
+       }
+ 

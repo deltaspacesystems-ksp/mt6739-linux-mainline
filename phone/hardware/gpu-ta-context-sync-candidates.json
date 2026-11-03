@@ -1,0 +1,32 @@
+{
+  "status": "Offline TA context packet and VDM sync shader candidates PASS",
+  "context_packet": {
+    "bytes": 112,
+    "banks": 2,
+    "bank_bytes": 48,
+    "validation": "PublicVDM/PPPpackers+exactstockSR/PTtask-expression oracle,ASan/UBSanPASS",
+    "SRstore_state0": "22001004",
+    "SRresume_state0": "20001004",
+    "SRstate1": "PDSdataoffset|5",
+    "SRtask1": "PDS code offset zeroextended64",
+    "PTstate0": "00000420",
+    "PTstate1": "PDSdataoffset"
+  },
+  "VDM_sync_USC": {
+    "public_program": "vs_nop_common",
+    "bytes": 8,
+    "temps": 0,
+    "vtxins": 0,
+    "sha256": "164e04488963dec22d26cbc213972940ebc63053ef73eab2ef47d1f98b9e94b5",
+    "profile": "Unknownphysicalcapacities,standaloneRA20,no syntheticdepth/slots"
+  },
+  "stock_isp_selected_candidate": {
+    "source": "PrivatehelperELF2e9ac,staticdecomp;assemblycrosscheckpending",
+    "inputs": "one packed output register,max_tiles_limit1",
+    "USC_PIXEL_OUTPUT_CTRL": "000001fc",
+    "ISP_CTL_partial": "00000000",
+    "ISP_CTL_stock_fixed_bits": "00080000",
+    "limits": "Selected registercandidate,notmeasuredphysicalcapacity"
+  },
+  "remaining": "AssemblePDS/USC/VDM/PPP images andFWpackets,verifyPR/sync/refcountsemantics andstockregistercorrelation beforeonecontrolleddraw."
+}

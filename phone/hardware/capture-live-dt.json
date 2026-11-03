@@ -1,0 +1,130 @@
+{
+  "source": "Live DT, running v53; selected hardware properties only; no chosen/calibration data",
+  "nodes": {
+    "i2c@11008000/alsps@53": {
+      "compatible": [
+        "mediatek,alsps"
+      ],
+      "reg": [
+        83
+      ],
+      "status": [
+        "okay"
+      ]
+    },
+    "i2c@11008000/cust_alsps@0": {
+      "compatible": [
+        "mediatek,ltr577"
+      ],
+      "i2c_num": [
+        1
+      ],
+      "polling_mode_als": [
+        1
+      ],
+      "polling_mode_ps": [
+        0
+      ],
+      "ps_threshold_high": [
+        900
+      ],
+      "ps_threshold_low": [
+        700
+      ]
+    },
+    "i2c@11009000/camera_main@43": {
+      "compatible": [
+        "mediatek,camera_main"
+      ],
+      "reg": [
+        67
+      ]
+    },
+    "i2c@11009000/camera_sub@41": {
+      "compatible": [
+        "mediatek,camera_sub"
+      ],
+      "reg": [
+        65
+      ]
+    },
+    "audio@11220000": {
+      "compatible": [
+        "mediatek,audio",
+        "syscon"
+      ],
+      "reg": [
+        0,
+        287440896,
+        0,
+        4096
+      ]
+    },
+    "audio_sram@11221000": {
+      "compatible": [
+        "mediatek,audio_sram"
+      ],
+      "reg": [
+        0,
+        287444992,
+        0,
+        36864
+      ]
+    },
+    "seninf@15008000": {
+      "compatible": [
+        "mediatek,seninf"
+      ],
+      "reg": [
+        0,
+        352354304,
+        0,
+        4096
+      ]
+    },
+    "kd_camera_hw1@15008000": {
+      "compatible": [
+        "mediatek,camera_hw"
+      ],
+      "reg": [
+        0,
+        352354304,
+        0,
+        4096
+      ],
+      "clock-names": [
+        "CLK_TOP_CAMTG_SEL",
+        "CLK_TOP_CAMTG2_SEL",
+        "CLK_TOP_CLK26M",
+        "CLK_TOP_UNIVPLL_48M_D2",
+        "CLK_TOP_UNIVPLL2_D8",
+        "CLK_TOP_UNIVPLL_D26",
+        "CLK_TOP_UNIVPLL2_D32",
+        "CLK_TOP_UNIVPLL_48M_D4",
+        "CLK_TOP_UNIVPLL_48M_D8",
+        "CLK_TOP_SENINF_SEL",
+        "CLK_TOP_SCAM_SEL"
+      ],
+      "pinctrl-names": [
+        "default",
+        "cam0_rst0",
+        "cam0_rst1",
+        "cam0_pnd0",
+        "cam0_pnd1",
+        "cam1_rst0",
+        "cam1_rst1",
+        "cam1_pnd0",
+        "cam1_pnd1",
+        "cam0_mclk_on",
+        "cam0_mclk_off",
+        "cam1_mclk_on",
+        "cam1_mclk_off"
+      ]
+    },
+    "gps": {
+      "compatible": [
+        "mediatek,gps"
+      ]
+    }
+  }
+}

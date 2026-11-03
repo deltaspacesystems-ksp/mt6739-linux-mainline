@@ -1,0 +1,27 @@
+{
+  "scope": "restricted transfer-context create/destroy, not submission",
+  "supported_operations": 18,
+  "reset_framework": "16-byte all-zero disabled only; size/enable flag checked against original1.9 declarations; dependencies isolated for host layout check",
+  "host": "ASan/UBSan wire/guards/errors PASS; full library link PASS; patch replay exact",
+  "phone": {
+    "create": "PASS",
+    "destroy": "PASS bounded RETRY loop",
+    "prior_memory_sync_regression": "PASS",
+    "trial_rc": 0,
+    "driver": "OK",
+    "firmware": "OK",
+    "hwr": 0,
+    "crr": 0
+  },
+  "limitations": [
+    "priority0/default CCB/no robustness or context flags only",
+    "legacy create returns no modern cli/usc PMR handles; explicitly NULL, not full modern semantic equivalence",
+    "modern SUBMITTRANSFER2 command3 is legacy SETPRIORITY3; MUST translate to SUBMIT2 with correct layout",
+    "old transfer takes one update timeline; modern has separate2D/3D timelines",
+    "firmware command/register package still needs exact target verification"
+  ],
+  "gpu_job_submitted": false,
+  "rendering": false,
+  "reboot": false,
+  "patch_sha256": "f2b67f34d4bd89a7d2c8cd5a307ccfe11c69cbcfb9dd62dc8fe852e15229756f"
+}

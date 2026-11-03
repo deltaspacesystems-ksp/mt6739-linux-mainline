@@ -1,0 +1,34 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -222,6 +222,31 @@
+   return rc;
+  }
+ 
++ if(bridge==128 && function==0){
++  struct pvr_srv_rgx_create_transfer_context_cmd *in=input;
++  struct pvr_srv_rgx_create_transfer_context_ret *out=output;
++  struct {uint32_t priority,size;uint64_t framework,private_data;} PACKED old_in;
++  struct {uint64_t context;uint32_t error;} PACKED old_out={.error=UINT32_MAX};
++  _Static_assert(sizeof(old_in)==24&&sizeof(old_out)==12,"1.9 transfer context ABI");
++  /* Only the disabled16-byte reset-framework diagnostic is currently supported. */
++  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||!in->priv_data||in->robustness_address||in->context_flags||in->packed_ccb_size_u8888||in->priority||in->reset_framework_cmd_size!=16||!in->reset_framework_cmd){errno=EINVAL;return -1;}
++  for(unsigned i=0;i<16;i++)if(in->reset_framework_cmd[i]){errno=EINVAL;return -1;}
++  old_in.priority=0;old_in.size=16;old_in.framework=(uintptr_t)in->reset_framework_cmd;old_in.private_data=(uintptr_t)in->priv_data;
++  cmd.in_data_ptr=(uintptr_t)&old_in;cmd.in_data_size=24;cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=12;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){out->transfer_context=(void*)(uintptr_t)old_out.context;out->cli_pmr_mem=NULL;out->usc_pmr_mem=NULL;out->error=mfw19_error(old_out.error);}
++  return rc;
++ }
++ if(bridge==128 && function==1){
++  uint64_t handle;uint32_t old_error=UINT32_MAX;
++  if(insize!=8||outsize!=4){errno=EINVAL;return -1;}
++  memcpy(&handle,input,8);if(!handle){errno=EINVAL;return -1;}
++  cmd.in_data_ptr=(uintptr_t)&handle;cmd.in_data_size=8;cmd.out_data_ptr=(uintptr_t)&old_error;cmd.out_data_size=4;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){enum pvr_srv_error error=mfw19_error(old_error);memcpy(output,&error,4);}
++  return rc;
++ }
++
+  /* Never send an unchecked1.17 command/layout to a1.9 kernel. */
+  errno=ENOTSUP;
+  return -1;

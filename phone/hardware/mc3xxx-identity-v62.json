@@ -1,0 +1,19 @@
+{
+  "kernel": "7.3.0 v62 #48",
+  "device": "I2C1 address 0x4c",
+  "measured": {
+    "product_register_0x3b": "0x66",
+    "hardware_register_0x18": "0x23"
+  },
+  "stock_validation": "accepted by exact stock4.4 MC3XXX_ValidateSensorIC",
+  "limitations": [
+    "identity only",
+    "no measurement or axis calibration established",
+    "commercial model not established"
+  ],
+  "writes_to_sensor_configuration": false,
+  "reboot": false,
+  "optical_restored": true,
+  "ir_test": false,
+  "allowlist_host_sanitizers": "PASS"
+}

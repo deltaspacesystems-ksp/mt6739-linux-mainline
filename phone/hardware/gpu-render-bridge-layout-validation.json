@@ -1,0 +1,387 @@
+{
+  "IN": {
+    "bytes": 352,
+    "fields": [
+      {
+        "name": "hRenderContext",
+        "offset": 0,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "ui32ClientCacheOpSeqNum",
+        "offset": 8,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui32ClientTAFenceCount",
+        "offset": 12,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "phClientTAFenceSyncPrimBlock",
+        "offset": 16,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "pui32ClientTAFenceSyncOffset",
+        "offset": 24,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "pui32ClientTAFenceValue",
+        "offset": 32,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "ui32ClientTAUpdateCount",
+        "offset": 40,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "phClientTAUpdateSyncPrimBlock",
+        "offset": 44,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "pui32ClientTAUpdateSyncOffset",
+        "offset": 52,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "pui32ClientTAUpdateValue",
+        "offset": 60,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "ui32ServerTASyncPrims",
+        "offset": 68,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "pui32ServerTASyncFlags",
+        "offset": 72,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "phServerTASyncs",
+        "offset": 80,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "ui32Client3DFenceCount",
+        "offset": 88,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "phClient3DFenceSyncPrimBlock",
+        "offset": 92,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "pui32Client3DFenceSyncOffset",
+        "offset": 100,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "pui32Client3DFenceValue",
+        "offset": 108,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "ui32Client3DUpdateCount",
+        "offset": 116,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "phClient3DUpdateSyncPrimBlock",
+        "offset": 120,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "pui32Client3DUpdateSyncOffset",
+        "offset": 128,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "pui32Client3DUpdateValue",
+        "offset": 136,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "ui32Server3DSyncPrims",
+        "offset": 144,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "pui32Server3DSyncFlags",
+        "offset": 148,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "phServer3DSyncs",
+        "offset": 156,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "hPRFenceUFOSyncPrimBlock",
+        "offset": 164,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "ui32FRFenceUFOSyncOffset",
+        "offset": 172,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui32FRFenceValue",
+        "offset": 176,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "hCheckFenceFD",
+        "offset": 180,
+        "bytes": 4,
+        "source_type": "PVRSRV_FENCE"
+      },
+      {
+        "name": "hUpdateTimeline",
+        "offset": 184,
+        "bytes": 4,
+        "source_type": "PVRSRV_TIMELINE"
+      },
+      {
+        "name": "puiUpdateFenceName",
+        "offset": 188,
+        "bytes": 8,
+        "source_type": "IMG_CHAR*"
+      },
+      {
+        "name": "ui32TACmdSize",
+        "offset": 196,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "psTACmd",
+        "offset": 200,
+        "bytes": 8,
+        "source_type": "IMG_BYTE*"
+      },
+      {
+        "name": "ui323DPRCmdSize",
+        "offset": 208,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ps3DPRCmd",
+        "offset": 212,
+        "bytes": 8,
+        "source_type": "IMG_BYTE*"
+      },
+      {
+        "name": "ui323DCmdSize",
+        "offset": 220,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ps3DCmd",
+        "offset": 224,
+        "bytes": 8,
+        "source_type": "IMG_BYTE*"
+      },
+      {
+        "name": "ui32ExtJobRef",
+        "offset": 232,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "bbLastTAInScene",
+        "offset": 236,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbKickTA",
+        "offset": 240,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbKickPR",
+        "offset": 244,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbKick3D",
+        "offset": 248,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbAbort",
+        "offset": 252,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "ui32PDumpFlags",
+        "offset": 256,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "hRTDataCleanup",
+        "offset": 260,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "hZBuffer",
+        "offset": 268,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "hSBuffer",
+        "offset": 276,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "hMSAAScratchBuffer",
+        "offset": 284,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE"
+      },
+      {
+        "name": "bbCommitRefCountsTA",
+        "offset": 292,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbCommitRefCounts3D",
+        "offset": 296,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "ui32SyncPMRCount",
+        "offset": 300,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "pui32SyncPMRFlags",
+        "offset": 304,
+        "bytes": 8,
+        "source_type": "IMG_UINT32*"
+      },
+      {
+        "name": "phSyncPMRs",
+        "offset": 312,
+        "bytes": 8,
+        "source_type": "IMG_HANDLE*"
+      },
+      {
+        "name": "ui32RenderTargetSize",
+        "offset": 320,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui32NumberOfDrawCalls",
+        "offset": 324,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui32NumberOfIndices",
+        "offset": 328,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui32NumberOfMRTs",
+        "offset": 332,
+        "bytes": 4,
+        "source_type": "IMG_UINT32"
+      },
+      {
+        "name": "ui64Deadline",
+        "offset": 336,
+        "bytes": 8,
+        "source_type": "IMG_UINT64"
+      },
+      {
+        "name": "ssRobustnessResetReason",
+        "offset": 344,
+        "bytes": 8,
+        "source_type": "IMG_DEV_VIRTADDR"
+      }
+    ]
+  },
+  "OUT": {
+    "bytes": 16,
+    "fields": [
+      {
+        "name": "hUpdateFence",
+        "offset": 0,
+        "bytes": 4,
+        "source_type": "PVRSRV_FENCE"
+      },
+      {
+        "name": "bbCommittedRefCountsTA",
+        "offset": 4,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "bbCommittedRefCounts3D",
+        "offset": 8,
+        "bytes": 4,
+        "source_type": "IMG_BOOL"
+      },
+      {
+        "name": "eError",
+        "offset": 12,
+        "bytes": 4,
+        "source_type": "PVRSRV_ERROR"
+      }
+    ]
+  },
+  "validation": "Host and native AlpineARM64 sizeof/offsetof staticassert PASS; storage only, no submission helper",
+  "independent_stock": "Exact libsrv_um.so wrapper ELF0xe26c calls bridge130/function14 input0x160/output0x10. RGXKickTA sends CMDTA0x118 and CMD3D0x298, independently matches exact firmware DWARF.",
+  "limits": "No TA/3D job; pointer widths, flags and dependency semantics must be filled from verified owned resources before use."
+}

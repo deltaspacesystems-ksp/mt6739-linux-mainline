@@ -1,0 +1,44 @@
+{
+  "status": "public Mesa generator offline PASS, not hardware validated",
+  "mesa_commit": "2736dd1220d58192f5591ca6f9fcc5e60ee368ad",
+  "generator": "pvr_pds_compute_shader from existing pinned libpvr_pds.a; exact public headers",
+  "candidate_contract": {
+    "local_input_regs": "X->USC vi0; Y/Z/workgroup/global/numgroups allUNUSED",
+    "kick_usc": true,
+    "usc_execution_offset_hex": "0x100 illustrative heap-relative offset, not allocated GPU resource",
+    "usc_temps_requested": 5,
+    "barrier_fence_conditional_render": false,
+    "data_dwords": 3,
+    "code_bytes": 20,
+    "code_dwords": 5,
+    "pds_temps_used": 3,
+    "data_hex": [
+      "00000100",
+      "00000010",
+      "80000000"
+    ],
+    "code_hex": [
+      "c2c00002",
+      "d3000000",
+      "f0024001",
+      "fc000002",
+      "d3000000"
+    ]
+  },
+  "validation": [
+    "SIZES/DATA/CODE output metadata agree",
+    "Return pointer advances exactly5 instructions",
+    "Canaries before buffer and aftercode unchanged",
+    "ASan/UBSan-instrumented harness PASS linked against existing public generator library (library itself not newly instrumented)",
+    "Both slc_mcu_cache_controls false/true produce identical candidate data/code for this path"
+  ],
+  "important_units": "This generator code_size isBYTES; data_size isDWORDS. Do not treat20 as20instructions. Probe independently checks return pointer.",
+  "source_contract": "pvr_pds.c maps CDM localX input to PDS temp0 and emits DOUTW into destinationUSCvi0, then DOUTU. Physical target CDM input semantics still require independent validation.",
+  "remaining": [
+    "Actual targetISA/errata and memory-completion validation",
+    "Native context store/load PDS/USC pair compatible with legacy firmware",
+    "Complete old120B compute packet, including unresolved48..55",
+    "Verified register allocation budget; no synthetic profile installed"
+  ],
+  "phone": "Read-only status check:Driver/FirmwareOK,HWR0,CRR0,APM0. No upload, restart or kick in this step."
+}

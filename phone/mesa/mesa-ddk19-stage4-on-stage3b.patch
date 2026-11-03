@@ -1,0 +1,34 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -196,6 +196,31 @@
+   return rc;
+  }
+ 
++ if(bridge==2 && function==0){
++  struct pvr_srv_bridge_alloc_sync_primitive_block_ret *out=output;
++  uint32_t placeholder=0;
++  struct {uint64_t handle;uint32_t address,size;uint64_t export_handle;uint32_t error;} PACKED old={.error=UINT32_MAX};
++  _Static_assert(sizeof(old)==28,"1.9 sync allocation ABI");
++  if(insize!=0||outsize!=sizeof(*out)){errno=EINVAL;return -1;}
++  cmd.in_data_ptr=(uintptr_t)&placeholder;cmd.in_data_size=4;
++  cmd.out_data_ptr=(uintptr_t)&old;cmd.out_data_size=28;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){out->handle=(void*)(uintptr_t)old.handle;out->pmr=(void*)(uintptr_t)old.export_handle;
++   out->addr=old.address;out->size=old.size;out->error=mfw19_error(old.error);}
++  return rc;
++ }
++ if(bridge==2 && (function==1||function==2)){
++  uint32_t old_error=UINT32_MAX;
++  if(outsize!=4||insize!=(function==1?8u:16u)){errno=EINVAL;return -1;}
++  uint64_t handle;memcpy(&handle,input,8);if(!handle){errno=EINVAL;return -1;}
++  /* SET input layout is identical: handle64/index32/value32. Kernel checks bounds. */
++  cmd.in_data_ptr=(uintptr_t)input;cmd.in_data_size=insize;
++  cmd.out_data_ptr=(uintptr_t)&old_error;cmd.out_data_size=4;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){enum pvr_srv_error error=mfw19_error(old_error);memcpy(output,&error,4);}
++  return rc;
++ }
++
+  /* Never send an unchecked1.17 command/layout to a1.9 kernel. */
+  errno=ENOTSUP;
+  return -1;

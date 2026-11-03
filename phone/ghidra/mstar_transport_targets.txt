@@ -1,0 +1,4 @@
+mstar_iic_write_data
+mstar_dev_hw_reset
+mstar_power_init
+mstar_get_chip_type

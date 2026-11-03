@@ -1,0 +1,101 @@
+INFO  Using log config file: jar:file:/D:/y5_linux_work/ghidra/ghidra_12.1.4_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (993 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (2815 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    D:\y5_linux_work\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessAnalyzer)  
+INFO  Opening project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessProject)  
+INFO  REPORT: Processing project file: /wmt_drv.ko (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompFuncByName.java 'wmt_dev_patch_get'  (HeadlessAnalyzer)  
+INFO  SCRIPT: D:\y5_linux_work\ghidra_scripts\DecompFuncByName.java (HeadlessAnalyzer)  
+INFO  DecompFuncByName.java> ===wmt_dev_patch_get_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+/* WARNING: Enum "anon_enum_32": Some values do not have unique names */
+
+INT32 wmt_dev_patch_get(PUINT8 pPatchName,osal_firmware **ppPatch)
+
+{
+  undefined *puVar1;
+  undefined *puVar2;
+  undefined *str;
+  INT32 IVar3;
+  int iVar4;
+  osal_firmware *local_10;
+  long local_8;
+  
+  str = PTR_s__HIF_SDIO__E__s__d__failed_to_op_00134b90;
+                    /* Unresolved local var: INT32 iRet@[???]
+                       Unresolved local var: osal_firmware * fw@[???]
+                       Unresolved local var: char[18] __func__@[???] */
+  puVar2 = PTR___stack_chk_guard_00134b78;
+  local_10 = (osal_firmware *)0x0;
+  local_8 = *(long *)PTR___stack_chk_guard_00134b78;
+  if (ppPatch == (osal_firmware **)0x0) {
+                    /* Unresolved local var: INT32 iRet@[???]
+                       Unresolved local var: osal_firmware * fw@[???]
+                       Unresolved local var: char[18] __func__@[???] */
+    osal_err_print(PTR_s__HIF_SDIO__E__s__d__invalid_ppBu_00134b88,PTR___func___00134b80 + 0x58,
+                   0x1a0);
+  }
+  else {
+    puVar1 = PTR___func___00134b80 + 0x58;
+    *ppPatch = (osal_firmware *)0x0;
+    while (iVar4 = request_firmware(&local_10,pPatchName,0), iVar4 == -0xb) {
+      osal_err_print(str,puVar1,0x1a7,pPatchName);
+      osal_sleep_ms(100);
+    }
+    if (iVar4 == 0) {
+      if (2 < *(uint *)PTR_gWmtDbgLvl_00134ba0) {
+        osal_warn_print(PTR_s__HIF_SDIO__D__s_loader_firmware___00134ba8,
+                        PTR___func___00134b80 + 0x58,pPatchName);
+      }
+      *ppPatch = local_10;
+      IVar3 = 0;
+      goto LAB_00134ab0;
+    }
+    osal_err_print(PTR_s__HIF_SDIO__E__s__d__failed_to_op_00134b98,PTR___func___00134b80 + 0x58,
+                   0x1ac,pPatchName);
+  }
+  IVar3 = -1;
+LAB_00134ab0:
+  if (local_8 != *(long *)puVar2) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return IVar3;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===wmt_dev_patch_get_END=== (GhidraScript)  
+INFO  REPORT: Save succeeded for processed file: /wmt_drv.ko (HeadlessAnalyzer)  

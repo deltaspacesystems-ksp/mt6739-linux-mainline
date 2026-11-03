@@ -1,0 +1,44 @@
+{
+  "": {
+    "array_element_type": "",
+    "element_bytes": 48,
+    "bounds": [
+      {
+        "DW_AT_type": 432,
+        "DW_AT_upper_bound": 1
+      }
+    ],
+    "members": [
+      {
+        "name": "uTAReg_VDM_CONTEXT_STORE_TASK0",
+        "offset": 0,
+        "bytes": 8
+      },
+      {
+        "name": "uTAReg_VDM_CONTEXT_STORE_TASK1",
+        "offset": 8,
+        "bytes": 8
+      },
+      {
+        "name": "uTAReg_VDM_CONTEXT_STORE_TASK2",
+        "offset": 16,
+        "bytes": 8
+      },
+      {
+        "name": "uTAReg_VDM_CONTEXT_RESUME_TASK0",
+        "offset": 24,
+        "bytes": 8
+      },
+      {
+        "name": "uTAReg_VDM_CONTEXT_RESUME_TASK1",
+        "offset": 32,
+        "bytes": 8
+      },
+      {
+        "name": "uTAReg_VDM_CONTEXT_RESUME_TASK2",
+        "offset": 40,
+        "bytes": 8
+      }
+    ]
+  }
+}

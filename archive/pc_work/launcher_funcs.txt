@@ -1,0 +1,1849 @@
+INFO  Using log config file: jar:file:/D:/y5_linux_work/ghidra/ghidra_12.1.4_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\pc\AppData\Roaming\ghidra\ghidra_12.1.4_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1401 ms) (ClassSearcher)  
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (3275 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+INFO  HEADLESS Script Paths:
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    D:\y5_linux_work\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    D:\y5_linux_work\ghidra\ghidra_12.1.4_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Opening existing project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessAnalyzer)  
+INFO  Opening project: D:\y5_linux_work\ghidra_wmt_proj\wmt_proj (HeadlessProject)  
+INFO  REPORT: Processing project file: /wmt_launcher_bin (HeadlessAnalyzer)  
+INFO  REPORT: Execute script: DecompFuncByName.java '*'  (HeadlessAnalyzer)  
+INFO  SCRIPT: D:\y5_linux_work\ghidra_scripts\DecompFuncByName.java (HeadlessAnalyzer)  
+INFO  DecompFuncByName.java> ### FUN_00101598 size=20 (GhidraScript)  
+INFO  DecompFuncByName.java> ===FUN_00101598_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void FUN_00101598(void)
+
+{
+  (*(code *)PTR_00107e48)();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===FUN_00101598_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### _start_main size=84 (GhidraScript)  
+INFO  DecompFuncByName.java> ===_start_main_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void _start_main(undefined8 param_1)
+
+{
+  undefined *local_18;
+  undefined *local_10;
+  undefined *local_8;
+  
+  local_18 = PTR___PREINIT_ARRAY___00107e08;
+  local_10 = PTR___INIT_ARRAY___00107e10;
+  local_8 = PTR___FINI_ARRAY___00107e18;
+  __libc_init(param_1,0,PTR_main_00107e20,&local_18);
+  _start_main(&stack0xffffffffffffffc0);
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===_start_main_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### _start size=8 (GhidraScript)  
+INFO  DecompFuncByName.java> ===_start_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void _start(void)
+
+{
+  _start_main();
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===_start_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### __atexit_handler_wrapper size=40 (GhidraScript)  
+INFO  DecompFuncByName.java> ===__atexit_handler_wrapper_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void __atexit_handler_wrapper(code *param_1)
+
+{
+  if (param_1 != (code *)0x0) {
+    (*param_1)();
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===__atexit_handler_wrapper_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### atexit size=52 (GhidraScript)  
+INFO  DecompFuncByName.java> ===atexit_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+int atexit(__func *__func)
+
+{
+  int iVar1;
+  
+  iVar1 = __cxa_atexit(__atexit_handler_wrapper,__func,&DAT_00108000);
+  return iVar1;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===atexit_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### pthread_atfork size=56 (GhidraScript)  
+INFO  DecompFuncByName.java> ===pthread_atfork_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+int pthread_atfork(__prepare *__prepare,__parent *__parent,__child *__child)
+
+{
+  int iVar1;
+  
+  iVar1 = __register_atfork(__prepare,__parent,__child,&DAT_00108000);
+  return iVar1;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===pthread_atfork_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_115k size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_115k_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_115k(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 0x1c200;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_115k_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_921k size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_921k_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_921k(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 0xe1000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_921k_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_2kk size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_2kk_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_2kk(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 2000000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_2kk_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_2_5kk size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_2_5kk_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_2_5kk(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 2500000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_2_5kk_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_3kk size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_3kk_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_3kk(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 3000000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_3kk_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_3_5kk size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_3_5kk_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_3_5kk(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 3500000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_3_5kk_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_baud_4kk size=48 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_4kk_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 cmd_hdr_baud_4kk(long param_1)
+
+{
+  int iVar1;
+  undefined8 uVar2;
+  
+  iVar1 = DAT_00108504;
+  *(undefined4 *)(param_1 + 0x214) = 4000000;
+  if (iVar1 != -1) {
+    uVar2 = launcher_setup_uart_param(iVar1,param_1 + 0x208);
+    return uVar2;
+  }
+  return 0xffffffff;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_baud_4kk_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_stp_open size=364 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_open_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void cmd_hdr_stp_open(void)
+
+{
+  long lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined4 local_3c;
+  long local_38;
+  
+  lVar1 = tpidr_el0;
+  local_38 = *(long *)(lVar1 + 0x28);
+  if ((int)DAT_0010860c == 1 && DAT_00108504 == -1) {
+    DAT_00108504 = __open_2(&DAT_00108714,0x102);
+    if (DAT_00108504 < 0) {
+      fprintf(*(FILE **)PTR_stderr_00107e28,"Can\'t open serial port %s\n",&DAT_00108714);
+      uVar3 = 0xfffffffe;
+    }
+    else {
+      __android_log_print(4,"wmt_launcher","real_tty(%s) opened(%d)\n",&DAT_00108714,DAT_00108504);
+      local_3c = 0x10;
+      iVar2 = ioctl(DAT_00108504,0x5423,&local_3c);
+      if (iVar2 < 0) {
+        fwrite("Can\'t set ldisc to N_MTKSTP\n",0x1c,1,*(FILE **)PTR_stderr_00107e28);
+        uVar3 = 0xfffffffd;
+      }
+      else {
+        iVar2 = ioctl(DAT_00108504,0x400455c8,0);
+        uVar3 = 0;
+        if (iVar2 < 0) {
+          __android_log_print(6,"wmt_launcher","Can\'t set HCIUARTSETPROTO\n");
+          uVar3 = 0xfffffffc;
+        }
+      }
+    }
+  }
+  else {
+    fprintf(*(FILE **)PTR_stderr_00107e28,"stp_open fail: stp_mode(%d) real_tty_fd(%d) \n");
+    uVar3 = 0xffffffff;
+  }
+  if (*(long *)(lVar1 + 0x28) == local_38) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail(uVar3);
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_open_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_stp_close size=220 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_close_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void cmd_hdr_stp_close(void)
+
+{
+  long lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  undefined4 local_2c;
+  long local_28;
+  
+  lVar1 = tpidr_el0;
+  local_28 = *(long *)(lVar1 + 0x28);
+  if (((uint)DAT_0010860c == 1) && (-1 < (int)DAT_00108504)) {
+    local_2c = 0;
+    iVar2 = ioctl(DAT_00108504,0x5423,&local_2c);
+    if (iVar2 < 0) {
+      __android_log_print(6,"wmt_launcher","Can\'t restore line discipline");
+      uVar3 = 0xfffffffe;
+    }
+    else {
+      close(DAT_00108504);
+      uVar3 = 0;
+      DAT_00108504 = 0xffffffff;
+    }
+  }
+  else if (DAT_00108504 == 0xffffffff) {
+    uVar3 = 0;
+  }
+  else {
+    fprintf(*(FILE **)PTR_stderr_00107e28,"stp_close fail: stp_mode(%d) real_tty_fd(%d) \n",
+            (ulong)(uint)DAT_0010860c,(ulong)DAT_00108504);
+    uVar3 = 0xffffffff;
+  }
+  if (*(long *)(lVar1 + 0x28) == local_28) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail(uVar3);
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_close_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_stp_rst size=220 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_rst_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void cmd_hdr_stp_rst(undefined8 param_1)
+
+{
+  long lVar1;
+  int iVar2;
+  undefined4 local_3c;
+  long local_38;
+  
+  lVar1 = tpidr_el0;
+  local_38 = *(long *)(lVar1 + 0x28);
+  if (((uint)DAT_0010860c == 1) && (-1 < (int)DAT_00108504)) {
+    local_3c = 0;
+    iVar2 = ioctl(DAT_00108504,0x5423,&local_3c);
+    if (iVar2 < 0) {
+      __android_log_print(6,"wmt_launcher","Can\'t restore line discipline");
+    }
+    else {
+      close(DAT_00108504);
+      DAT_00108504 = 0xffffffff;
+    }
+  }
+  else if (DAT_00108504 != 0xffffffff) {
+    fprintf(*(FILE **)PTR_stderr_00107e28,"stp_close fail: stp_mode(%d) real_tty_fd(%d) \n",
+            (ulong)(uint)DAT_0010860c,(ulong)DAT_00108504);
+  }
+  cmd_hdr_stp_open(param_1);
+  if (*(long *)(lVar1 + 0x28) == local_38) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_stp_rst_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### cmd_hdr_sch_patch size=2292 (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_sch_patch_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined4 cmd_hdr_sch_patch(long param_1)
+
+{
+  char *pcVar1;
+  long lVar2;
+  bool bVar3;
+  undefined1 uVar4;
+  undefined1 uVar5;
+  undefined1 uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  DIR *__dirp;
+  dirent *pdVar11;
+  undefined4 *puVar12;
+  __off_t _Var13;
+  size_t sVar14;
+  char *pcVar15;
+  undefined8 uVar16;
+  ulong uVar17;
+  undefined8 uVar18;
+  uint uVar19;
+  undefined4 uVar20;
+  undefined8 local_310;
+  uint local_304;
+  undefined1 auStack_300 [128];
+  undefined1 auStack_280 [256];
+  undefined8 local_180;
+  ulong uStack_178;
+  undefined8 local_170;
+  undefined1 auStack_168 [8];
+  char acStack_160 [247];
+  undefined1 local_69;
+  long local_68;
+  
+  lVar2 = tpidr_el0;
+  local_68 = *(long *)(lVar2 + 0x28);
+  memset(auStack_280,0,0x100);
+  memset(auStack_300,0,0x80);
+  local_304 = 0;
+  local_310 = 0;
+  if (DAT_00108500 < 1) {
+    uVar17 = __android_log_print(6,"wmt_launcher","file descriptor is not valid\n");
+    uVar20 = 0xffffffff;
+    goto LAB_001025ec;
+  }
+  uVar7 = ioctl(DAT_00108500,0x8004a00c,0);
+  if ((int)uVar7 < 0x551) {
+    switch(uVar7) {
+    case 0x321:
+    case 0x335:
+    case 0x337:
+      pcVar15 = "for denali chipid convert\n";
+      break;
+    case 0x322:
+    case 0x323:
+    case 0x324:
+    case 0x325:
+    case 0x327:
+    case 0x328:
+    case 0x329:
+    case 0x32a:
+    case 0x32b:
+    case 0x32c:
+    case 0x32d:
+    case 0x32e:
+    case 0x32f:
+    case 0x330:
+    case 0x331:
+    case 0x332:
+    case 0x333:
+    case 0x334:
+    case 0x336:
+switchD_00101f20_caseD_322:
+      DAT_00108924 = 0;
+      DAT_0010892c = 0;
+      if (0x7622 < (int)uVar7) {
+        if ((int)uVar7 < 0x8163) {
+          if (uVar7 != 0x7623) {
+            if (uVar7 == 0x8127) {
+LAB_0010203c:
+              pcVar15 = "ROMv2";
+              goto LAB_0010268c;
+            }
+            goto switchD_0010270c_caseD_6736;
+          }
+        }
+        else if ((uVar7 != 0x8163) && (uVar7 != 0x8167)) goto switchD_0010270c_caseD_6736;
+        goto switchD_0010270c_caseD_6735;
+      }
+      switch(uVar7) {
+      case 0x6735:
+      case 0x6739:
+      case 0x6752:
+      case 0x6755:
+      case 0x6757:
+      case 0x6763:
+        goto switchD_0010270c_caseD_6735;
+      case 0x6736:
+      case 0x6737:
+      case 0x6738:
+      case 0x673a:
+      case 0x673b:
+      case 0x673c:
+      case 0x673d:
+      case 0x673e:
+      case 0x673f:
+      case 0x6740:
+      case 0x6741:
+      case 0x6742:
+      case 0x6743:
+      case 0x6744:
+      case 0x6745:
+      case 0x6746:
+      case 0x6747:
+      case 0x6748:
+      case 0x6749:
+      case 0x674a:
+      case 0x674b:
+      case 0x674c:
+      case 0x674d:
+      case 0x674e:
+      case 0x674f:
+      case 0x6750:
+      case 0x6751:
+      case 0x6753:
+      case 0x6754:
+      case 0x6756:
+      case 0x6758:
+      case 0x675a:
+      case 0x675b:
+      case 0x675c:
+      case 0x675d:
+      case 0x675e:
+      case 0x675f:
+      case 0x6760:
+      case 0x6761:
+      case 0x6762:
+      case 0x6764:
+      case 0x6765:
+      case 0x6766:
+      case 0x6767:
+      case 0x6768:
+      case 0x6769:
+      case 0x676a:
+      case 0x676b:
+      case 0x676c:
+      case 0x676d:
+      case 0x676e:
+      case 0x676f:
+      case 0x6770:
+      case 0x6772:
+      case 0x6773:
+      case 0x6774:
+      case 0x6776:
+      case 0x6777:
+      case 0x6778:
+      case 0x6779:
+      case 0x677a:
+      case 0x677b:
+      case 0x677c:
+      case 0x677d:
+      case 0x677e:
+      case 0x677f:
+      case 0x6780:
+      case 0x6781:
+      case 0x6782:
+      case 0x6783:
+      case 0x6784:
+      case 0x6785:
+      case 0x6786:
+      case 0x6787:
+      case 0x6788:
+      case 0x6789:
+      case 0x678a:
+      case 0x678b:
+      case 0x678c:
+      case 0x678d:
+      case 0x678e:
+      case 0x678f:
+      case 0x6790:
+      case 0x6791:
+      case 0x6792:
+      case 0x6793:
+      case 0x6794:
+      case 0x6795:
+      case 0x6796:
+        break;
+      case 0x6759:
+        goto switchD_0010270c_caseD_6759;
+      case 0x6771:
+      case 0x6775:
+        goto switchD_0010270c_caseD_6771;
+      case 0x6797:
+        goto switchD_0010270c_caseD_6797;
+      default:
+        uVar17 = (ulong)(uVar7 - 0x6570);
+        if (uVar7 - 0x6570 < 0x23) {
+          if ((1L << (uVar17 & 0x3f) & 0x400040004U) != 0) {
+            pcVar15 = "ROMv1";
+            goto LAB_0010268c;
+          }
+          if ((1L << (uVar17 & 0x3f) & 0x10001U) != 0) goto switchD_0010270c_caseD_6735;
+          if (uVar17 == 1) goto LAB_0010203c;
+        }
+      }
+switchD_0010270c_caseD_6736:
+      __strncpy_chk2(&DAT_00108924,&DAT_00104f7a,2,0x10,3);
+      sprintf((char *)((long)&DAT_00108924 + 2),(char *)0xe,&DAT_00104f7d,(ulong)uVar7);
+      goto LAB_001020d0;
+    case 0x326:
+      pcVar15 = "for jade chipid convert\n";
+      break;
+    default:
+      if (uVar7 == 0x279) {
+        __android_log_print(4,"wmt_launcher","for everest chipid convert\n");
+switchD_0010270c_caseD_6797:
+        pcVar15 = "ROMv3";
+      }
+      else {
+        if (uVar7 != 0x507) goto switchD_00101f20_caseD_322;
+        __android_log_print(4,"wmt_launcher","for alaska chipid convert\n");
+switchD_0010270c_caseD_6759:
+        pcVar15 = "ROMv4";
+      }
+LAB_0010268c:
+      uVar16 = 5;
+      uVar18 = 6;
+      goto LAB_001020cc;
+    }
+LAB_0010209c:
+    __android_log_print(4,"wmt_launcher",pcVar15);
+switchD_0010270c_caseD_6735:
+    pcVar15 = "ROMv2_lm";
+  }
+  else {
+    if ((int)uVar7 < 0x699) {
+      if (uVar7 == 0x551) {
+        pcVar15 = "for olympus chipid convert\n";
+      }
+      else if (uVar7 == 0x633) {
+        pcVar15 = "for rushmore chipid convert\n";
+      }
+      else {
+        if (uVar7 != 0x690) goto switchD_00101f20_caseD_322;
+        pcVar15 = "for bianco chipid convert\n";
+      }
+      goto LAB_0010209c;
+    }
+    if (uVar7 == 0x699) {
+      pcVar15 = "for zion chipid convert\n";
+      goto LAB_0010209c;
+    }
+    if (uVar7 == 0x713) {
+      pcVar15 = "for cannon chipid convert\n";
+    }
+    else {
+      if (uVar7 != 0x788) goto switchD_00101f20_caseD_322;
+      pcVar15 = "for sylvia chipid convert\n";
+    }
+    __android_log_print(4,"wmt_launcher",pcVar15);
+switchD_0010270c_caseD_6771:
+    pcVar15 = "ROMv4_be";
+  }
+  uVar18 = 9;
+  uVar16 = 8;
+LAB_001020cc:
+  DAT_0010892c = 0;
+  DAT_00108924 = 0;
+  __strncpy_chk2(&DAT_00108924,pcVar15,uVar16,0x10,uVar18);
+LAB_001020d0:
+  __strncat_chk(&DAT_00108924,"_patch",6,0x10);
+  __android_log_print(4,"wmt_launcher","patch name pre-fix:%s\n",&DAT_00108924);
+  uVar7 = ioctl(DAT_00108500,0x8004a00c,2);
+  __android_log_print(4,"wmt_launcher","fw_version:0x%04x\n",uVar7);
+  pcVar15 = (char *)(param_1 + 8);
+  __strncpy_chk2(pcVar15,"/vendor/firmware",0x10,0x100,0x11);
+  *(undefined1 *)(param_1 + 0x19) = 0;
+  __dirp = opendir(pcVar15);
+  if (__dirp == (DIR *)0x0) {
+    uVar17 = __android_log_print(6,"wmt_launcher","patch path cannot be opened");
+    uVar20 = 0xfffffffd;
+  }
+  else {
+    pdVar11 = readdir(__dirp);
+    if (pdVar11 == (dirent *)0x0) {
+      uVar20 = 0;
+    }
+    else {
+      uVar20 = 0;
+      bVar3 = true;
+      do {
+        pcVar1 = pdVar11->d_name;
+        local_304 = 0;
+        sVar14 = __strlen_chk(&DAT_00108924,0x10);
+        iVar10 = strncmp(pcVar1,(char *)&DAT_00108924,sVar14);
+        if (iVar10 == 0) {
+          sVar14 = strlen(pcVar15);
+          __strncpy_chk2(auStack_280,pcVar15,sVar14 + 1,0x100,0x100);
+          __strncat_chk(auStack_280,&DAT_00104d7e,1,0x100);
+          sVar14 = strlen(pcVar1);
+          __strncat_chk(auStack_280,pcVar1,sVar14,0x100);
+          __android_log_print(4,"wmt_launcher",&DAT_00104d80,auStack_280);
+          sVar14 = strlen(pcVar1);
+          __strncpy_chk(auStack_300,pcVar1,sVar14 + 1,0x80);
+          iVar10 = __open_2(auStack_280,0);
+          if (iVar10 < 0) {
+            __android_log_print(6,"wmt_launcher","open patch file(%s) failed\n",auStack_300);
+          }
+          else {
+            local_180 = 0;
+            uStack_178 = 0;
+            iVar8 = __read_chk(iVar10,&local_180,0x10,0x10);
+            if (iVar8 == -1) {
+              __android_log_print(6,"wmt_launcher","read patch_build_ver failed!\n");
+            }
+            uStack_178 = uStack_178 & 0xffffffffffffff;
+            local_170 = "persist.mtk.wcn.patch.version";
+            sprintf(acStack_160,(char *)0x5c,&DAT_00104fdc,&local_180);
+            iVar8 = property_set(local_170,acStack_160);
+            pcVar1 = local_170;
+            if (iVar8 == 0) {
+              __android_log_print(4,"wmt_launcher","set property(%s) to %s succeed.\n",local_170,
+                                  acStack_160);
+            }
+            else {
+              puVar12 = (undefined4 *)__errno();
+              __android_log_print(6,"wmt_launcher",
+                                  "set property(%s) to %s failed,ret:%d, errno:%d\n",pcVar1,
+                                  acStack_160,iVar8,*puVar12);
+            }
+            _Var13 = lseek(iVar10,0x16,0);
+            if (_Var13 == -1) {
+              __android_log_print(6,"wmt_launcher","seek failed\n");
+              goto LAB_001024cc;
+            }
+            iVar8 = __read_chk(iVar10,(ulong)&local_304 | 1,1,3);
+            if (iVar8 == -1) {
+              __android_log_print(6,"wmt_launcher","read patch_ver failed!\n");
+              iVar8 = -1;
+            }
+            else {
+              iVar8 = 0;
+            }
+            iVar9 = __read_chk(iVar10,&local_304,1,4);
+            if (iVar9 == -1) {
+              __android_log_print(6,"wmt_launcher","read patch_ver failed!\n");
+LAB_001024b0:
+              __android_log_print(6,"wmt_launcher","read patch_ver failed!\n");
+              uVar20 = 0xfffffffc;
+            }
+            else {
+              if (iVar8 != 0) goto LAB_001024b0;
+              __android_log_print(4,"wmt_launcher","fw Ver in patch: 0x%04x\n",local_304);
+              if (((local_304 ^ uVar7) & 0xff) == 0) {
+                local_310 = 0;
+                iVar8 = __read_chk(iVar10,&local_310,4,8);
+                if (iVar8 == -1) {
+                  __android_log_print(6,"wmt_launcher","read patch_info failed!\n");
+                  uVar20 = 0xfffffffb;
+                }
+                else {
+                  uVar17 = local_310 & 0xff;
+                  uVar4 = local_310._1_1_;
+                  uVar5 = local_310._2_1_;
+                  uVar6 = local_310._3_1_;
+                  local_310._0_5_ = (uint5)(uint)local_310;
+                  __android_log_print(4,"wmt_launcher",
+                                      "read patch info:0x%02x,0x%02x,0x%02x,0x%02x\n",uVar17,uVar4,
+                                      uVar5,uVar6);
+                  iVar8 = DAT_00108500;
+                  if (bVar3) {
+                    uVar17 = local_310 >> 4 & 0xf;
+                    __android_log_print(4,"wmt_launcher","patch num = [%d]\n",uVar17);
+                    iVar9 = ioctl(iVar8,0x4004a00e,uVar17);
+                    if (iVar9 == 0) goto LAB_00102404;
+                  }
+                  else {
+LAB_00102404:
+                    uVar19 = (uint)(byte)local_310;
+                    __android_log_print(4,"wmt_launcher","patch seq = [%d]\n",uVar19 & 0xf);
+                    local_170._5_3_ = (undefined3)(local_310 >> 8);
+                    local_170._0_5_ = (uint5)(uVar19 & 0xf);
+                    __strncpy_chk2(auStack_168,auStack_300,0xff,0x100,0x80);
+                    local_69 = 0;
+                    iVar8 = ioctl(iVar8,0x4008a00f,&local_170);
+                    if (iVar8 == 0) {
+                      bVar3 = false;
+                      goto LAB_001024cc;
+                    }
+                  }
+                  __android_log_print(6,"wmt_launcher","ioctl failed !!\n");
+                  __android_log_print(6,"wmt_launcher","launcher_set_patch_info fail\n");
+                  uVar20 = 0xfffffffa;
+                }
+              }
+            }
+LAB_001024cc:
+            close(iVar10);
+          }
+        }
+        pdVar11 = readdir(__dirp);
+      } while (pdVar11 != (dirent *)0x0);
+    }
+    uVar7 = closedir(__dirp);
+    uVar17 = (ulong)uVar7;
+  }
+LAB_001025ec:
+  if (*(long *)(lVar2 + 0x28) != local_68) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail(uVar17);
+  }
+  return uVar20;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===cmd_hdr_sch_patch_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### main size=5732 (GhidraScript)  
+INFO  DecompFuncByName.java> ===main_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+undefined8 main(int param_1,char **param_2)
+
+{
+  bool bVar1;
+  long lVar2;
+  undefined *puVar3;
+  int iVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  uint uVar8;
+  ulong uVar9;
+  FILE *pFVar10;
+  long lVar11;
+  char *pcVar12;
+  size_t sVar13;
+  byte *__src;
+  long lVar14;
+  undefined4 *puVar15;
+  undefined8 uVar16;
+  uint *puVar17;
+  int *piVar18;
+  pthread_t pVar19;
+  undefined8 extraout_x1;
+  char *pcVar20;
+  int iVar21;
+  ulong uVar22;
+  byte *pbVar23;
+  int iVar24;
+  undefined *puVar25;
+  undefined1 auVar26 [16];
+  int local_178;
+  undefined4 local_174;
+  _union_1457 local_170;
+  code *pcStack_168;
+  ulong uStack_160;
+  undefined8 uStack_158;
+  long local_68;
+  
+  lVar2 = tpidr_el0;
+  local_68 = *(long *)(lVar2 + 0x28);
+  pcStack_168 = (code *)0x0;
+  local_170.sa_handler = (__sighandler_t)0x105065;
+  local_178 = -1;
+  do {
+    iVar4 = property_get(local_170.sa_handler,&uStack_160,pcStack_168);
+    if (iVar4 < 1) {
+      __android_log_print(6,"wmt_launcher","get property(%s) failed i_ret:%d\n",local_170.sa_handler
+                          ,iVar4);
+    }
+    else {
+      __android_log_print(4,"wmt_launcher","get property(%s) is %s\n",local_170.sa_handler,
+                          &uStack_160);
+      iVar4 = strcmp((char *)&uStack_160,"yes");
+      if (iVar4 == 0) break;
+    }
+    usleep(300000);
+  } while( true );
+  DAT_00108500 = __open_2("/dev/stpwmt",0x102);
+  while ((int)DAT_00108500 < 0) {
+    __android_log_print(6,"wmt_launcher","Can\'t open device node(%s) error:%d \n","/dev/stpwmt",
+                        DAT_00108500);
+    usleep(300000);
+    DAT_00108500 = __open_2("/dev/stpwmt",0x102);
+  }
+  __android_log_print(4,"wmt_launcher","open device node succeed.(Node:%s, fd:%d) \n","/dev/stpwmt",
+                      DAT_00108500);
+  pcStack_168 = (code *)0x0;
+  local_170.sa_handler = (__sighandler_t)0x10511a;
+  do {
+    iVar4 = property_get(local_170.sa_handler,&uStack_160,pcStack_168);
+    if (iVar4 == 0) {
+      __android_log_print(6,"wmt_launcher","get chip_id property(%s) failed\n",local_170.sa_handler)
+      ;
+    }
+    else {
+      uVar9 = strtoul((char *)&uStack_160,(char **)0x0,0x10);
+      __android_log_print(4,"wmt_launcher","key:(%s)-value:(%s),chip_id:0x%04x\n",
+                          local_170.sa_handler,&uStack_160,uVar9 & 0xffffffff);
+      if ((int)uVar9 != -1) break;
+    }
+    uVar8 = ioctl(DAT_00108500,0x8004a016,0);
+    uVar9 = (ulong)uVar8;
+    __android_log_print(4,"wmt_launcher","chip_id from kernel by ioctl:0x%04x\n",uVar9);
+    if (uVar8 != 0xffffffff) break;
+    usleep(300000);
+  } while( true );
+  __android_log_print(4,"wmt_launcher","chip_id:0x%04x\n",uVar9 & 0xffffffff);
+  iVar4 = (int)uVar9;
+  local_178 = iVar4;
+  if (iVar4 < 1) {
+    __android_log_print(6,"wmt_launcher","invalid chip id(%d)\n",uVar9 & 0xffffffff);
+    __android_log_print(6,"wmt_launcher","unknow chip type, may be chid id is invalid\n");
+  }
+  else {
+    uVar8 = iVar4 - 0x6620U >> 1;
+    if (((uVar8 | iVar4 << 0x1f) < 10) && ((1 << (ulong)(uVar8 & 0x1f) & 0x311U) != 0)) {
+      DAT_0010860c._0_4_ = 4;
+      DAT_0010860c._4_4_ = 2;
+      DAT_00108820 = 4000000;
+      memset(&DAT_00108714,0,0x10c);
+      bVar1 = false;
+      goto LAB_00102ab4;
+    }
+  }
+  bVar1 = true;
+  DAT_0010860c._0_4_ = 3;
+  DAT_0010860c._4_4_ = 2;
+LAB_00102ab4:
+  memset(&DAT_00108614,0,0x100);
+  puVar25 = PTR_optarg_00107e30;
+  do {
+    iVar5 = getopt(param_1,param_2,"m:d:b:c:p:n:?");
+    switch(iVar5) {
+    case 0x62:
+      DAT_00108820 = atoi(*(char **)puVar25);
+      break;
+    case 99:
+      DAT_00108814 = atoi(*(char **)puVar25);
+      break;
+    case 100:
+      pcVar12 = *(char **)puVar25;
+      sVar13 = strlen(pcVar12);
+      __strncpy_chk(&DAT_00108714,pcVar12,sVar13 + 1,0x100);
+      break;
+    case 0x65:
+    case 0x66:
+    case 0x67:
+    case 0x68:
+    case 0x69:
+    case 0x6a:
+    case 0x6b:
+    case 0x6c:
+    case 0x6e:
+    case 0x6f:
+      goto switchD_00102b54_caseD_65;
+    case 0x6d:
+      DAT_0010860c._0_4_ = atoi(*(char **)puVar25);
+      break;
+    case 0x70:
+      pcVar12 = *(char **)puVar25;
+      sVar13 = strlen(pcVar12);
+      __strncpy_chk(&DAT_00108614,pcVar12,sVar13 + 1,0x100);
+      __android_log_print(4,"wmt_launcher","patch path:%s\n",&DAT_00108614);
+      break;
+    default:
+      if (iVar5 == -1) {
+        if (DAT_00108614 == '\0') {
+          __android_log_print(6,"wmt_launcher",
+                              "MCU patch path not config,use /system/etc/firmware\n");
+          __strncpy_chk2(&DAT_00108614,"/system/etc/firmware",0x14,0x100,0x15);
+          iVar5 = -1;
+          DAT_00108629 = 0;
+        }
+        else {
+          iVar5 = 0;
+        }
+        if (3 < (uint)DAT_0010860c - 1) {
+          if (bVar1) {
+            __android_log_print(6,"wmt_launcher",
+                                "Stp Mode is not set, common interface use default: BTIF Mode");
+            DAT_0010860c._0_4_ = 3;
+          }
+          else {
+            __android_log_print(6,"wmt_launcher",
+                                "Stp Mode is not set, common interface use default: SDIO Mode");
+            DAT_0010860c._0_4_ = 4;
+          }
+          iVar5 = -3;
+        }
+        if ((uint)DAT_0010860c - 1 < 2) {
+          __android_log_print(4,"wmt_launcher","Common Interface: UART mode\n");
+          if (DAT_00108714 == '\0') {
+            __strncpy_chk2(&DAT_00108714,"/dev/ttyMT2",0xc,0x100,0xc);
+            __android_log_print(4,"wmt_launcher","no uart device input, use default: %s\n",
+                                &DAT_00108714);
+            iVar5 = -4;
+          }
+          if (-1 < DAT_00108820) goto LAB_00102cd8;
+          DAT_00108820 = 4000000;
+          __android_log_print(4,"wmt_launcher","no baudrate input, use default: %d\n");
+        }
+        else {
+LAB_00102cd8:
+          if (iVar5 == 0) {
+            if (bVar1) goto LAB_001032f0;
+            ioctl(DAT_00108500,0x4004a017,uVar9 & 0xffffffff);
+            __android_log_print(4,"wmt_launcher","set chip_id(0x%x) to driver\n",uVar9 & 0xffffffff)
+            ;
+            pFVar10 = fopen("/system/vendor/firmware/WMT.cfg","r");
+            if (pFVar10 != (FILE *)0x0) {
+              lVar11 = __fgets_chk(&local_170,0xff,pFVar10,0xff);
+              goto joined_r0x00102d50;
+            }
+            puVar15 = (undefined4 *)__errno();
+            __android_log_print(6,"wmt_launcher","%s cannot be opened, errno:%d\n",
+                                "/system/vendor/firmware/WMT.cfg",*puVar15);
+            pcVar12 = "launcher_get_wmt_cfg_infor fail\n";
+            goto LAB_00103238;
+          }
+        }
+        __android_log_print(6,"wmt_launcher","stp param is invalid, use default:\n");
+        __android_log_print(4,"wmt_launcher","fm mode:%d\n",DAT_0010860c._4_4_);
+        __android_log_print(4,"wmt_launcher","stp mode:%d\n",(uint)DAT_0010860c);
+        __android_log_print(4,"wmt_launcher","patch path:%s\n",&DAT_00108614);
+        if ((uint)DAT_0010860c - 1 < 2) {
+          __android_log_print(4,"wmt_launcher","stp uart dev:%s\n",&DAT_00108714);
+          __android_log_print(4,"wmt_launcher","stp uart baud rate:%d\n",DAT_00108820);
+          __android_log_print(4,"wmt_launcher","stp uart fc:%d\n",DAT_00108814);
+          __android_log_print(4,"wmt_launcher","stp uart parity:%d\n",DAT_00108818);
+          __android_log_print(4,"wmt_launcher","stp uart stop bit:%d\n",DAT_0010881c);
+        }
+        __android_log_print(6,"wmt_launcher",
+                            "if this default param is not correct,please see usage help:\n");
+        launcher_display_usage();
+        goto LAB_00103db4;
+      }
+      goto switchD_00102b54_caseD_65;
+    }
+  } while( true );
+joined_r0x00102d50:
+  if (lVar11 == 0) goto LAB_00102fb8;
+  pcVar12 = strchr((char *)&local_170,0x6d);
+  puVar25 = PTR_s_mt6620_defAnt_00108010;
+  if (pcVar12 == (char *)0x0) {
+    __android_log_print(6,"wmt_launcher","Warning:no string start with \'m\' found in %s\n",
+                        &local_170);
+  }
+  else {
+    sVar13 = strlen(PTR_s_mt6620_defAnt_00108010);
+    iVar5 = strncasecmp(pcVar12,puVar25,sVar13);
+    puVar3 = PTR_s_mt6628_defAnt_00108120;
+    if (iVar5 == 0) {
+      lVar11 = 0;
+    }
+    else {
+      sVar13 = strlen(PTR_s_mt6628_defAnt_00108120);
+      iVar5 = strncasecmp(pcVar12,puVar3,sVar13);
+      puVar25 = PTR_s_mt6630_defAnt_00108230;
+      if (iVar5 == 0) {
+        lVar11 = 1;
+        puVar25 = puVar3;
+      }
+      else {
+        sVar13 = strlen(PTR_s_mt6630_defAnt_00108230);
+        iVar5 = strncasecmp(pcVar12,puVar25,sVar13);
+        puVar3 = PTR_s_mt6632_defAnt_00108340;
+        if (iVar5 == 0) {
+          lVar11 = 2;
+        }
+        else {
+          sVar13 = strlen(PTR_s_mt6632_defAnt_00108340);
+          iVar5 = strncasecmp(pcVar12,puVar3,sVar13);
+          if (iVar5 != 0) goto LAB_00102f90;
+          lVar11 = 3;
+          puVar25 = puVar3;
+        }
+      }
+    }
+    pcVar12 = strchr(pcVar12,0x3d);
+    if (pcVar12 == (char *)0x0) {
+      pcVar12 = "Warning:no \'=\' found in %s\n";
+    }
+    else {
+      __src = (byte *)strchr(pcVar12,0x6d);
+      if (__src != (byte *)0x0) {
+        for (; uVar22 = (ulong)*__src, pbVar23 = __src,
+            *__src < 0x21 && (1L << (uVar22 & 0x3f) & 0x100000600U) != 0; __src = __src + 1) {
+          lVar14 = __strlen_chk(&local_170,0xff);
+          if ((byte *)((long)&local_170 + lVar14) <= __src) {
+            uVar22 = (ulong)*__src;
+            break;
+          }
+        }
+        while (((0x20 < (uint)uVar22 || ((1L << (uVar22 & 0x3f) & 0x100002601U) == 0)) &&
+               (lVar14 = __strlen_chk(&local_170,0xff),
+               pbVar23 < (byte *)((long)&local_170 + lVar14)))) {
+          uVar22 = (ulong)pbVar23[1];
+          pbVar23 = pbVar23 + 1;
+        }
+        *pbVar23 = 0;
+        strncpy(s_mt6620_ant_m3_cfg_00108018 + lVar11 * 0x110,(char *)__src,0xff);
+        *(undefined1 *)(lVar11 * 0x110 + 0x108117) = 0;
+        __android_log_print(4,"wmt_launcher","Info:key:%s value:%s\n",puVar25,
+                            s_mt6620_ant_m3_cfg_00108018 + lVar11 * 0x110);
+        goto LAB_00102f90;
+      }
+      pcVar12 = "Warning:no \'m\' found in %s\n";
+    }
+    __android_log_print(6,"wmt_launcher",pcVar12,0);
+  }
+LAB_00102f90:
+  memset(&local_170,0,0xff);
+  lVar11 = __fgets_chk(&local_170,0xff,pFVar10,0xff);
+  goto joined_r0x00102d50;
+switchD_00102b54_caseD_65:
+  pVar19 = launcher_display_usage();
+  goto LAB_00103c74;
+LAB_00102fb8:
+  __android_log_print(4,"wmt_launcher","NULL is returned, eighter EOF or error maybe found\n");
+  iVar5 = fclose(pFVar10);
+  if (iVar5 == 0) {
+    __android_log_print(4,"wmt_launcher","close %s succeed\n","/system/vendor/firmware/WMT.cfg");
+  }
+  else {
+    puVar15 = (undefined4 *)__errno();
+    __android_log_print(4,"wmt_launcher","close %s failed, errno:%d\n",
+                        "/system/vendor/firmware/WMT.cfg",*puVar15);
+  }
+  uVar8 = (uint)DAT_0010860c;
+  iVar5 = -1;
+  if ((g_chip_mode_info <= iVar4) && (iVar4 <= DAT_00108338)) {
+    iVar21 = 0;
+    iVar5 = 1;
+    iVar24 = 3;
+    do {
+      if ((&g_chip_mode_info)[(long)iVar5 * 0x44] < iVar4) {
+        iVar21 = iVar5 + 1;
+      }
+      else {
+        if ((&g_chip_mode_info)[(long)iVar5 * 0x44] <= iVar4) {
+          if (iVar5 < 0) goto LAB_001030f4;
+          __android_log_print(4,"wmt_launcher","index:%d, chip_id:0x%x\n",iVar5);
+          goto LAB_00103144;
+        }
+        iVar24 = iVar5 + -1;
+      }
+      iVar5 = iVar24 + iVar21;
+      if (iVar5 < 0) {
+        iVar5 = iVar5 + 1;
+      }
+      iVar5 = iVar5 >> 1;
+    } while (iVar21 <= iVar24);
+    iVar5 = -1;
+LAB_001030f4:
+    __android_log_print(6,"wmt_launcher","no supported chip_id found\n");
+  }
+LAB_00103144:
+  if (3 < uVar8 - 1) {
+    __android_log_print(4,"wmt_launcher","STP Mode is not set, fetching default mode...\n");
+    if (iVar5 < 0) {
+      DAT_0010860c._0_4_ = 0xffffffff;
+    }
+    else {
+      DAT_0010860c._0_4_ = *(uint *)((long)iVar5 * 0x110 + 0x10800c);
+    }
+  }
+  memset(&DAT_00108934,0,0x100);
+  if (-1 < iVar5) {
+    strncpy(&DAT_00108934,s_mt6620_ant_m3_cfg_00108018 + (long)iVar5 * 0x110,0xff);
+    sVar13 = strlen(s_mt6620_ant_m3_cfg_00108018 + (long)iVar5 * 0x110);
+    (&DAT_00108934)[sVar13] = 0;
+  }
+  uVar8 = (uint)DAT_0010860c;
+  uVar16 = __strlen_chk(&DAT_00108934,0x100);
+  __android_log_print(4,"wmt_launcher",
+                      "chip_id(0x%04x), default Mode(%d), strlen(g_wmt_cfg_name)(%zd), g_wmt_cfg_name(%s)\n"
+                      ,uVar9 & 0xffffffff,uVar8,uVar16,&DAT_00108934);
+  iVar4 = ioctl(DAT_00108500,0xc008a015,&DAT_00108934);
+  if (iVar4 != 0) {
+    pcVar12 = "ioctl failed";
+LAB_00103238:
+    __android_log_print(6,"wmt_launcher",pcVar12);
+  }
+  if ((uint)DAT_0010860c - 1 < 2) {
+    pcVar12 = strstr(&DAT_00108714,"tty");
+    if (pcVar12 == (char *)0x0) {
+      __android_log_print(6,"wmt_launcher","no uart name found in %s\n",&DAT_00108714);
+      pcVar20 = "use default uart %s\n";
+      pcVar12 = "ttyMT2";
+    }
+    else {
+      pcVar20 = "uart name %s\n";
+    }
+    __android_log_print(4,"wmt_launcher",pcVar20,pcVar12);
+    iVar4 = ioctl(DAT_00108500,0xc008a014,pcVar12);
+    if (iVar4 != 0) {
+      __android_log_print(6,"wmt_launcher","ioctl failed \n");
+    }
+  }
+LAB_001032f0:
+  ioctl(DAT_00108500,0x4004a005,
+        (ulong)(DAT_00108820 << 8 | (DAT_0010860c._4_4_ & 0xf) << 4 | (uint)DAT_0010860c & 0xf));
+  ioctl(DAT_00108500,0x4004a00d,0);
+  iVar4 = pthread_create(&g_thread_handle,(pthread_attr_t *)0x0,launcher_pwr_on_thread,&local_178);
+  if (iVar4 == 0) {
+    pcVar12 = "create pwr on thread ok\n";
+    uVar16 = 4;
+  }
+  else {
+    pcVar12 = "create pwr on thread fail\n";
+    uVar16 = 6;
+  }
+  __android_log_print(uVar16,"wmt_launcher",pcVar12);
+  uStack_158 = 0;
+  uStack_160 = 0;
+  local_170 = (_union_1457)0x1;
+  pcStack_168 = (code *)0x1;
+  sigaction(0x11,(sigaction *)&local_170,(sigaction *)0x0);
+  sigaction(0xd,(sigaction *)&local_170,(sigaction *)0x0);
+  pcStack_168 = sig_term;
+  sigaction(0xf,(sigaction *)&local_170,(sigaction *)0x0);
+  sigaction(2,(sigaction *)&local_170,(sigaction *)0x0);
+  pcStack_168 = sig_hup;
+  sigaction(1,(sigaction *)&local_170,(sigaction *)0x0);
+  iVar4 = local_178;
+  memset(&local_170,0,0x5c);
+  if (iVar4 < 1) {
+    __android_log_print(6,"wmt_launcher","invalid chip id(%d)\n",iVar4);
+  }
+  else {
+    uVar8 = iVar4 - 0x6620U >> 1;
+    if ((9 < (uVar8 | iVar4 << 0x1f)) || ((1 << (ulong)(uVar8 & 0x1f) & 0x311U) == 0)) {
+      memset(&DAT_00108a34,0,0x184);
+      iVar4 = property_get("persist.mtk.wcn.fwlog.status",&DAT_00108a44,0);
+      if (iVar4 < 0) {
+        __android_log_print(6,"wmt_launcher","get property(%s) failed ret:%d\n",
+                            "persist.mtk.wcn.fwlog.status",iVar4);
+      }
+      else if (iVar4 == 0) {
+        __android_log_print(4,"wmt_launcher","(%s) is not supported\n",
+                            "persist.mtk.wcn.fwlog.status");
+      }
+      else {
+        __android_log_print(4,"wmt_launcher","get property (%s) is %s\n",
+                            "persist.mtk.wcn.fwlog.status",&DAT_00108a44);
+      }
+      iVar4 = property_get("persist.mtk.wcn.dynamic.dump",&DAT_00108afc,0);
+      if (iVar4 < 0) {
+        __android_log_print(6,"wmt_launcher","get property(%s) failed ret:%d\n",
+                            "persist.mtk.wcn.dynamic.dump",iVar4);
+      }
+      else if (iVar4 == 0) {
+        __android_log_print(4,"wmt_launcher","(%s) is not supported\n",
+                            "persist.mtk.wcn.dynamic.dump");
+      }
+      else {
+        __android_log_print(4,"wmt_launcher","get property (%s) is %s\n",
+                            "persist.mtk.wcn.dynamic.dump",&DAT_00108afc);
+      }
+    }
+  }
+  iVar4 = property_get("service.wcn.formeta.ready",&local_170,0);
+  if ((iVar4 < 1) || (iVar5 = strcmp((char *)&local_170,"yes"), iVar5 == 0)) {
+    __android_log_print(4,"wmt_launcher","get property(%s) failed iRet:%d or property is %s\n",
+                        "service.wcn.formeta.ready",iVar4,&local_170);
+  }
+  sprintf((char *)&local_170,(char *)0x5c,&DAT_00104fdc,&DAT_001050b8);
+  iVar4 = property_set("service.wcn.formeta.ready",&local_170);
+  if (iVar4 == 0) {
+    __android_log_print(4,"wmt_launcher","set property(%s) to %s succeed\n",
+                        "service.wcn.formeta.ready",&local_170);
+  }
+  else {
+    __android_log_print(4,"wmt_launcher","set property(%s) to %s failed iRet:%d\n",
+                        "service.wcn.formeta.ready",&local_170,iVar4);
+  }
+  local_170._0_6_ = 0x4100000000;
+  local_170._0_4_ = DAT_00108500;
+joined_r0x00103594:
+  do {
+    if (DAT_00108508 != 0) goto LAB_00103ae4;
+    if (local_178 < 1) {
+      __android_log_print(6,"wmt_launcher","invalid chip id(%d)\n");
+    }
+    else {
+      uVar8 = local_178 - 0x6620U >> 1;
+      if (9 < (uVar8 | local_178 << 0x1f) || (1 << (ulong)(uVar8 & 0x1f) & 0x311U) == 0) {
+        local_174 = 0;
+        if ((_DAT_00108bb4 & 1) == 0) {
+          if ((DAT_00108a3c == 1) || (5 < DAT_00108a34)) {
+            iVar4 = strcmp(&DAT_00108aa0,"yes");
+            if (iVar4 == 0) {
+              local_174 = 1;
+              iVar4 = pthread_create(&g_thread_handle,(pthread_attr_t *)0x0,
+                                     launcher_set_fwdbg_thread,&local_174);
+              if (iVar4 != 0) {
+                __android_log_print(6,"wmt_launcher","create enable firmware dbglog thread fail\n");
+              }
+            }
+            else {
+              ioctl(DAT_00108500,0x8004a01d,0);
+            }
+            _DAT_00108bb4 = _DAT_00108bb4 | 1;
+            goto LAB_0010391c;
+          }
+          iVar4 = DAT_00108a34 + 1;
+          bVar1 = 5 < DAT_00108a34;
+          DAT_00108a34 = iVar4;
+          if (bVar1) goto LAB_0010391c;
+          iVar4 = property_get("persist.mtk.wcn.fwlog.status",&DAT_00108aa0,0);
+          if (iVar4 < 0) {
+            __android_log_print(6,"wmt_launcher","get property(%s) failed ret:%d\n",
+                                "persist.mtk.wcn.fwlog.status",iVar4);
+LAB_00103798:
+          }
+          else {
+            if (iVar4 == 0) {
+              __android_log_print(4,"wmt_launcher","(%s) is not supported\n",
+                                  "persist.mtk.wcn.fwlog.status");
+              goto LAB_00103798;
+            }
+            iVar4 = strcmp(&DAT_00108aa0,&DAT_00108a44);
+            if (iVar4 == 0) goto LAB_0010391c;
+            DAT_00108a3c = 1;
+          }
+        }
+        else {
+LAB_0010391c:
+        }
+        if ((DAT_00108bb4 >> 1 & 1) == 0) {
+          if ((DAT_00108a40 == 1) || (5 < DAT_00108a38)) {
+            if ((DAT_00108a40 == 1) &&
+               (iVar4 = ioctl(DAT_00108500,0x8008a01e,&DAT_00108b58), iVar4 < 0)) {
+              piVar18 = (int *)__errno();
+              pcVar12 = strerror(*piVar18);
+              __android_log_print(6,"wmt_launcher","ioctl error: err msg: %s\n",pcVar12);
+            }
+            _DAT_00108bb4 = _DAT_00108bb4 | 2;
+          }
+          else {
+            iVar4 = DAT_00108a38 + 1;
+            bVar1 = DAT_00108a38 < 6;
+            DAT_00108a38 = iVar4;
+            if (bVar1) {
+              iVar4 = property_get("persist.mtk.wcn.dynamic.dump",&DAT_00108b58,0);
+              if (iVar4 < 0) {
+                __android_log_print(6,"wmt_launcher","get property(%s) failed ret:%d\n",
+                                    "persist.mtk.wcn.dynamic.dump",iVar4);
+              }
+              else if (iVar4 == 0) {
+                __android_log_print(4,"wmt_launcher","(%s) is not supported\n",
+                                    "persist.mtk.wcn.dynamic.dump");
+              }
+              else {
+                iVar4 = strcmp(&DAT_00108b58,&DAT_00108afc);
+                if (iVar4 != 0) {
+                  DAT_00108a40 = 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    local_170.sa_handler = local_170.sa_handler & 0xffffffffffff;
+    iVar4 = __poll_chk(&local_170,1,2000,0x10);
+    uVar8 = DAT_00108500;
+    if (-1 < iVar4) {
+      if ((iVar4 != 0) && (((ulong)local_170.sa_handler & 0x1000000000000) != 0)) {
+        if ((int)DAT_00108500 < 0) goto LAB_00103afc;
+        memset(&DAT_0010850c,0,0x100);
+        iVar4 = __read_chk(uVar8,&DAT_0010850c,0xff,0x100);
+        if (iVar4 - 1U < 0xff) {
+          (&DAT_0010850c)[iVar4] = 0;
+          lVar11 = 0;
+          uVar9 = 1;
+          do {
+            pcVar12 = *(char **)((long)&g_cmd_hdr_table + lVar11);
+            sVar13 = strlen(pcVar12);
+            iVar5 = iVar4;
+            if ((int)sVar13 <= iVar4) {
+              iVar5 = (int)sVar13;
+            }
+            pcVar20 = (char *)(long)iVar5;
+            uVar8 = strncmp(pcVar12,&DAT_0010850c,(size_t)pcVar20);
+            auVar26._4_4_ = 0;
+            auVar26._0_4_ = uVar8;
+            auVar26._8_8_ = extraout_x1;
+            if (uVar8 == 0) {
+              auVar26 = (**(code **)((long)&PTR_cmd_hdr_baud_115k_00108450 + lVar11))(&DAT_0010860c)
+              ;
+              uVar9 = auVar26._0_8_ & 0xffffffff;
+            }
+            uVar22 = auVar26._8_8_;
+            pcVar12 = auVar26._0_8_;
+            lVar11 = lVar11 + 0x10;
+          } while (lVar11 != 0xb0);
+          if ((int)uVar9 == 1) {
+            snprintf(pcVar12,uVar22,pcVar20,"cmd not found");
+          }
+          else if ((int)uVar9 == 0) {
+            snprintf(pcVar12,uVar22,pcVar20,&DAT_001049ae);
+          }
+          else {
+            snprintf(pcVar12,uVar22,pcVar20,"resp_%d",uVar9);
+          }
+          __android_log_print(4,"wmt_launcher","cmd(%s) resp(%s)\n",&DAT_0010850c,&DAT_00108824);
+          uVar8 = DAT_00108500;
+          uVar16 = __strlen_chk(&DAT_00108824,0x100);
+          uVar6 = __write_chk(uVar8,&DAT_00108824,uVar16,0x100);
+          uVar7 = __strlen_chk(&DAT_00108824,0x100);
+          uVar8 = DAT_00108500;
+          if (uVar6 != uVar7) {
+            pFVar10 = *(FILE **)PTR_stderr_00107e28;
+            puVar17 = (uint *)__errno();
+            uVar7 = *puVar17;
+            pcVar12 = "";
+            if (uVar6 == 0xffffffff) {
+              pcVar12 = strerror(uVar7);
+            }
+            fprintf(pFVar10,"write resp(%d) fail: len(%d), errno(%d, %s)\n",(ulong)uVar8,
+                    (ulong)uVar6,(ulong)uVar7,pcVar12);
+          }
+        }
+        else {
+          __android_log_print(6,"wmt_launcher","POLLIN(%d) but read fail:%d\n",DAT_00108500,iVar4);
+        }
+      }
+      goto joined_r0x00103594;
+    }
+    piVar18 = (int *)__errno();
+    iVar5 = *piVar18;
+  } while (iVar5 == 4);
+  pcVar12 = strerror(iVar5);
+  __android_log_print(6,"wmt_launcher","poll error:%d errno:%d, %s\n",iVar4,iVar5,pcVar12);
+LAB_00103ae4:
+  if (-1 < (int)DAT_00108500) {
+    close(DAT_00108500);
+    DAT_00108500 = 0xffffffff;
+  }
+LAB_00103afc:
+  if (((uint)DAT_0010860c - 1 < 2) && (-1 < DAT_00108504)) {
+    local_174 = 0;
+    iVar4 = ioctl(DAT_00108504,0x5423,&local_174);
+    if (iVar4 < 0) {
+LAB_00103db4:
+      __android_log_print(6,"wmt_launcher","Can\'t restore line discipline");
+                    /* WARNING: Subroutine does not return */
+      exit(1);
+    }
+    close(DAT_00108504);
+    DAT_00108504 = -1;
+  }
+  pVar19 = g_thread_handle;
+  if (g_thread_handle != 0xffffffffffffffff) {
+    uVar8 = pthread_detach(g_thread_handle);
+    pVar19 = (pthread_t)uVar8;
+    g_thread_handle = 0xffffffffffffffff;
+  }
+  if (*(long *)(lVar2 + 0x28) == local_68) {
+    return 0;
+  }
+LAB_00103c74:
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail(pVar19);
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===main_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### snprintf size=176 (GhidraScript)  
+INFO  DecompFuncByName.java> ===snprintf_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+/* snprintf(char*, unsigned long pass_object_size1, char const*, ...) */
+
+void snprintf(char *param_1,ulong param_2,char *param_3,...)
+
+{
+  long lVar1;
+  undefined8 in_x3;
+  undefined8 in_x4;
+  undefined8 in_x5;
+  undefined8 in_x6;
+  undefined8 in_x7;
+  long lVar2;
+  undefined8 local_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined1 *local_70;
+  undefined1 **ppuStack_68;
+  undefined8 *puStack_60;
+  undefined8 uStack_58;
+  
+  lVar1 = tpidr_el0;
+  puStack_60 = &local_90;
+  lVar2 = *(long *)(lVar1 + 0x28);
+  ppuStack_68 = &local_70;
+  uStack_58 = 0xffffff80ffffffe0;
+  local_90 = in_x4;
+  uStack_88 = in_x5;
+  local_80 = in_x6;
+  uStack_78 = in_x7;
+  local_70 = (undefined1 *)register0x00000008;
+  __vsnprintf_chk(&DAT_00108824,0x100,0,0x100,in_x3,&local_70);
+  if (*(long *)(lVar1 + 0x28) == lVar2) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===snprintf_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### launcher_setup_uart_param size=1264 (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_setup_uart_param_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void launcher_setup_uart_param(int param_1,undefined4 *param_2)
+
+{
+  long lVar1;
+  int iVar2;
+  undefined8 uVar3;
+  int *piVar4;
+  char *pcVar5;
+  char *pcVar6;
+  long lVar7;
+  speed_t __speed;
+  undefined1 auStack_a8 [16];
+  uint local_98;
+  uint local_60;
+  uint local_58;
+  long local_38;
+  
+  lVar1 = tpidr_el0;
+  local_38 = *(long *)(lVar1 + 0x28);
+  if (param_2 == (undefined4 *)0x0) {
+    pcVar6 = "Invalid stpUartConfig";
+LAB_00103fe0:
+    __android_log_print(6,"wmt_launcher",pcVar6);
+    uVar3 = 0xfffffffe;
+    goto LAB_00103fec;
+  }
+  __android_log_print(4,"wmt_launcher","setup_uart_param %d %d\n",param_2[3],*param_2);
+  if (param_1 < 0) {
+    pcVar6 = "Invalid serial port";
+    goto LAB_00103fe0;
+  }
+  tcflush(param_1,2);
+  iVar2 = tcgetattr(param_1,(termios *)&local_60);
+  if (iVar2 < 0) {
+    __android_log_print(6,"wmt_launcher","Can\'t get port settings");
+    uVar3 = 0xfffffffd;
+    goto LAB_00103fec;
+  }
+  cfmakeraw((termios *)&local_60);
+  __android_log_print(4,"wmt_launcher","ti.c_cflag = 0x%08x\n",local_58);
+  local_58 = local_58 | 0x800;
+  __android_log_print(4,"wmt_launcher","CLOCAL = 0x%x\n",0x800);
+  __android_log_print(4,"wmt_launcher","(ori)ti.c_iflag = 0x%08x\n",local_60);
+  __android_log_print(4,"wmt_launcher","(ori)ti.c_cflag = 0x%08x\n",local_58);
+  __android_log_print(4,"wmt_launcher","stpuartconfig->fc= %d (0:none,sw,hw,linux)\n",*param_2);
+  switch(*param_2) {
+  case 0:
+    local_58 = local_58 & 0x7fffffff;
+    local_60 = local_60 & 0x7fffffff;
+    break;
+  case 1:
+    local_58 = local_58 & 0x7fffffff;
+    local_60 = local_60 | 0x80000000;
+    break;
+  case 2:
+    local_60 = local_60 | 0x1c00;
+  default:
+    local_58 = local_58 & 0x7fffffff;
+LAB_00104068:
+    local_60 = local_60 & 0x7fffffff;
+    break;
+  case 3:
+    local_58 = local_58 | 0x80000000;
+    goto LAB_00104068;
+  }
+  __android_log_print(4,"wmt_launcher","c_c CRTSCTS = 0x%16x\n",0x80000000);
+  __android_log_print(4,"wmt_launcher","c_i IXON = 0x%08x\n",0x400);
+  __android_log_print(4,"wmt_launcher","c_i IXOFF = 0x%08x\n",0x1000);
+  __android_log_print(4,"wmt_launcher","c_i IXANY = 0x%08x\n",0x800);
+  __android_log_print(4,"wmt_launcher","(aft)ti.c_iflag = 0x%08x\n",local_60);
+  __android_log_print(4,"wmt_launcher","(aft)ti.c_cflag = 0x%08x\n\n",local_58);
+  iVar2 = tcsetattr(param_1,0,(termios *)&local_60);
+  if (iVar2 < 0) {
+    __android_log_print(6,"wmt_launcher","Can\'t set port settings");
+    uVar3 = 0xfffffffc;
+    goto LAB_00103fec;
+  }
+  iVar2 = param_2[3];
+  __speed = 0x1000;
+  if (iVar2 < 2000000) {
+    if (0xe0fff < iVar2) {
+      if (iVar2 == 0xe1000) {
+        lVar7 = 1;
+      }
+      else if (iVar2 == 1000000) {
+        lVar7 = 2;
+      }
+      else {
+        if (iVar2 != 0x119400) goto LAB_00104280;
+        lVar7 = 3;
+      }
+      goto LAB_00104270;
+    }
+    if (iVar2 != 0x1000) {
+      if (iVar2 == 0x1c200) {
+        lVar7 = 0;
+        goto LAB_00104270;
+      }
+      goto LAB_00104280;
+    }
+    __android_log_print(6,"wmt_launcher","%s: unsupported non-standard baudrate: %d -> 0x%08x\n",
+                        "set_speed",0x1000,0x1000);
+  }
+  else {
+    if (iVar2 < 3000000) {
+      if (iVar2 == 2000000) {
+        lVar7 = 4;
+      }
+      else {
+        if (iVar2 != 2500000) goto LAB_00104280;
+        lVar7 = 5;
+      }
+    }
+    else if (iVar2 == 3000000) {
+      lVar7 = 6;
+    }
+    else if (iVar2 == 3500000) {
+      lVar7 = 7;
+    }
+    else {
+      if (iVar2 != 4000000) goto LAB_00104280;
+      lVar7 = 8;
+    }
+LAB_00104270:
+    __speed = (&DAT_00105da8)[lVar7 * 2];
+LAB_00104280:
+    iVar2 = ioctl(param_1,0x541e,auStack_a8);
+    if (iVar2 < 0) {
+      piVar4 = (int *)__errno();
+      pcVar5 = strerror(*piVar4);
+      pcVar6 = "%s: BAUD: error to get the serial_struct info:%s\n";
+    }
+    else {
+      local_98 = local_98 & 0xffffdfcf | 0x2000;
+      iVar2 = ioctl(param_1,0x541f,auStack_a8);
+      if (-1 < iVar2) {
+        cfsetospeed((termios *)&local_60,__speed);
+        cfsetispeed((termios *)&local_60,__speed);
+        iVar2 = tcsetattr(param_1,0,(termios *)&local_60);
+        if (-1 < iVar2) {
+          tcflush(param_1,2);
+          uVar3 = 0;
+          goto LAB_00103fec;
+        }
+        goto LAB_00104350;
+      }
+      piVar4 = (int *)__errno();
+      pcVar5 = strerror(*piVar4);
+      pcVar6 = "%s: BAUD: error to set serial_struct:%s\n";
+    }
+    __android_log_print(6,"wmt_launcher",pcVar6,"set_speed",pcVar5);
+  }
+LAB_00104350:
+  __android_log_print(6,"wmt_launcher","Can\'t set initial baud rate");
+  uVar3 = 0xfffffffb;
+LAB_00103fec:
+  if (*(long *)(lVar1 + 0x28) != local_38) {
+                    /* WARNING: Subroutine does not return */
+    __stack_chk_fail(uVar3);
+  }
+  return;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_setup_uart_param_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### sprintf size=172 (GhidraScript)  
+INFO  DecompFuncByName.java> ===sprintf_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+/* sprintf(char*, char const* pass_object_size1, ...) */
+
+void sprintf(char *param_1,char *param_2,...)
+
+{
+  long lVar1;
+  undefined8 in_x2;
+  undefined8 in_x3;
+  undefined8 in_x4;
+  undefined8 in_x5;
+  undefined8 in_x6;
+  undefined8 in_x7;
+  long lVar2;
+  undefined1 auStack_a0 [8];
+  undefined8 local_98;
+  undefined8 local_90;
+  undefined8 uStack_88;
+  undefined8 local_80;
+  undefined8 uStack_78;
+  undefined1 *local_70;
+  undefined1 **ppuStack_68;
+  undefined1 *puStack_60;
+  undefined8 uStack_58;
+  
+  lVar1 = tpidr_el0;
+  puStack_60 = auStack_a0;
+  lVar2 = *(long *)(lVar1 + 0x28);
+  ppuStack_68 = &local_70;
+  uStack_58 = 0xffffff80ffffffd8;
+  local_98 = in_x3;
+  local_90 = in_x4;
+  uStack_88 = in_x5;
+  local_80 = in_x6;
+  uStack_78 = in_x7;
+  local_70 = (undefined1 *)register0x00000008;
+  __vsprintf_chk(param_1,0,param_2,in_x2,&local_70);
+  if (*(long *)(lVar1 + 0x28) == lVar2) {
+    return;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===sprintf_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### launcher_display_usage size=84 (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_display_usage_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+void launcher_display_usage(void)
+
+{
+  long lVar1;
+  
+  lVar1 = 0;
+  do {
+    __android_log_print(4,"wmt_launcher",&DAT_00104d80,
+                        *(undefined8 *)
+                         ((long)&PTR_s_MTK_WCN_combo_tool_set__version_1_00107b10 + lVar1));
+    lVar1 = lVar1 + 8;
+  } while (lVar1 != 0xa0);
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_display_usage_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### launcher_pwr_on_thread size=232 (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_pwr_on_thread_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 launcher_pwr_on_thread(undefined4 *param_1)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  pthread_t __target_thread;
+  int iVar3;
+  
+  uVar1 = *param_1;
+  __target_thread = pthread_self();
+  pthread_setname_np(__target_thread,"pwr_on_conn");
+  __android_log_print(4,"wmt_launcher","enter power on connsys flow");
+  iVar3 = -1;
+  do {
+    iVar2 = ioctl(DAT_00108500,0x4004a007,1);
+    if (iVar2 == 0) break;
+    iVar3 = iVar3 + 1;
+    ioctl(DAT_00108500,0x4004a007,0);
+    __android_log_print(4,"wmt_launcher","power on %x failed, retrying, retry counter:%d\n",uVar1,
+                        iVar3);
+    usleep(1000000);
+  } while (iVar3 < 0x13);
+  pthread_detach(g_thread_handle);
+  g_thread_handle = 0xffffffffffffffff;
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_pwr_on_thread_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### sig_term size=84 (GhidraScript)  
+INFO  DecompFuncByName.java> ===sig_term_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+int sig_term(uint param_1)
+
+{
+  int iVar1;
+  
+  fprintf(*(FILE **)PTR_stderr_00107e28,"sig_term...(%d)\n",(ulong)param_1);
+  DAT_00108508 = 1;
+  iVar1 = ioctl(DAT_00108500,0x4004a00d,1);
+  return iVar1;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===sig_term_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### sig_hup size=32 (GhidraScript)  
+INFO  DecompFuncByName.java> ===sig_hup_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+int sig_hup(ulong param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = fprintf(*(FILE **)PTR_stderr_00107e28,"sig_hup...(%d)\n",param_1 & 0xffffffff);
+  return iVar1;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===sig_hup_END=== (GhidraScript)  
+INFO  DecompFuncByName.java> ### launcher_set_fwdbg_thread size=160 (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_set_fwdbg_thread_START=== (GhidraScript)  
+INFO  DecompFuncByName.java> 
+undefined8 launcher_set_fwdbg_thread(uint *param_1)
+
+{
+  uint uVar1;
+  int iVar2;
+  pthread_t __target_thread;
+  int *piVar3;
+  char *pcVar4;
+  
+  uVar1 = *param_1;
+  __target_thread = pthread_self();
+  pthread_setname_np(__target_thread,"dump_fwemi_log");
+  __android_log_print(4,"wmt_launcher","dump firmware dbg log from emi buffer ");
+  iVar2 = ioctl(DAT_00108500,0x8004a01d,(ulong)uVar1);
+  if (iVar2 < 0) {
+    piVar3 = (int *)__errno();
+    pcVar4 = strerror(*piVar3);
+    __android_log_print(4,"wmt_launcher","ioctl error: err msg: %s\n",pcVar4);
+    pthread_detach(g_thread_handle);
+    g_thread_handle = 0xffffffffffffffff;
+  }
+  return 0;
+}
+
+ (GhidraScript)  
+INFO  DecompFuncByName.java> ===launcher_set_fwdbg_thread_END=== (GhidraScript)  
+INFO  REPORT: Save succeeded for processed file: /wmt_launcher_bin (HeadlessAnalyzer)  

@@ -1,0 +1,9 @@
+mtk_pmx_set_mux
+mtk_pinctrl_set_gpio_value
+mtk_pinctrl_set_gpio_direction
+goodix_chip_reset
+goodix_chip_detect
+hw_ts_power_switch
+mtk_btif_probe
+ccci_platform_init
+ccci_md_start

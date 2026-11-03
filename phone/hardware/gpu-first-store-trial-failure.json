@@ -1,0 +1,50 @@
+{
+  "status": "FIRST native USC store trial FAILED; no shader readback proof",
+  "staging": "Native compile, bundleSHA checks and10page staging/cleanupPASS before explicit submission",
+  "submission": "Legacy129/2 accepted exact132B bridge+120B firmware packet",
+  "observed": {
+    "ufo_completion": "0x87654321 observed",
+    "output": "0xdeadbeef unchanged",
+    "returncode": 1,
+    "HWR_before": 0,
+    "HWR_after": 1,
+    "CRR_after": 0,
+    "Driver_after": "OK",
+    "Firmware_after": "OK",
+    "cleanup": "Completed; no retained compute trial process"
+  },
+  "diagnostic": {
+    "dm": "CDM recovery1; innocent lockup",
+    "event_status_hex": "0x200",
+    "mmu_status_hex": "0x41",
+    "request_hex": "0x00004bf800000000",
+    "request_decoded": "TA TE Region Header writing0xf800000000",
+    "pc_physical_hex": "0x4263d000",
+    "meaning": "Matches BRN65273 MMU_INIA heap base, missing from10page client allocation. HWR completion can updateUFO without shader store; UFO alone NOT shaderPASS."
+  },
+  "exact_stock_correlation": {
+    "context_creator": "PVRSRVCreateDeviceMemContext ELF0x18efc calls helper0x1904c for MMU INIA BRN65273 and MMU INIB BRN65273",
+    "helper": "Allocates5bytes,512alignment,flags3 then GPUmaps; ARM64 immediate values independently checked at0x19090..0x190a0",
+    "heap_bases": [
+      "0xf800000000",
+      "0xf900000000"
+    ],
+    "hypothesis": "Missing init buffers likely explain observed first fault; cannot conclude shaderISA valid until actual corrected run"
+  },
+  "next": "Add owned mappings at both queriedMMUinit heap bases, source-equivalent alignment/coverage, stage withoutkick then one controlled test; baselineHWR1 must remain fixed/checked. No blind retries.",
+  "bundle_manifest": {
+    "compute-pds-candidate.bin": {
+      "bytes": 4096,
+      "sha256": "fdc27d91472f3721e4b911f099d55d8f0b7d85316da0f9151337ac84a1022006"
+    },
+    "compute-usc-candidate.bin": {
+      "bytes": 4096,
+      "sha256": "e999eb707e2f4e116b064d2af4da8e16c4d93f3dc9f6b8dc7f6f2adf193a4827"
+    },
+    "compute-stream-candidate.bin": {
+      "bytes": 60,
+      "sha256": "271dcb5fd06f70a64cc3cb9f7ee5e13d4b604bfd7e79de3b308047ac1e203108"
+    }
+  },
+  "hardware_scope": "No boot write/restart; nativeCPU/OpenCLgeneratedUSC only, no Bionic/HAL/vendorCPUexecution."
+}

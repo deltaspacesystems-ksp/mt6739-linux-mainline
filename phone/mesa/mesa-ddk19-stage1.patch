@@ -1,0 +1,162 @@
+diff --git a/meson.options b/meson.options
+index 9a132f8..7aae935 100644
+--- a/meson.options
++++ b/meson.options
+@@ -865,3 +865,5 @@ option(
+   type : 'feature',
+   description : 'Use SPIRV-Tools for dumping SPIR-V for debugging purposes (required by CLC)'
+ )
++
++option('imagination-mfw-ddk19', type : 'boolean', value : false, description : 'Experimental fixed DURA-L21 DDK1.9 translation; incomplete winsys')
+diff --git a/src/imagination/vulkan/meson.build b/src/imagination/vulkan/meson.build
+index bab40be..356c0bb 100644
+--- a/src/imagination/vulkan/meson.build
++++ b/src/imagination/vulkan/meson.build
+@@ -115,6 +115,9 @@ if with_imagination_srv
+     'winsys/pvrsrvkm/pvr_arch_srv_job_transfer.c',
+   )
+   pvr_flags += '-DPVR_SUPPORT_SERVICES_DRIVER'
++  if get_option('imagination-mfw-ddk19')
++    pvr_flags += '-DPVR_MFW_DDK19'
++  endif
+ endif
+ 
+ rogue_files = files(
+diff --git a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.c b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.c
+index 5dde6f5..8b5987a 100644
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.c
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.c
+@@ -46,6 +46,8 @@
+              (bridge_ret).error,                        \
+              strerror(errno))
+ 
++#include "pvr_srv_ddk19.h"
++
+ static int pvr_srv_bridge_call(int fd,
+                                uint8_t bridge_id,
+                                uint32_t function_id,
+@@ -54,6 +56,9 @@ static int pvr_srv_bridge_call(int fd,
+                                void *output,
+                                uint32_t output_buffer_size)
+ {
++#ifdef PVR_MFW_DDK19
++   return pvr_srv_ddk19_bridge_call(fd, bridge_id, function_id, input, input_buffer_size, output, output_buffer_size);
++#else
+    struct drm_srvkm_cmd cmd = {
+       .bridge_id = bridge_id,
+       .bridge_func_id = function_id,
+@@ -70,10 +75,15 @@ static int pvr_srv_bridge_call(int fd,
+    VG(VALGRIND_MAKE_MEM_DEFINED(output, output_buffer_size));
+ 
+    return 0U;
++#endif
+ }
+ 
+ VkResult pvr_srv_init_module(int fd, enum pvr_srvkm_module_type module)
+ {
++#ifdef PVR_MFW_DDK19
++   /*1.9 initializes services on render-node OPEN, no INIT ioctl. */
++   return module == PVR_SRVKM_MODULE_TYPE_SERVICES ? VK_SUCCESS : VK_ERROR_FEATURE_NOT_PRESENT;
++#else
+    struct drm_srvkm_init_data init_data = { .init_module = module };
+ 
+    int ret = drmIoctl(fd, DRM_IOCTL_SRVKM_INIT, &init_data);
+@@ -85,6 +95,7 @@ VkResult pvr_srv_init_module(int fd, enum pvr_srvkm_module_type module)
+    }
+ 
+    return VK_SUCCESS;
++#endif
+ }
+ 
+ VkResult pvr_srv_set_timeline_sw_only(int sw_timeline_fd)
+diff --git a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.h b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.h
+index 0f2b4c1..db32146 100644
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_bridge.h
+@@ -133,6 +133,13 @@
+ #define SUPPORT_BUFFER_SYNC_SET_OFFSET BITFIELD_BIT(11U)
+ #define OPTIONS_BIT31 BITFIELD_BIT(31U)
+ 
++#ifdef PVR_MFW_DDK19
++#define RGX_BUILD_OPTIONS 0x80000010U
++#define PVR_SRV_VERSION_MAJ 1U
++#define PVR_SRV_VERSION_MIN 9U
++#define PVR_SRV_VERSION 0x00010009U
++#define PVR_SRV_VERSION_BUILD 4893595
++#else
+ #define RGX_BUILD_OPTIONS                       \
+    (SUPPORT_RGX_SET_OFFSET | DEBUG_SET_OFFSET | \
+     SUPPORT_BUFFER_SYNC_SET_OFFSET | OPTIONS_BIT31)
+@@ -146,6 +153,8 @@
+ 
+ #define PVR_SRV_VERSION_BUILD 6256262
+ 
++#endif
++
+ /*! This flags gets set if the client is 64 Bit compatible. */
+ #define PVR_SRV_FLAGS_CLIENT_64BIT_COMPAT BITFIELD_BIT(5U)
+ 
+diff --git a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+new file mode 100644
+index 0000000..5d43b61
+--- /dev/null
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -0,0 +1,58 @@
++/* SPDX-License-Identifier: MIT
++ * Experimental fixed-platform DDK1.9 bridge translation.
++ * Wire fields checked against generated1.9 headers and native live probes.
++ * This does NOT provide a complete winsys or a complete GPU device profile.
++ */
++#ifdef PVR_MFW_DDK19
++struct mfw19_connect_in { uint32_t flags, options, version, build; } PACKED;
++struct mfw19_connect_out { uint8_t arch; uint32_t caps,pvr,rgx,error; } PACKED;
++_Static_assert(sizeof(struct mfw19_connect_in)==16,"DDK1.9 CONNECT input");
++_Static_assert(sizeof(struct mfw19_connect_out)==17,"DDK1.9 CONNECT output");
++_Static_assert(sizeof(struct drm_srvkm_cmd)==32,"DDK1.9 envelope");
++static int
++pvr_srv_ddk19_bridge_call(int fd, uint8_t bridge, uint32_t function,
++                        void *input, uint32_t insize, void *output, uint32_t outsize)
++{
++ struct drm_srvkm_cmd cmd={.bridge_id=bridge,.bridge_func_id=function};
++ if(bridge==PVR_SRV_BRIDGE_SRVCORE && function==PVR_SRV_BRIDGE_SRVCORE_CONNECT){
++  struct pvr_srv_bridge_connect_cmd *modern=input;
++  struct pvr_srv_bridge_connect_ret *converted=output;
++  struct mfw19_connect_in legacy;
++  struct mfw19_connect_out result={.error=UINT32_MAX};
++  drmVersionPtr version;
++  if(insize!=sizeof(*modern)||outsize!=sizeof(*converted)){errno=EINVAL;return -1;}
++  version=drmGetVersion(fd);
++  if(!version){errno=ENODEV;return -1;}
++  bool compatible=version->name && !strcmp(version->name,"pvr") && version->version_major==1 && version->version_minor==9 && version->version_patchlevel==4893595;
++  drmFreeVersion(version);
++  if(!compatible){errno=ENOTSUP;return -1;}
++  if(modern->flags!=32 || modern->build_options!=0x80000010 || modern->DDK_version!=0x10009 || modern->DDK_build!=4893595){errno=EINVAL;return -1;}
++  legacy=(struct mfw19_connect_in){.flags=modern->flags,.options=modern->build_options,.version=modern->DDK_version,.build=modern->DDK_build};
++  cmd.in_data_ptr=(uintptr_t)&legacy;cmd.out_data_ptr=(uintptr_t)&result;
++  cmd.in_data_size=sizeof(legacy);cmd.out_data_size=sizeof(result);
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(rc)return rc;
++  memset(converted,0,sizeof(*converted));
++  converted->error=result.error==0?PVR_SRV_OK:PVR_SRV_ERROR_BRIDGE_CALL_FAILED;
++  converted->capability_flags=result.caps;converted->kernel_arch=result.arch;
++  /* Explicit build target from measured DURA-L21; old CONNECT has no BVNC.
++   * This is target selection, never represented as a fresh hardware query.
++   * Mesa still rejects the target until a complete device profile exists. */
++  converted->bvnc=UINT64_C(0x0016003100150010);
++  return 0;
++ }
++ if(bridge==PVR_SRV_BRIDGE_SRVCORE && function==PVR_SRV_BRIDGE_SRVCORE_DISCONNECT){
++  uint32_t legacy_in=0,legacy_out=UINT32_MAX;
++  struct pvr_srv_bridge_disconnect_ret *converted=output;
++  if(insize!=0||outsize!=sizeof(*converted)){errno=EINVAL;return -1;}
++  cmd.in_data_ptr=(uintptr_t)&legacy_in;cmd.out_data_ptr=(uintptr_t)&legacy_out;
++  cmd.in_data_size=4;cmd.out_data_size=4;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc)converted->error=legacy_out==0?PVR_SRV_OK:PVR_SRV_ERROR_BRIDGE_CALL_FAILED;
++  return rc;
++ }
++ /* Never send an unchecked1.17 command/layout to a1.9 kernel. */
++ errno=ENOTSUP;
++ return -1;
++}
++#endif

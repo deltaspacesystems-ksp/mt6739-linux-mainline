@@ -1,0 +1,92 @@
+{
+  "scope": "offline verified register bit-pack components, NOT complete packet or GPU profile",
+  "stock_helpers": {
+    "ELF_0x30044_mode1": {
+      "operation": "round up dwords*4 to64 bytes, shift11 and mask0x000ff800",
+      "ARM64_checked": true,
+      "public_match": "RGX_CR_CDM_CONTEXT_PDS1_COMMON_SIZE_SHIFT/CLRMSK, non-TEMPSIZE8 layout",
+      "meaning": "common-size field, not unified-store hardware depth"
+    },
+    "ELF_0x2f650": {
+      "observed_allocations": {
+        "shared_state_buffer_bytes": 16432,
+        "PDS_store_bytes": 256,
+        "PDS_load_bytes": 256,
+        "PDS_fence_terminate_bytes": 256,
+        "USC_store_bytes": 512,
+        "USC_load_bytes": 512
+      },
+      "capacity_warning": "0x4030 allocation does NOT establish common_store_size_in_dwords/unified_store_depth/usc_slots"
+    },
+    "ELF_0x2fa30": "diagnostic strings distinguish RGXGenerateContextLoadUSC / store generation; code/data addresses packed as public PDS0 fields",
+    "ELF_0x2ff10": "diagnostic strings identify RGXGenerateFenceTerminatePDS / ContextSwitchFenceTermTask"
+  },
+  "native_header": "phone/mesa/mfw_cdm19_pack.h",
+  "host_tests": "ASan/UBSan8177 common sizes plus16192 unified/data pairs each for STORE/LOAD, fence-mode and rejection cases PASS; public register staticasserts; ARM64-Werror compilePASS",
+  "arm64_compile": "PASS -Wall -Wextra -Werror",
+  "constraints": [
+    "heap-relative32bit aligned PDS offsets only; not full40bit GPU VA",
+    "reject unrepresentable common-size rather than truncating",
+    "reject merging into occupied common-size field",
+    "non-TEMPSIZE8 only"
+  ],
+  "phone_changed": false,
+  "shader_execution": false,
+  "state_task_controls": {
+    "store_base": "0x28000001",
+    "load_base": "0x00100000",
+    "fence_terminate_base": "0x28100001",
+    "unified_units_field": "bits21..26, value0..63; unit meaning is not inferred as physical capacity",
+    "pds_data_field": "ceil(data_dwords/4) inbits1..6, maximum252dwords",
+    "evidence": "stock helper2fa30 CDM branch, load/store diagnostic strings, public non-TEMPSIZE8 PDS1 masks"
+  },
+  "context_role_map": [
+    {
+      "old_packet_offset": 56,
+      "context_offset": "0xc8",
+      "role": "compute-state buffer base",
+      "modern_source": "per-kick regs.cdm_context_state_base_addr"
+    },
+    {
+      "old_packet_offset": 64,
+      "context_offset": "0xd0",
+      "role": "store PDS0",
+      "modern_source": "static ctx_switch_regs.cdm_context_pds0"
+    },
+    {
+      "old_packet_offset": 72,
+      "context_offset": "0xd8",
+      "role": "store PDS1",
+      "modern_source": "static ctx_switch_regs.cdm_context_pds1"
+    },
+    {
+      "old_packet_offset": 80,
+      "context_offset": "0xe0",
+      "role": "fence/terminate PDS0",
+      "modern_source": "static ctx_switch_regs.cdm_terminate_pds"
+    },
+    {
+      "old_packet_offset": 88,
+      "context_offset": "0xe8",
+      "role": "fence/terminate PDS1",
+      "modern_source": "static ctx_switch_regs.cdm_terminate_pds1"
+    },
+    {
+      "old_packet_offset": 96,
+      "context_offset": "0xf0",
+      "role": "load/resume PDS0",
+      "modern_source": "static ctx_switch_regs.cdm_resume_pds0"
+    },
+    {
+      "old_packet_offset": 104,
+      "context_offset": "0xf8 OR per-kick common-size field",
+      "role": "load/resume PDS1",
+      "modern_source": "per-kick regs.cdm_resume_pds1"
+    }
+  ],
+  "mapping_limitations": [
+    "role correspondence based on stock creation call sequence and helper diagnostics/flags, not firmware tracing",
+    "modern alternate B-state words have no proven old equivalent; must not silently drop",
+    "full packet and state program contents still unresolved; no hardware dispatch"
+  ]
+}

@@ -1,0 +1,6 @@
+// Optional include AFTER the existing DURA-L21 DT, not a standalone tree.
+// Inherits SPI202/LEVEL_LOW and parent sysirq from stock; do not bypass sysirq.
+&{/disp_rdma0@1400b000} {
+ compatible = "microfw,mt6739-rdma-observer";
+ microfw,observe-lk-scanout;
+};

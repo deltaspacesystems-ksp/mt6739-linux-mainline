@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "transition": "v62/#48 -> same v62/#48 using kexec_file_load",
+  "kernel_load": "rc0, kexec_loaded1 before execution",
+  "input_image_sha256": "479064c2529c1d1b4adb1cc0acde1277843c8c9cdf650f42e8d972d668f2d54e",
+  "initramfs_sha256": "77d123dd73311f263dd971b93f6e6575f55fd86778d1eb2337a10fdcbec3e87c",
+  "execution": "sync, rootfs remount read-only, kexec -e",
+  "post_boot_proof": [
+    "/proc/device-tree/chosen/linux,booted-from-kexec exists",
+    "uptime36.56s; previous RAM trial files absent",
+    "kexec_loaded0",
+    "4 processors activated",
+    "USB RNDIS and native shell returned",
+    "rootfs p46 mounted rw; Charging USBonline1"
+  ],
+  "gpu": "disabled before and after",
+  "boot_partition_write": "none during kexec trial",
+  "limitations": [
+    "Same kernel/DT only; different kernel and active GPU handover untested",
+    "Panel visual state not verified",
+    "Framework modules not autoloaded after boot"
+  ],
+  "post_boot_battery": {
+    "voltage_uv": 4250061,
+    "temp_deci_c": 268
+  }
+}

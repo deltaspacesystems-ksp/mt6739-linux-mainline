@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-25",
+  "method": "vendor p41 ext4 ro,noload; only known GPU ELF headers and DT_NEEDED; no execution or copying of blobs",
+  "variants": [
+    {
+      "path": "/lib/egl/libEGL_mtk.so",
+      "class": "ELF32",
+      "machine": 40
+    },
+    {
+      "path": "/lib64/egl/libEGL_mtk.so",
+      "class": "ELF64",
+      "machine": 183
+    },
+    {
+      "path": "/lib/egl/libGLESv2_mtk.so",
+      "class": "ELF32",
+      "machine": 40
+    },
+    {
+      "path": "/lib64/egl/libGLESv2_mtk.so",
+      "class": "ELF64",
+      "machine": 183
+    }
+  ],
+  "gles2_needed": [
+    "libIMGegl.so",
+    "libsrv_um.so",
+    "libusc.so",
+    "libglslcompiler.so",
+    "libm.so",
+    "libgpu_aux.so",
+    "libgralloc_extra.so",
+    "libsync.so",
+    "libc.so"
+  ],
+  "imgegl_additional_needed": [
+    "libged.so",
+    "libhardware.so",
+    "libz.so",
+    "libdrm.so"
+  ],
+  "kernel_compat_enabled": false,
+  "conclusion": "64-bit vendor libraries exist; libc/HAL/vendor dependencies prevent treating them as native Alpine drop-in libraries. No acceleration tested."
+}

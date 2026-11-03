@@ -1,0 +1,38 @@
+{
+  "kernel": "v61/#46",
+  "method": "read-only live DT reg/size properties, boot reserved-memory messages and /proc/iomem",
+  "regions": [
+    {
+      "name": "consys-reserve-memory",
+      "base": "0xbfe00000",
+      "bytes": 2097152,
+      "no_map": true,
+      "placement": "dynamic DT allocation, resolved by Linux boot log; not fixed reg"
+    },
+    {
+      "name": "mblock-9-ccci",
+      "base": "0x6c000000",
+      "bytes": 1048576,
+      "no_map": true
+    },
+    {
+      "name": "mblock-10-ccci",
+      "base": "0x5c000000",
+      "bytes": 268435456,
+      "no_map": false
+    },
+    {
+      "name": "mblock-11-ccci",
+      "base": "0x8e000000",
+      "bytes": 12582912,
+      "no_map": true
+    }
+  ],
+  "allocator_exclusion": "all four ranges reported reserved in live iomem",
+  "limitations": [
+    "Does not establish firmware EMI address compatibility or successful CONNSYS/modem initialization",
+    "Dynamic CONNSYS reservation must be reconciled with stock driver and EMI/remapping before DMA",
+    "No Wi-Fi netdev, Bluetooth class or remoteproc class currently present"
+  ],
+  "writes": "none; no reboot, firmware launch or NVRAM access"
+}

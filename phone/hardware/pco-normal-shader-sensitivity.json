@@ -1,0 +1,788 @@
+{
+  "scope": "offline synthetic sensitivity sweep, normal shaders internal=false; NOT hardware profile or validation",
+  "target_ident_only": "22.49.21.16",
+  "cases": [
+    {
+      "stage": "compute",
+      "synthetic_depth": 16,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 16,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 16,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 16,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 16,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 32,
+      "synthetic_slots": 4,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 32,
+      "synthetic_slots": 8,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 32,
+      "synthetic_slots": 16,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 32,
+      "synthetic_slots": 32,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 32,
+      "synthetic_slots": 64,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 64,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 64,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 64,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 64,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 64,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 128,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 128,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 128,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 128,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 128,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 208,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 208,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 208,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 208,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 208,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 256,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 256,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 256,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 256,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "compute",
+      "synthetic_depth": 256,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 128,
+      "sha256": "773b3dba384506c1411ff1d08bedce0ad955e57e990edc59ee25c5e20aa67582"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 16,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 16,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 16,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 16,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 16,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 32,
+      "synthetic_slots": 4,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 32,
+      "synthetic_slots": 8,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 32,
+      "synthetic_slots": 16,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 32,
+      "synthetic_slots": 32,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 32,
+      "synthetic_slots": 64,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 64,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 64,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 64,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 64,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 64,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 128,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 128,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 128,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 128,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 128,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 208,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 208,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 208,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 208,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 208,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 256,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 256,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 256,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 256,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "vertex",
+      "synthetic_depth": 256,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 176,
+      "sha256": "0aa5b981e894dfa6964784bf932ffbf931c06a53d6771777e0d2fd378df42f84"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 16,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 16,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 16,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 16,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 16,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949",
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 32,
+      "synthetic_slots": 4,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 32,
+      "synthetic_slots": 8,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 32,
+      "synthetic_slots": 16,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 32,
+      "synthetic_slots": 32,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 32,
+      "synthetic_slots": 64,
+      "rc": -6,
+      "bytes": 0,
+      "sha256": null,
+      "validity": "INVALID synthetic capacity; underflow at16 or zero capacity at32"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 64,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 64,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 64,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 64,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 64,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 128,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 128,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 128,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 128,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 128,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 208,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 208,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 208,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 208,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 208,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 256,
+      "synthetic_slots": 4,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 256,
+      "synthetic_slots": 8,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 256,
+      "synthetic_slots": 16,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 256,
+      "synthetic_slots": 32,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    },
+    {
+      "stage": "fragment",
+      "synthetic_depth": 256,
+      "synthetic_slots": 64,
+      "rc": 0,
+      "bytes": 440,
+      "sha256": "fd6b51d683292d22651611c4ff8bd2058af0ecd0f6b6004ab5f9ea7a184e5949"
+    }
+  ],
+  "stage_summary": {
+    "compute": {
+      "successes": 25,
+      "cases": 30,
+      "unique_success_binaries": 1,
+      "sizes": [
+        128
+      ]
+    },
+    "vertex": {
+      "successes": 25,
+      "cases": 30,
+      "unique_success_binaries": 1,
+      "sizes": [
+        176
+      ]
+    },
+    "fragment": {
+      "successes": 25,
+      "cases": 30,
+      "unique_success_binaries": 1,
+      "sizes": [
+        440
+      ]
+    }
+  },
+  "hardware_executed": false,
+  "warning": "unknown features/errata unresolved; sampled-limit invariance does not establish target compatibility; no upload or dispatch",
+  "correction_2026_10_27": "Depth16 cases invalid: unsigned subtraction underflow in rogue_get_min_attr_in_usrm_lines. Depth32 gives zero temp capacity. Prior25/30 success count is historical, NOT25 valid cases. Depth>=64 successes remain offline synthetic only.",
+  "new_probe_guard": "Reject nonzero synthetic depth when floor(depth*8/128)<=2; tested16/32 exit2. Do not infer physical capacity from this guard.",
+  "new_compute_metadata": "Synthetic64/4:128B,temps5,vtxins1,shareds0 via pco_get_precomp_data; no hardware execution",
+  "slot_dependency": "For explicit workgroup1 and no barriers, rogue_max_wg_temps reads usc_slots for max-total-instance assertion; multi-slot barrier arithmetic not entered. This narrows this helper only, not all compiler dependencies."
+}

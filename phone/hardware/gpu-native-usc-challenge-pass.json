@@ -1,0 +1,26 @@
+{
+  "status": "LIVE independent shader value/address challenge PASS",
+  "changes": {
+    "shader_literal": "0xa1b2c3d4 instead0x12345678",
+    "GPU_store_address": "0x65c0000040 instead0x65c0000000",
+    "output_word": 16,
+    "shader_recompiled": true,
+    "shader_sha256": "039a121c3de88b59e5d5c98798128a1889ed38ff939ff36d179458ab8bbae770",
+    "USCimage_sha256": "59e047bd5925634c59a303f3993ed98567f9e42bc2a56af9358bef48825bd113"
+  },
+  "observed": {
+    "output": "a1b2c3d4",
+    "UFO": "87654321",
+    "guard_words": 1023,
+    "returncode": 0,
+    "complete_cleanup": true,
+    "HWR_before": 1,
+    "HWR_after": 1,
+    "CRR_after": 0,
+    "Driver": "OK",
+    "Firmware": "OK",
+    "idle_utilisation": "0%"
+  },
+  "scope": "Two independently compiled literals and addresses now verified; native compute execution/readback proven for this path. Not3D triangle/fullMesa/full target profile.",
+  "note": "PowerShell $() substitution mistakenly intercepted one local hash-check command; it only ran empty test remotely. Replaced with saved.sh script and correct SHA checks before staging/submit."
+}

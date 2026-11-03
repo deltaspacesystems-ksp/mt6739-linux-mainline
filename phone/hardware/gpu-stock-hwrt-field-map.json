@@ -1,0 +1,25 @@
+{
+  "status": "Static stock RenderTarget->HWRT wire mapping recovered",
+  "source": "Exact private RGXAddRenderTarget plus wrapper FUN_0010dbd8 (ELF0xdbd8), 26 arguments ->98byte130/0 input",
+  "single_layer_allocation": "Stock TPC_RTC_Vheap alloc align64(TPCbytes)+0x600; VHeap atTPCbase+align64(TPCbytes); optional RTC only layers>1",
+  "single_sample_flags0_geometry_64x64": {
+    "ppp_screen": "003f003f",
+    "ppp_grid_offset": 0,
+    "ppp_multisample": 0,
+    "tpc_stride": 0,
+    "tpc_size": 128,
+    "te_screen": "00003003",
+    "te_aa": 0,
+    "te_mtile1": "00100000",
+    "te_mtile2": "00100000",
+    "mtile_stride": 16,
+    "max_rts": 1
+  },
+  "merge_constants_raw_float32": {
+    "lower_numerator": "3e89309c",
+    "upper_numerator": "3fddb3d9",
+    "scale_denominator": "3fbb67b2"
+  },
+  "merge_formula": "lowerX=c0/width,lowerY=c0/height,upperX=c1/width,upperY=c1/height,scaleX=width*16/c2,scaleY=height*16/c2",
+  "limits": "Static dataflow, no draw execution. Confirm full callsite ARM64 argument mapping and pack float32 before submission. Local prior grid_candidate was NOT PPPGridOffset: actual PPPGridOffset comes flags, zero for selected flags0."
+}

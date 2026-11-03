@@ -1,0 +1,52 @@
+{
+  "status": "Offline final graphics metadata audited and PPP/context PDS candidates PASS",
+  "correction": "VS emits5 outputs, not4: implicit point-size output atUVSW4 added by lowering. Previous VDM4output candidate not valid for this shader. Updated archived VDM uses5; CAM31/maxInstances16 remains same branch (40<56). No old candidate submitted.",
+  "VS": {
+    "vtxouts": 5,
+    "position": "UVSW0..3",
+    "point_size": "UVSW4,constant1",
+    "vertex_id": "vi0",
+    "entry": 0,
+    "coeffs": 0
+  },
+  "FS": {
+    "phase_change": false,
+    "w": false,
+    "z": false,
+    "depth_feedback": false,
+    "discard": true,
+    "early_frag": false,
+    "sample_shading": false,
+    "coeffs": 0,
+    "meta": "shared0,count1",
+    "entry": 0,
+    "output_mapping": "0:4 logical components, packed output instruction",
+    "pass_type": "PUNCH_THROUGH required bypublic pipeline fordiscard flag, even constant-color shader coverage prologue"
+  },
+  "PPP": {
+    "words": 25,
+    "header": "007f0ec7",
+    "output_select": "05040000 (vtxsize5,pointsizepresent)",
+    "viewport": "64x64 NDC viewport transform",
+    "uniform_size": 1,
+    "shared_size": 1,
+    "validation": "Generated packers ASan/UBSan/canariesPASS",
+    "pending": "Region clip16 alignment candidate needs stock correlation; fullpacket notGPUvalidated"
+  },
+  "context_PDS": {
+    "PT_buffer_bytes": 128,
+    "PT_store": "data8/code5DWORDS",
+    "PT_resume": "data8/code6DWORDS",
+    "SR_store_resume": "data16/code3DWORDS,ccfalse,no compute barrier",
+    "validation": "ASan/UBSan/endpointer/canariesPASS"
+  },
+  "stock_context_buffers": {
+    "VDM_bytes": 92,
+    "TA_bytes": 484,
+    "PT_bytes_per_bank": 128,
+    "SR_bytes_per_bank": 16432,
+    "banks": 2,
+    "source": "Private actual RGXCreateRenderContext andhelpers2f4cc/2f650; actualDWARFarraybounds independently proves2elements48B each"
+  },
+  "limits": "No TA/3D submitted. Stock constants/helper fieldmaps static; contextprogram hardware execution untested."
+}

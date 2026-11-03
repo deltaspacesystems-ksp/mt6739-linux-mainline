@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-26",
+  "method": "Only generic GPU library dynamic symbol metadata, vendor p41 ext4 ro,noload; unmounted afterward",
+  "libraries": {
+    "libusc.so": 1775544,
+    "libsrv_um.so": 1493008,
+    "libglslcompiler.so": 1005712
+  },
+  "observed_symbol_names": [
+    "PVRUniFlexCompileToHw",
+    "PVRUniFlexGetTileBufferSize",
+    "PVRSRVBridgeCall"
+  ],
+  "scope": "Symbols may be definitions or imports; not a complete hardware profile",
+  "libraries_executed": false,
+  "libraries_copied": false,
+  "android_runtime_used": false,
+  "hardware_features_derived_from_libraries": false
+}

@@ -1,0 +1,5 @@
+mtk_apmixed_init
+mtk_top_init
+mtk_infra_init
+mtk_clk_register_plls
+mtk_clk_register_factors

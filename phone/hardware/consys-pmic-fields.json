@@ -1,0 +1,46 @@
+{
+  "source": "stock kernel4.4 executable plus pmic_set_register_value decompilation",
+  "table_va": "0xffffff8008bd8390",
+  "stride": 12,
+  "schema": "id u32 at0, addr u16 at4, mask u16 at6, shift u8 at8",
+  "fields": [
+    {
+      "selector": "0xc2f",
+      "register": "0x1a58",
+      "mask": "0x1",
+      "shift": 0
+    },
+    {
+      "selector": "0xc31",
+      "register": "0x1a5a",
+      "mask": "0x1",
+      "shift": 0
+    },
+    {
+      "selector": "0xd03",
+      "register": "0x1b1e",
+      "mask": "0x1",
+      "shift": 1
+    },
+    {
+      "selector": "0xd08",
+      "register": "0x1b24",
+      "mask": "0x1",
+      "shift": 1
+    },
+    {
+      "selector": "0xd3b",
+      "register": "0x1b8a",
+      "mask": "0x1",
+      "shift": 1
+    },
+    {
+      "selector": "0xd41",
+      "register": "0x1b90",
+      "mask": "0x1",
+      "shift": 1
+    }
+  ],
+  "meaning": "Selectors are enum IDs, not PMIC addresses; no hardware writes",
+  "confidence": "Exact extracted fields, caller labels in wmt_consys.c; no assumed PMIC feature names"
+}

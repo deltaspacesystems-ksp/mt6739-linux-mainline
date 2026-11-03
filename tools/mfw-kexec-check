@@ -1,0 +1,17 @@
+#!/bin/sh
+# Read-only kexec readiness report; deliberately never loads or executes a kernel.
+set -u
+printf 'MICROFW kexec readiness (no kernel loaded, no restart)\n'
+if [ -r /sys/kernel/kexec_loaded ]; then
+ printf 'kexec_loaded: '; cat /sys/kernel/kexec_loaded
+else echo 'kexec API: not exposed by running kernel'; fi
+if [ -r /proc/sys/kernel/kexec_load_disabled ]; then
+ printf 'kexec_load_disabled: '; cat /proc/sys/kernel/kexec_load_disabled
+fi
+if [ -x /usr/sbin/kexec ] || [ -x /sbin/kexec ] || command -v kexec >/dev/null 2>&1; then echo 'kexec userspace: present'; else echo 'kexec userspace: missing'; fi
+printf 'online CPUs: '; cat /sys/devices/system/cpu/online
+if [ -r /sys/module/pvrsrvkm/parameters/enable ]; then
+ printf 'native GPU enabled: '; cat /sys/module/pvrsrvkm/parameters/enable
+fi
+echo 'Hardware handover is untested. API presence does not establish working kexec.'
+echo 'First trial requires owner present; keep GPU disabled for that trial.'

@@ -1,0 +1,5 @@
+dsi_wait_not_busy
+ddp_ovl_get_cur_addr
+ovl_get_address
+ddp_mutex_enable
+ddp_mutex_set_sof_wait

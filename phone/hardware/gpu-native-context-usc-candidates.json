@@ -1,0 +1,28 @@
+{
+  "status": "Native open context USC candidates compiled offline; no GPU upload",
+  "source": "Pinned Mesa common.cl load_store_sr, with final partial DMA subtraction fix",
+  "bug": "Original size_remaining_dw -= block_size_dw underflows when final allocation chunk is smaller than256/1024dwords; replace subtraction bymin(remaining,block)",
+  "validation": "CPU scheduling model reproduces old failure for16dw allocation and validates1539 legal16dw allocation cases for16/256/1024blocks underASan/UBSan; not a GPU shader execution test",
+  "compile": "OpenCL->SPIRV rebuiltPASS; selected public store/load functions compiled with explicit software RA budget20, no spills/temp<=20 guards and unknown device feature/capacity struct. Full production compiler unchanged. PCO_DEBUG=no_pred_cf matches upstream generator invocation.",
+  "programs": {
+    "cs_store_sr_1024_common": {
+      "bytes": 568,
+      "temps": 10,
+      "vtxins": 0,
+      "sha256": "f43db25cadd502378588c159c7f976c1a809475face4b54d277f890835f4430e"
+    },
+    "cs_load_sr_256_common": {
+      "bytes": 488,
+      "temps": 10,
+      "vtxins": 0,
+      "sha256": "4d1c683dd275035cafbc37019c3834803ede322f220ef70c0e5285e95c6a57d9"
+    }
+  },
+  "limits": [
+    "Software budget20 NOT physical USC depth or slot count",
+    "No Bionic/HAL/vendor CPU libraries used",
+    "ISA/errata, GPU memory/allocation/synchronization and context execution still need hardware validation",
+    "Existing generic generated context code in build-mfw is stale after SPIRV sourcefix until normal USCgen target rebuilt; standalone candidates live inout and are not installed"
+  ],
+  "patch": "Apply mesa-context-sr-last-burst.patch to pinned Mesa source before generating anycontext programs."
+}

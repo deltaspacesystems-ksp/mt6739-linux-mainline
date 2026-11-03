@@ -1,0 +1,5 @@
+RGXInit
+RGXRegisterDevice
+RGXDevInitCompatCheck
+mt_gpufreq_pdrv_probe
+MTKInitHWAPM

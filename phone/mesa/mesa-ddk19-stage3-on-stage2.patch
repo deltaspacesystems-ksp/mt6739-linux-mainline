@@ -1,0 +1,35 @@
+--- a/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
++++ b/src/imagination/vulkan/winsys/pvrsrvkm/pvr_srv_ddk19.h
+@@ -107,6 +107,32 @@
+   return rc;
+  }
+ 
++ if(bridge==PVR_SRV_BRIDGE_MM && function==21){
++  struct pvr_srv_devmem_int_reserve_range_cmd *in=input;
++  struct pvr_srv_devmem_int_reserve_range_ret *out=output;
++  struct {uint64_t heap,address,length;} PACKED old_in;
++  struct {uint64_t reservation;uint32_t error;} PACKED old_out={.error=UINT32_MAX};
++  _Static_assert(sizeof(old_in)==24&&sizeof(old_out)==12,"1.9 reservation ABI");
++  if(insize!=sizeof(*in)||outsize!=sizeof(*out)||!in->server_heap||!in->size||
++     (in->addr.addr&4095)||(in->size&4095)||in->addr.addr>UINT64_MAX-in->size){errno=EINVAL;return -1;}
++  old_in.heap=(uintptr_t)in->server_heap;old_in.address=in->addr.addr;old_in.length=in->size;
++  cmd.in_data_ptr=(uintptr_t)&old_in;cmd.in_data_size=sizeof(old_in);
++  cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=sizeof(old_out);
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){out->reservation=(void*)(uintptr_t)old_out.reservation;out->error=mfw19_error(old_out.error);}
++  return rc;
++ }
++ if(bridge==PVR_SRV_BRIDGE_MM && function==22){
++  uint64_t handle;uint32_t old_out=UINT32_MAX;
++  if(insize!=8||outsize!=4){errno=EINVAL;return -1;}
++  memcpy(&handle,input,8);if(!handle){errno=EINVAL;return -1;}
++  cmd.in_data_ptr=(uintptr_t)&handle;cmd.in_data_size=8;
++  cmd.out_data_ptr=(uintptr_t)&old_out;cmd.out_data_size=4;
++  int rc=drmIoctl(fd,DRM_IOCTL_SRVKM_CMD,&cmd);
++  if(!rc){enum pvr_srv_error error=mfw19_error(old_out);memcpy(output,&error,4);}
++  return rc;
++ }
++
+  /* Never send an unchecked1.17 command/layout to a1.9 kernel. */
+  errno=ENOTSUP;
+  return -1;

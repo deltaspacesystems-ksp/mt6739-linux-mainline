@@ -1,0 +1,34 @@
+{
+  "status": "offline public complete PDS context pair comparison PASS; no shader/GPU execution",
+  "correction": "Earlier claim that stock context PDS omits DOUTW was wrong: decompiler suppressed args to helper0x36230. ARM64 caller0x364c8/0x36524 passes original x1 buffer and w2 mode through to3arghelper.",
+  "legacy_helper": "ELF0x36230 emits two64bit DOUTW payloads/control words and instructions, then helper0x364a8 appends USC taskdata/DOUTU",
+  "state_data": "Two pointers stateVA andstateVA+48, each stored high32 thenlow32; interleaved DOUTW controls2 and0x80004002",
+  "full_context_pds": {
+    "data_dwords": 16,
+    "code_dwords": 6,
+    "code_sequence": [
+      "barrier conditional BRA",
+      "conditionalHALT",
+      "reset predicateBRA",
+      "DOUTW pointer0",
+      "DOUTW pointer1",
+      "predicated endDOUTU"
+    ],
+    "usc_task_data_dword_offset": 8,
+    "store_tasktemps": 8,
+    "load_tasktemps": 20,
+    "test_offsets": "StateVA0xa800010000/USCoffset0x2000 are offline illustrative values only"
+  },
+  "public_match": "pvr_pds_generate_shared_storing_program with2DOUTW constants and cc_enabletrue + public barrierconditional exactly matches independently recovered old data/code expressions for both store/load at corresponding SLC encoding0",
+  "validation": [
+    "4mode cases store/load*SLC0/1 pass sizes/returnpointer/canaries",
+    "Both SLC0 cases compare all16data+6code words against old expressions",
+    "SLC1 alternatives size/bounds only, not oldexpression asserted",
+    "ASan/UBSan harness linked existing pinned public libpvr_pds.a; library not newly instrumented"
+  ],
+  "remaining": [
+    "This validates PDS address-passing contract, not USC context shader ISA/errata or full dispatch",
+    "Modern common USC binary differs from old fixed blob and still uses synthetic compiler profile",
+    "No claim all modern barrier/workaround paths apply to target"
+  ]
+}

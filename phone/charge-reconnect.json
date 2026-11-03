@@ -1,0 +1,118 @@
+[
+  {
+    "uptime_s": 43682.28,
+    "voltage_uv": 4249896,
+    "temp_deci_c": 320,
+    "status": "Charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5326,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 0,
+      "temp": 320,
+      "elapsed_s": 253
+    },
+    "registers": {
+      "id": 65,
+      "status": 208,
+      "control": 120,
+      "special": 36,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:43:00.713674+00:00"
+  },
+  {
+    "uptime_s": 43699.52,
+    "voltage_uv": 4251379,
+    "temp_deci_c": 320,
+    "status": "Charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5328,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 0,
+      "temp": 320,
+      "elapsed_s": 270
+    },
+    "registers": {
+      "id": 65,
+      "status": 208,
+      "control": 120,
+      "special": 36,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:43:17.947970+00:00"
+  },
+  {
+    "uptime_s": 43716.8,
+    "voltage_uv": 4250061,
+    "temp_deci_c": 320,
+    "status": "Charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5330,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 0,
+      "temp": 320,
+      "elapsed_s": 286
+    },
+    "registers": {
+      "id": 65,
+      "status": 208,
+      "control": 120,
+      "special": 36,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:43:35.183613+00:00"
+  },
+  {
+    "uptime_s": 43733.99,
+    "voltage_uv": 4251049,
+    "temp_deci_c": 320,
+    "status": "Charging",
+    "cpu_hz": 949999755,
+    "service": {
+      "kicks": 5332,
+      "errors": 4,
+      "timer_faults_seen": 1,
+      "last_error": 0,
+      "profile_ok": 1,
+      "blocks": 0,
+      "temp": 321,
+      "elapsed_s": 303
+    },
+    "registers": {
+      "id": 65,
+      "status": 208,
+      "control": 120,
+      "special": 36,
+      "oreg": 142,
+      "ibat": 129,
+      "safety": 123,
+      "fault": 0,
+      "online": 1
+    },
+    "utc": "2026-10-25T12:43:52.375247+00:00"
+  }
+]

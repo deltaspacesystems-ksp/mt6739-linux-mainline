@@ -1,0 +1,163 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * MediaTek MT6739 - minimalny opis do pierwszego uruchomienia (M0).
+ * Dane zebrane ze stockowego DTB Huawei (kernel 4.4.95) oraz z dzialajacego systemu.
+ */
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	compatible = "mediatek,mt6739";
+	interrupt-parent = <&gic>;
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x0>;
+			enable-method = "psci";
+		};
+		cpu1: cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x1>;
+			enable-method = "psci";
+		};
+		cpu2: cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x2>;
+			enable-method = "psci";
+		};
+		cpu3: cpu@3 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53";
+			reg = <0x3>;
+			enable-method = "psci";
+		};
+	};
+
+	psci {
+		compatible = "arm,psci-0.2";
+		method = "smc";
+	};
+
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
+		clock-frequency = <13000000>;
+	};
+
+	clk26m: oscillator-26m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+		clock-output-names = "clk26m";
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		gic: interrupt-controller@c000000 {
+			compatible = "arm,gic-v3";
+			#interrupt-cells = <3>;
+			interrupt-controller;
+			reg = <0 0x0c000000 0 0x40000>,	/* GICD */
+			      <0 0x0c080000 0 0x200000>;	/* GICR */
+			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+		};
+
+		uart0: serial@11002000 {
+			compatible = "mediatek,mt6577-uart";
+			reg = <0 0x11002000 0 0x1000>;
+			interrupts = <GIC_SPI 91 IRQ_TYPE_LEVEL_LOW>;
+			clocks = <&clk26m>;
+			clock-names = "baud";
+			status = "disabled";
+		};
+
+		/* eMMC (msdc0): zegary i piny zostawia wlaczone LK (clk_ignore_unused) */
+		mmc0: mmc@11230000 {
+			compatible = "mediatek,mt8183-mmc";
+			reg = <0 0x11230000 0 0x1000>, <0 0x11cd0000 0 0x1000>;
+			interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_LOW>;
+			clocks = <&clk_msdc_src>, <&clk_msdc_hclk>;
+			clock-names = "source", "hclk";
+			bus-width = <8>;
+			max-frequency = <200000000>;
+			non-removable;
+			cap-mmc-highspeed;
+			mmc-ddr-1_8v;
+			mmc-hs200-1_8v;
+			vmmc-supply = <&reg_3v3>;
+			vqmmc-supply = <&reg_1v8>;
+		};
+
+		/* USB 2.0 OTG (MUSB): gadget, PHY zainicjowany przez LK */
+		usb0: usb@11200000 {
+			compatible = "mediatek,mt2701-musb", "mediatek,mtk-musb";
+			reg = <0 0x11200000 0 0x1000>;
+			interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_LOW>;
+			interrupt-names = "mc";
+			dr_mode = "peripheral";
+			clocks = <&clk_usb_main>, <&clk_usb_mcu>, <&clk_usb_univpll>;
+			clock-names = "main", "mcu", "univpll";
+		};
+	};
+
+	clk_msdc_src: msdc-src-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <200000000>;
+	};
+	clk_msdc_hclk: msdc-hclk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <66000000>;
+	};
+	clk_usb_main: usb-main-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+	clk_usb_mcu: usb-mcu-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <125000000>;
+	};
+	clk_usb_univpll: usb-univpll-clk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <104000000>;
+	};
+
+	reg_3v3: regulator-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+	reg_1v8: regulator-1v8 {
+		compatible = "regulator-fixed";
+		regulator-name = "1v8";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-always-on;
+	};
+};

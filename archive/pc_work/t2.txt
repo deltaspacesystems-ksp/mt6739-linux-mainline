@@ -1,0 +1,5 @@
+mtk_infra_init
+clk_mt6739_init
+mtk_clk_register_gates
+mtk_clk_register_gate
+mtk_mm_init

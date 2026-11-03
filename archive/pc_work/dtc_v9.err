@@ -1,0 +1,237 @@
+v9.dts:1236.4-17: Warning (reg_format): /i2c@11008000/rt9458@6a:reg: property has invalid length (4 bytes) (#address-cells == 2, #size-cells == 1)
+v9.dts:181.9-184.4: Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
+v9.dts:186.25-192.4: Warning (unit_address_vs_reg): /cpu_dbgapb: node has a reg or ranges property, but no unit name
+v9.dts:1429.37-1452.5: Warning (unit_address_vs_reg): /msdc@11230000/msdc0@default: node has a unit name, but no reg or ranges property
+v9.dts:1454.58-1460.5: Warning (unit_address_vs_reg): /msdc@11230000/msdc0@register_default: node has a unit name, but no reg or ranges property
+v9.dts:1495.37-1510.5: Warning (unit_address_vs_reg): /msdc@11240000/msdc1@default: node has a unit name, but no reg or ranges property
+v9.dts:1512.35-1527.5: Warning (unit_address_vs_reg): /msdc@11240000/msdc1@sdr104: node has a unit name, but no reg or ranges property
+v9.dts:1529.33-1544.5: Warning (unit_address_vs_reg): /msdc@11240000/msdc1@sdr50: node has a unit name, but no reg or ranges property
+v9.dts:1546.33-1561.5: Warning (unit_address_vs_reg): /msdc@11240000/msdc1@ddr50: node has a unit name, but no reg or ranges property
+v9.dts:1563.58-1569.5: Warning (unit_address_vs_reg): /msdc@11240000/msdc1@register_default: node has a unit name, but no reg or ranges property
+v9.dts:1839.17-1940.6: Warning (unit_address_vs_reg): /touch/ts_kit/focaltech@38: node has a unit name, but no reg or ranges property
+v9.dts:1942.17-1981.6: Warning (unit_address_vs_reg): /touch/ts_kit/goodix_ts@5d: node has a unit name, but no reg or ranges property
+v9.dts:1983.16-2023.6: Warning (unit_address_vs_reg): /touch/ts_kit/mstar_ts@26: node has a unit name, but no reg or ranges property
+v9.dts:2208.28-2214.4: Warning (unit_address_vs_reg): /dispsys@14000000: node has a unit name, but no reg or ranges property
+v9.dts:2521.16-2525.4: Warning (unit_address_vs_reg): /als_ps@0: node has a unit name, but no reg or ranges property
+v9.dts:38.17-48.5: Warning (unit_address_format): /cpus/cpu@001: unit name should not have leading 0s
+v9.dts:50.17-60.5: Warning (unit_address_format): /cpus/cpu@002: unit name should not have leading 0s
+v9.dts:62.17-72.5: Warning (unit_address_format): /cpus/cpu@003: unit name should not have leading 0s
+v9.dts:242.37-255.4: Warning (unit_address_format): /interrupt-controller@0c000000: unit name should not have leading 0s
+v9.dts:257.39-265.4: Warning (unit_address_format): /intpol-controller@0x10200620: unit name should not have leading "0x"
+v9.dts:267.18-270.4: Warning (unit_address_format): /chipid@08000000: unit name should not have leading 0s
+v9.dts:1022.18-1025.4: Warning (unit_address_format): /gic500@0c000000: unit name should not have leading 0s
+v9.dts:1027.19-1030.4: Warning (unit_address_format): /gic_cpu@0c400000: unit name should not have leading 0s
+v9.dts:1032.15-1035.4: Warning (unit_address_format): /dfd@0c600000: unit name should not have leading 0s
+v9.dts:1037.19-1040.4: Warning (unit_address_format): /dbg_etb@0d010000: unit name should not have leading 0s
+v9.dts:1042.19-1045.4: Warning (unit_address_format): /dbg_cti@0d020000: unit name should not have leading 0s
+v9.dts:1047.19-1050.4: Warning (unit_address_format): /dbg_etr@0d030000: unit name should not have leading 0s
+v9.dts:1052.22-1055.4: Warning (unit_address_format): /dbg_funnel@0d040000: unit name should not have leading 0s
+v9.dts:1057.19-1061.4: Warning (unit_address_format): /dbg_dem@0d0a0000: unit name should not have leading 0s
+v9.dts:1063.22-1066.4: Warning (unit_address_format): /dbg_mdsys1@0d0c0000: unit name should not have leading 0s
+v9.dts:1068.25-1071.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d400000: unit name should not have leading 0s
+v9.dts:1073.25-1076.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d410000: unit name should not have leading 0s
+v9.dts:1078.25-1081.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d420000: unit name should not have leading 0s
+v9.dts:1083.25-1086.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d430000: unit name should not have leading 0s
+v9.dts:1088.25-1091.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d440000: unit name should not have leading 0s
+v9.dts:1093.25-1096.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d510000: unit name should not have leading 0s
+v9.dts:1098.25-1101.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d520000: unit name should not have leading 0s
+v9.dts:1103.25-1106.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d530000: unit name should not have leading 0s
+v9.dts:1108.25-1111.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d540000: unit name should not have leading 0s
+v9.dts:1113.25-1116.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d610000: unit name should not have leading 0s
+v9.dts:1118.25-1121.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d620000: unit name should not have leading 0s
+v9.dts:1123.25-1126.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d630000: unit name should not have leading 0s
+v9.dts:1128.25-1131.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d640000: unit name should not have leading 0s
+v9.dts:1133.25-1136.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d710000: unit name should not have leading 0s
+v9.dts:1138.25-1141.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d720000: unit name should not have leading 0s
+v9.dts:1143.25-1146.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d730000: unit name should not have leading 0s
+v9.dts:1148.25-1151.4: Warning (unit_address_format): /dbg_apmcu_mp0@0d740000: unit name should not have leading 0s
+v9.dts:1153.25-1156.4: Warning (unit_address_format): /dbg_apmcu_mp1@0d800000: unit name should not have leading 0s
+v9.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
+v9.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+v9.dtb: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
+v9.dts:1221.21-1249.4: Warning (i2c_bus_bridge): /i2c@11008000: incorrect #address-cells for I2C bus
+v9.dts:1221.21-1249.4: Warning (i2c_bus_bridge): /i2c@11008000: incorrect #size-cells for I2C bus
+v9.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+v9.dtb: Warning (i2c_bus_reg): Failed prerequisite 'i2c_bus_bridge'
+v9.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+v9.dts:1233.13-1248.5: Warning (avoid_default_addr_size): /i2c@11008000/rt9458@6a: Relying on default #address-cells value
+v9.dts:1233.13-1248.5: Warning (avoid_default_addr_size): /i2c@11008000/rt9458@6a: Relying on default #size-cells value
+v9.dtb: Warning (avoid_unnecessary_addr_size): Failed prerequisite 'avoid_default_addr_size'
+v9.dtb: Warning (unique_unit_address): Failed prerequisite 'avoid_default_addr_size'
+v9.dts:471.3-19: Warning (clocks_property): /apxgpt@10008000:clocks: cell 0 is not a phandle reference
+v9.dts:666.3-24: Warning (clocks_property): /devapc@10207000:clocks: cell 0 is not a phandle reference
+v9.dts:732.3-24: Warning (clocks_property): /cq_dma@10212000:clocks: cell 0 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 0 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 2 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 4 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 6 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 8 is not a phandle reference
+v9.dts:819.3-74: Warning (clocks_property): /mdcldma@10014000:clocks: cell 10 is not a phandle reference
+v9.dts:968.3-34: Warning (clocks_property): /gce@10228000:clocks: cell 0 is not a phandle reference
+v9.dts:968.3-34: Warning (clocks_property): /gce@10228000:clocks: cell 2 is not a phandle reference
+v9.dts:1168.3-24: Warning (clocks_property): /auxadc@11001000:clocks: cell 0 is not a phandle reference
+v9.dts:1181.3-34: Warning (clocks_property): /apuart0@11002000:clocks: cell 0 is not a phandle reference
+v9.dts:1181.3-34: Warning (clocks_property): /apuart0@11002000:clocks: cell 2 is not a phandle reference
+v9.dts:1194.3-24: Warning (clocks_property): /apuart1@11003000:clocks: cell 0 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 0 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 2 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 4 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 6 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 8 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 10 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 12 is not a phandle reference
+v9.dts:1204.3-94: Warning (clocks_property): /pwm@11006000:clocks: cell 14 is not a phandle reference
+v9.dts:1213.3-34: Warning (clocks_property): /i2c@11007000:clocks: cell 0 is not a phandle reference
+v9.dts:1213.3-34: Warning (clocks_property): /i2c@11007000:clocks: cell 2 is not a phandle reference
+v9.dts:1226.3-34: Warning (clocks_property): /i2c@11008000:clocks: cell 0 is not a phandle reference
+v9.dts:1226.3-34: Warning (clocks_property): /i2c@11008000:clocks: cell 2 is not a phandle reference
+v9.dts:1256.3-34: Warning (clocks_property): /i2c@11009000:clocks: cell 0 is not a phandle reference
+v9.dts:1256.3-34: Warning (clocks_property): /i2c@11009000:clocks: cell 2 is not a phandle reference
+v9.dts:1269.3-34: Warning (clocks_property): /i2c@1100f000:clocks: cell 0 is not a phandle reference
+v9.dts:1269.3-34: Warning (clocks_property): /i2c@1100f000:clocks: cell 2 is not a phandle reference
+v9.dts:1282.3-34: Warning (clocks_property): /i2c@11011000:clocks: cell 0 is not a phandle reference
+v9.dts:1282.3-34: Warning (clocks_property): /i2c@11011000:clocks: cell 2 is not a phandle reference
+v9.dts:1295.3-34: Warning (clocks_property): /i2c@11016000:clocks: cell 0 is not a phandle reference
+v9.dts:1295.3-34: Warning (clocks_property): /i2c@11016000:clocks: cell 2 is not a phandle reference
+v9.dts:1308.3-44: Warning (clocks_property): /spi@1100a000:clocks: cell 0 is not a phandle reference
+v9.dts:1308.3-44: Warning (clocks_property): /spi@1100a000:clocks: cell 2 is not a phandle reference
+v9.dts:1308.3-44: Warning (clocks_property): /spi@1100a000:clocks: cell 4 is not a phandle reference
+v9.dts:1319.3-44: Warning (clocks_property): /spi@11010000:clocks: cell 0 is not a phandle reference
+v9.dts:1319.3-44: Warning (clocks_property): /spi@11010000:clocks: cell 2 is not a phandle reference
+v9.dts:1319.3-44: Warning (clocks_property): /spi@11010000:clocks: cell 4 is not a phandle reference
+v9.dts:1330.3-44: Warning (clocks_property): /spi@11012000:clocks: cell 0 is not a phandle reference
+v9.dts:1330.3-44: Warning (clocks_property): /spi@11012000:clocks: cell 2 is not a phandle reference
+v9.dts:1330.3-44: Warning (clocks_property): /spi@11012000:clocks: cell 4 is not a phandle reference
+v9.dts:1340.3-24: Warning (clocks_property): /therm_ctrl@1100b000:clocks: cell 0 is not a phandle reference
+v9.dts:1348.3-64: Warning (clocks_property): /eem_fsm@1100b000:clocks: cell 0 is not a phandle reference
+v9.dts:1348.3-64: Warning (clocks_property): /eem_fsm@1100b000:clocks: cell 2 is not a phandle reference
+v9.dts:1348.3-64: Warning (clocks_property): /eem_fsm@1100b000:clocks: cell 4 is not a phandle reference
+v9.dts:1348.3-64: Warning (clocks_property): /eem_fsm@1100b000:clocks: cell 6 is not a phandle reference
+v9.dts:1348.3-64: Warning (clocks_property): /eem_fsm@1100b000:clocks: cell 8 is not a phandle reference
+v9.dts:1358.3-34: Warning (clocks_property): /btif@1100c000:clocks: cell 0 is not a phandle reference
+v9.dts:1358.3-34: Warning (clocks_property): /btif@1100c000:clocks: cell 2 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 0 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 2 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 4 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 5 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 7 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 9 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 11 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 13 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 15 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 17 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 19 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 21 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 23 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 25 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 27 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 29 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 31 is not a phandle reference
+v9.dts:1394.3-189: Warning (clocks_property): /nfi@11018000:clocks: cell 33 is not a phandle reference
+v9.dts:1423.3-34: Warning (clocks_property): /msdc@11230000:clocks: cell 0 is not a phandle reference
+v9.dts:1423.3-34: Warning (clocks_property): /msdc@11230000:clocks: cell 2 is not a phandle reference
+v9.dts:1489.3-34: Warning (clocks_property): /msdc@11240000:clocks: cell 0 is not a phandle reference
+v9.dts:1489.3-34: Warning (clocks_property): /msdc@11240000:clocks: cell 2 is not a phandle reference
+v9.dts:1579.3-44: Warning (clocks_property): /usb0@11200000:clocks: cell 0 is not a phandle reference
+v9.dts:1579.3-44: Warning (clocks_property): /usb0@11200000:clocks: cell 2 is not a phandle reference
+v9.dts:1579.3-44: Warning (clocks_property): /usb0@11200000:clocks: cell 4 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 0 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 2 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 4 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 6 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 8 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 10 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 12 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 14 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 16 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 18 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 20 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 22 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 24 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 26 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 28 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 30 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 32 is not a phandle reference
+v9.dts:1602.3-189: Warning (clocks_property): /mt_soc_dl1_pcm@11220000:clocks: cell 34 is not a phandle reference
+v9.dts:1760.3-24: Warning (clocks_property): /wifi@180f0000:clocks: cell 0 is not a phandle reference
+v9.dts:1795.3-59: Warning (clocks_property): /mfg_auckland@13000000:clocks: cell 0 is not a phandle reference
+v9.dts:1795.3-59: Warning (clocks_property): /mfg_auckland@13000000:clocks: cell 2 is not a phandle reference
+v9.dts:1795.3-59: Warning (clocks_property): /mfg_auckland@13000000:clocks: cell 3 is not a phandle reference
+v9.dts:1795.3-59: Warning (clocks_property): /mfg_auckland@13000000:clocks: cell 5 is not a phandle reference
+v9.dts:1795.3-59: Warning (clocks_property): /mfg_auckland@13000000:clocks: cell 7 is not a phandle reference
+v9.dts:1806.3-39: Warning (clocks_property): /gpufreq:clocks: cell 0 is not a phandle reference
+v9.dts:1806.3-39: Warning (clocks_property): /gpufreq:clocks: cell 2 is not a phandle reference
+v9.dts:1806.3-39: Warning (clocks_property): /gpufreq:clocks: cell 3 is not a phandle reference
+v9.dts:1815.3-24: Warning (clocks_property): /mmsys_config@14000000:clocks: cell 0 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 0 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 2 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 4 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 6 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 8 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 10 is not a phandle reference
+v9.dts:2074.3-84: Warning (clocks_property): /smi_common@14002000:clocks: cell 12 is not a phandle reference
+v9.dts:2082.3-34: Warning (clocks_property): /smi_larb0@14003000:clocks: cell 0 is not a phandle reference
+v9.dts:2082.3-34: Warning (clocks_property): /smi_larb0@14003000:clocks: cell 2 is not a phandle reference
+v9.dts:2092.3-24: Warning (clocks_property): /mdp_rdma0@14004000:clocks: cell 0 is not a phandle reference
+v9.dts:2102.3-24: Warning (clocks_property): /mdp_rsz0@14005000:clocks: cell 0 is not a phandle reference
+v9.dts:2112.3-24: Warning (clocks_property): /mdp_rsz1@14006000:clocks: cell 0 is not a phandle reference
+v9.dts:2122.3-24: Warning (clocks_property): /mdp_wdma0@14007000:clocks: cell 0 is not a phandle reference
+v9.dts:2132.3-24: Warning (clocks_property): /mdp_wrot0@14008000:clocks: cell 0 is not a phandle reference
+v9.dts:2141.3-24: Warning (clocks_property): /mdp_tdshp0@14009000:clocks: cell 0 is not a phandle reference
+v9.dts:2151.3-24: Warning (clocks_property): /disp_ovl0@1400a000:clocks: cell 0 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 0 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 2 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 4 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 6 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 8 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 10 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 12 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 14 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 16 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 18 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 20 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 22 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 24 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 26 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 28 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 30 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 32 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 34 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 36 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 38 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 39 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 41 is not a phandle reference
+v9.dts:2210.3-239: Warning (clocks_property): /dispsys@14000000:clocks: cell 43 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 0 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 2 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 4 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 6 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 8 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 10 is not a phandle reference
+v9.dts:2241.3-84: Warning (clocks_property): /ispsys@15000000:clocks: cell 12 is not a phandle reference
+v9.dts:2249.3-34: Warning (clocks_property): /smi_larb2@15001000:clocks: cell 0 is not a phandle reference
+v9.dts:2249.3-34: Warning (clocks_property): /smi_larb2@15001000:clocks: cell 2 is not a phandle reference
+v9.dts:2315.3-54: Warning (clocks_property): /vdec_gcon@17000000:clocks: cell 0 is not a phandle reference
+v9.dts:2315.3-54: Warning (clocks_property): /vdec_gcon@17000000:clocks: cell 2 is not a phandle reference
+v9.dts:2315.3-54: Warning (clocks_property): /vdec_gcon@17000000:clocks: cell 4 is not a phandle reference
+v9.dts:2315.3-54: Warning (clocks_property): /vdec_gcon@17000000:clocks: cell 6 is not a phandle reference
+v9.dts:2323.3-24: Warning (clocks_property): /venc_jpg@17030000:clocks: cell 0 is not a phandle reference
+v9.dts:2351.3-44: Warning (clocks_property): /smi_larb1@17010000:clocks: cell 0 is not a phandle reference
+v9.dts:2351.3-44: Warning (clocks_property): /smi_larb1@17010000:clocks: cell 2 is not a phandle reference
+v9.dts:2351.3-44: Warning (clocks_property): /smi_larb1@17010000:clocks: cell 4 is not a phandle reference
+v9.dts:2511.3-24: Warning (clocks_property): /consys@18070000:clocks: cell 0 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 0 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 2 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 4 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 5 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 7 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 9 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 11 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 13 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 15 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 17 is not a phandle reference
+v9.dts:2620.3-119: Warning (clocks_property): /kd_camera_hw1@15008000:clocks: cell 19 is not a phandle reference
+v9.dts:1485.3-31: Warning (gpios_property): /msdc@11240000:cd-gpios: cell 0 is not a phandle reference
+v9.dts:3154.3-27: Warning (gpios_property): /__symbols__:gpio: property size (15) is invalid, expected multiple of 4
+v9.dts:498.23-503.5: Warning (interrupt_provider): /pwrap@1000d000/pmic_irq: Missing '#interrupt-cells' in interrupt provider
+v9.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'

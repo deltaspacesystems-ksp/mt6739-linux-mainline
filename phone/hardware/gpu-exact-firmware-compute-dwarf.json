@@ -1,0 +1,168 @@
+{
+  "scope": "Exact loaded stock firmware DWARF type facts, no proprietary code/binary copied into repository",
+  "firmware_sha256": "8a843eb1678c0e2fd630c66d4a8070a0a6d4ca5ba7bfd16904d89d66f9fa074c",
+  "types": {
+    "RGXFWIF_CDM_REGISTERS": {
+      "bytes": 56,
+      "members": [
+        {
+          "name": "uCDMReg_CDM_CTRL_STREAM_BASE",
+          "offset": 0,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_TPU_BORDER_COLOUR_TABLE",
+          "offset": 8,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_COMPUTE_THREAD_BARRIER",
+          "offset": 16,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_PDS_CTRL",
+          "offset": 24,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_TPU_YUV_CSC_COEFFICIENTS",
+          "offset": 32,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_TPU",
+          "offset": 40,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_TPU_ARRAYS_CDM",
+          "offset": 48,
+          "type": "long long unsigned int",
+          "bytes": 8
+        }
+      ]
+    },
+    "RGXFWIF_CDM_REGISTERS_CSWITCH": {
+      "bytes": 56,
+      "members": [
+        {
+          "name": "uCDMReg_CDM_CONTEXT_STATE_BASE_ADDR",
+          "offset": 0,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_CONTEXT_PDS0",
+          "offset": 8,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_CONTEXT_PDS1",
+          "offset": 16,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_TERMINATE_PDS",
+          "offset": 24,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_TERMINATE_PDS1",
+          "offset": 32,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_RESUME_PDS0",
+          "offset": 40,
+          "type": "long long unsigned int",
+          "bytes": 8
+        },
+        {
+          "name": "uCDMReg_CDM_RESUME_PDS1",
+          "offset": 48,
+          "type": "long long unsigned int",
+          "bytes": 8
+        }
+      ]
+    },
+    "RGXFWIF_CMD_COMPUTE": {
+      "bytes": 120,
+      "members": [
+        {
+          "name": "sCDMRegs",
+          "offset": 0,
+          "type": "_RGXFWIF_CDM_REGISTERS_",
+          "bytes": 56
+        },
+        {
+          "name": "sCDMRegsCSwitch",
+          "offset": 56,
+          "type": "_RGXFWIF_CDM_REGISTERS_CSWITCH_",
+          "bytes": 56
+        },
+        {
+          "name": "ui32Flags",
+          "offset": 112,
+          "type": "long unsigned int",
+          "bytes": 4
+        },
+        {
+          "name": "ui32MaxDeadlineMS",
+          "offset": 116,
+          "type": "long unsigned int",
+          "bytes": 4
+        }
+      ]
+    },
+    "RGXFWIF_COMPUTECTX_STATE": {
+      "bytes": 8,
+      "members": [
+        {
+          "name": "bBufferB",
+          "offset": 0,
+          "type": "tag_img_bool",
+          "bytes": 4
+        }
+      ]
+    }
+  },
+  "elf": {
+    "class": 32,
+    "machine": "MIPS32r2 microMIPS little-endian",
+    "symbols": 4001,
+    "dwarf_present": true
+  },
+  "consumer": {
+    "function": "rgxfw_compute_kickcdm",
+    "address_hex": "0xc0014828",
+    "bytes": 1042,
+    "dwarf_location": "psCmdHeader=r16; psComputeCmd=r16+56, documented location ranges",
+    "observed_direct_register_writes": {
+      "packet0": "0x480/0x484",
+      "packet8": "0x17a8/0x17ac",
+      "packet16": "0x708 low32",
+      "packet24": "0x600/0x604 read-modify-write, low24 bits retained from register",
+      "packet32": "0x1788/0x178c only whennonzero",
+      "packet40": "0x1780 low32",
+      "packet56": "0x498/0x49c",
+      "packet64": "0x4a8/0x4ac",
+      "packet72": "0x4b0 low32",
+      "packet80": "0x4b8/0x4bc",
+      "packet88": "0x4c0 low32"
+    },
+    "packet48": "No direct load at r16+0x68/+0x6c observed in complete1042B function; NOT global proof of non-use",
+    "register_window": "Firmware virtual0xcf400000; do not use as CPU physical address",
+    "limits": "Manual microMIPS instruction+DWARF correlation, not runtime trace; packet24 masked RMW and resume branch need exact implementation treatment"
+  }
+}
